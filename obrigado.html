@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Obrigado! | SAW Móveis — Estamos te chamando no WhatsApp</title>
-  <meta name="description" content="Recebemos seu pedido de Projeto 3D. Em instantes te chamamos no WhatsApp." />
+  <title>Recebemos seu pedido! | SAW Móveis</title>
+  <meta name="description" content="Recebemos seu pedido de Projeto 3D. Em instantes nossa equipe te chama no WhatsApp." />
   <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0a0a0a" />
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
 
   <!-- ═══════════════════════════════════════════
        GOOGLE ANALYTICS 4 + Google Ads
@@ -37,173 +39,342 @@
   </script>
 
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-      color: #f5f5f5;
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #E85C1A;
+      --orange-light: #FF7B3B;
+      --orange-dark: #C84A0E;
+      --bg-0: #0a0a0a;
+      --bg-1: #111113;
+      --bg-2: #1A1A1C;
+      --text-0: #F4F4F4;
+      --text-1: #C8C8C8;
+      --text-2: #888;
+      --green: #25d366;
+    }
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-0);
+      color: var(--text-0);
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      margin: 0;
+      padding: 24px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -20%, rgba(232,92,26,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 50% 120%, rgba(232,92,26,0.10) 0%, transparent 60%),
+        var(--bg-0);
     }
-    .obrigado-card {
-      max-width: 600px;
+    .obrigado {
+      max-width: 640px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid rgba(232,92,26,0.25);
       border-radius: 24px;
-      padding: 48px 32px;
+      padding: 48px 36px;
       text-align: center;
       backdrop-filter: blur(20px);
+      animation: fadeUp 0.6s cubic-bezier(0.4,0,0.2,1);
     }
-    .obrigado-card__logo {
-      max-width: 180px;
-      margin: 0 auto 32px;
+    @media (max-width: 540px) {
+      .obrigado { padding: 36px 22px; border-radius: 18px; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .obrigado__logo {
+      max-width: 160px;
+      margin: 0 auto 28px;
       display: block;
     }
-    .obrigado-card__check {
-      width: 80px;
-      height: 80px;
+    .obrigado__check {
+      width: 84px;
+      height: 84px;
       margin: 0 auto 24px;
-      background: linear-gradient(135deg, #d4af37 0%, #c9a432 100%);
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 12px 32px rgba(232,92,26,0.35);
+      animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
     }
     @keyframes pop {
-      0% { transform: scale(0); }
-      70% { transform: scale(1.1); }
+      0%   { transform: scale(0); }
+      70%  { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
-    .obrigado-card h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 36px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      color: #d4af37;
+    .obrigado h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      color: var(--text-0);
     }
-    .obrigado-card__subtitle {
-      font-size: 18px;
-      color: #d0d0d0;
-      margin: 0 0 32px;
-      line-height: 1.5;
+    .obrigado h1 .accent {
+      color: var(--orange);
+      font-style: italic;
     }
-    .obrigado-card__nome {
-      color: #d4af37;
-      font-weight: 600;
+    .obrigado__subtitle {
+      font-size: 1.05rem;
+      color: var(--text-1);
+      margin-bottom: 28px;
+      line-height: 1.55;
     }
-    .obrigado-card__status {
+    .obrigado__subtitle strong { color: var(--text-0); }
+    .obrigado__status {
       background: rgba(37, 211, 102, 0.1);
       border: 1px solid rgba(37, 211, 102, 0.3);
       border-radius: 12px;
-      padding: 16px 20px;
-      margin: 0 0 24px;
+      padding: 14px 18px;
+      margin-bottom: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      font-size: 15px;
-      color: #25d366;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: var(--green);
+      font-weight: 500;
     }
-    .obrigado-card__status::before {
+    .obrigado__status::before {
       content: '';
-      width: 12px;
-      height: 12px;
-      background: #25d366;
+      width: 10px;
+      height: 10px;
+      background: var(--green);
       border-radius: 50%;
       animation: pulse 1.4s infinite;
+      flex-shrink: 0;
     }
     @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.4; transform: scale(1.4); }
     }
-    .obrigado-card__counter {
-      font-size: 14px;
-      color: #888;
-      margin: 0 0 32px;
+
+    /* Timeline próximos passos */
+    .obrigado__steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 0 auto 32px;
+      max-width: 480px;
     }
-    .obrigado-card__btn {
-      display: inline-block;
+    @media (max-width: 540px) {
+      .obrigado__steps { grid-template-columns: 1fr; gap: 10px; }
+    }
+    .obrigado__step {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 16px 12px;
+      text-align: center;
+      position: relative;
+    }
+    .obrigado__step::before {
+      content: attr(data-step);
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .obrigado__step h4 {
+      font-size: 0.85rem;
+      color: var(--text-0);
+      margin: 8px 0 4px;
+      font-weight: 600;
+    }
+    .obrigado__step p {
+      font-size: 0.78rem;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    .obrigado__counter {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      margin-bottom: 18px;
+    }
+    #contador { color: var(--orange); font-weight: 700; }
+
+    .obrigado__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       padding: 16px 32px;
-      background: #25d366;
+      background: var(--green);
       color: white;
       text-decoration: none;
-      border-radius: 50px;
+      border-radius: 999px;
       font-weight: 700;
-      font-size: 16px;
-      transition: transform 0.2s, box-shadow 0.2s;
+      font-size: 1rem;
+      transition: all 0.25s;
       box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+      margin-bottom: 24px;
     }
-    .obrigado-card__btn:hover {
+    .obrigado__btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.4);
+      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.45);
     }
-    .obrigado-card__home {
-      display: inline-block;
-      margin-top: 20px;
-      color: #888;
+    .obrigado__btn svg { width: 20px; height: 20px; }
+
+    .obrigado__alt {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .obrigado__alt a {
+      color: var(--text-1);
       text-decoration: none;
-      font-size: 14px;
-      transition: color 0.2s;
+      font-size: 0.88rem;
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      transition: all 0.2s;
     }
-    .obrigado-card__home:hover {
-      color: #d4af37;
+    .obrigado__alt a:hover {
+      border-color: var(--orange);
+      color: var(--orange);
     }
+
+    .obrigado__foot {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      margin-top: 12px;
+    }
+    .obrigado__foot a { color: var(--text-1); text-decoration: none; }
+    .obrigado__foot a:hover { color: var(--orange); }
   </style>
 </head>
 <body>
 
-  <div class="obrigado-card">
-    <img src="assets/logo-principal.png" alt="SAW Móveis" class="obrigado-card__logo" />
+  <main class="obrigado">
+    <img src="assets/logo-principal.png" alt="SAW Móveis" class="obrigado__logo" />
 
-    <div class="obrigado-card__check">
+    <div class="obrigado__check" aria-hidden="true">
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="20 6 9 17 4 12"></polyline>
       </svg>
     </div>
 
-    <h1>Recebemos seu pedido<span id="nomeUsuario"></span>!</h1>
-    <p class="obrigado-card__subtitle">
-      Em instantes nossa equipe vai te chamar no WhatsApp para iniciar seu <strong>Projeto 3D Gratuito</strong>.
+    <h1>Recebemos<span id="nomeUsuario"></span>!<br/><span class="accent">Vamos transformar seu projeto</span></h1>
+    <p class="obrigado__subtitle">
+      Em instantes nossa equipe te chama no WhatsApp para iniciar seu <strong id="ambienteCustom">Projeto 3D Gratuito</strong>. Sem compromisso, sem amarração.
     </p>
 
-    <div class="obrigado-card__status">
-      Abrindo o WhatsApp automaticamente
+    <div class="obrigado__status" id="statusBar">
+      Abrindo o WhatsApp automaticamente…
     </div>
 
-    <p class="obrigado-card__counter">
-      Caso o WhatsApp não abra em <span id="contador">3</span> segundos, clique abaixo
+    <!-- Próximos passos (gerência expectativa) -->
+    <div class="obrigado__steps">
+      <div class="obrigado__step" data-step="1">
+        <h4>WhatsApp</h4>
+        <p>Resposta em até 2h úteis</p>
+      </div>
+      <div class="obrigado__step" data-step="2">
+        <h4>Visita técnica</h4>
+        <p>Agendada conforme sua agenda</p>
+      </div>
+      <div class="obrigado__step" data-step="3">
+        <h4>Projeto 3D</h4>
+        <p>Entregue em até 7 dias úteis</p>
+      </div>
+    </div>
+
+    <p class="obrigado__counter">
+      Se o WhatsApp não abrir em <span id="contador">3</span> segundos, clique abaixo
     </p>
 
-    <a id="btnWhatsApp" href="https://wa.me/551134959479" target="_blank" rel="noopener" class="obrigado-card__btn">
+    <a id="btnWhatsApp" href="https://wa.me/551134959479" target="_blank" rel="noopener" class="obrigado__btn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
       Abrir WhatsApp agora
     </a>
 
-    <br>
+    <!-- CTAs secundários enquanto aguarda -->
+    <div class="obrigado__alt">
+      <a href="/#galeria">📸 Ver mais projetos</a>
+      <a href="/#depoimentos">⭐ Depoimentos reais</a>
+      <a href="catalogo-saw.html">📄 Baixar catálogo</a>
+    </div>
 
-    <a href="/" class="obrigado-card__home">← Voltar para o site</a>
-  </div>
+    <p class="obrigado__foot">
+      <a href="/">← Voltar para o site</a> · SAW Móveis · <a href="tel:1134959479">(11) 3495-9479</a>
+    </p>
+  </main>
 
   <script>
     /* ── Lê parâmetros da URL ── */
-    const params = new URLSearchParams(window.location.search);
-    const nome      = params.get('nome')      || '';
-    const telefone  = params.get('telefone')  || '';
-    const ambiente  = params.get('ambiente')  || '';
-    const descricao = params.get('descricao') || '';
+    const params    = new URLSearchParams(window.location.search);
+    const nome      = (params.get('nome')      || '').trim();
+    const telefone  = (params.get('telefone')  || '').trim();
+    const ambiente  = (params.get('ambiente')  || '').trim();
+    const descricao = (params.get('descricao') || '').trim();
 
     /* ── Personaliza saudação ── */
     if (nome) {
-      document.getElementById('nomeUsuario').textContent = ', ' + nome.split(' ')[0];
+      const primeiro = nome.split(' ')[0];
+      document.getElementById('nomeUsuario').textContent = ', ' + primeiro;
+    }
+    if (ambiente) {
+      const ambientesLabels = {
+        'cozinha': 'Projeto 3D da sua Cozinha',
+        'dormitorio': 'Projeto 3D do seu Dormitório',
+        'closet': 'Projeto 3D do seu Closet',
+        'sala': 'Projeto 3D da sua Sala',
+        'home-office': 'Projeto 3D do seu Home Office',
+        'completo': 'Projeto 3D Completo',
+        'banheiro': 'Projeto 3D do seu Banheiro'
+      };
+      const key = ambiente.toLowerCase().replace(/\s/g, '-');
+      const label = ambientesLabels[key] || `Projeto 3D Gratuito de ${ambiente}`;
+      document.getElementById('ambienteCustom').textContent = label;
+    }
+
+    /* ── Failsafe: captura redundante no Worker (se a inicial falhou) ── */
+    const CAMPANHAS_API = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+      ? 'http://localhost:3000'
+      : 'https://saw-leads.ivan-fbarbosa31.workers.dev';
+
+    if (nome && telefone) {
+      fetch(CAMPANHAS_API + '/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome,
+          telefone,
+          interesse: ambiente || null,
+          origem: 'obrigado_failsafe',
+          tags: ['site', 'failsafe-obrigado'],
+          metadata: { descricao: descricao || null, url_params: location.search }
+        })
+      })
+      .then(r => r.json())
+      .then(d => console.log('[obrigado-failsafe] OK:', d?.lead?.id || 'já-existia'))
+      .catch(err => console.warn('[obrigado-failsafe] falhou (silencioso):', err.message));
     }
 
     /* ── Dispara conversões — Meta Pixel ── */
     if (typeof fbq !== 'undefined') {
-      fbq('track', 'Lead', { value: 1500, currency: 'BRL' });
+      fbq('track', 'Lead', { value: 1500, currency: 'BRL', content_category: ambiente || 'geral' });
     }
 
     /* ── Dispara conversões — GA4 / Google Ads ── */
@@ -212,7 +383,8 @@
         currency: 'BRL',
         value: 1500,
         lead_source: 'landing_page_form',
-        interest: ambiente || 'nao_especificado'
+        interest: ambiente || 'nao_especificado',
+        page_origin: 'obrigado'
       });
       /* Google Ads — evento de conversão (formulário de lead) */
       gtag('event', 'conversion', {
@@ -223,7 +395,7 @@
     }
 
     /* ── Monta mensagem do WhatsApp ── */
-    let msg = `Olá! Gostaria de solicitar um orçamento de móveis planejados.\n\n`;
+    let msg = `Olá! Acabei de pedir um Projeto 3D pelo site.\n\n`;
     if (nome)      msg += `*Nome:* ${nome}\n`;
     if (telefone)  msg += `*WhatsApp:* ${telefone}\n`;
     if (ambiente)  msg += `*Ambiente:* ${ambiente}\n`;
@@ -235,14 +407,25 @@
     /* ── Contagem regressiva e abertura automática ── */
     let segundos = 3;
     const contadorEl = document.getElementById('contador');
+    const statusBar  = document.getElementById('statusBar');
     const intervalId = setInterval(() => {
       segundos--;
       if (contadorEl) contadorEl.textContent = String(segundos);
       if (segundos <= 0) {
         clearInterval(intervalId);
+        if (statusBar) statusBar.innerHTML = '✓ WhatsApp aberto em nova aba';
+        if (typeof gtag !== 'undefined') gtag('event', 'whatsapp_auto_open', {});
         window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       }
     }, 1000);
+
+    /* ── Tracking de cliques nos CTAs alternativos ── */
+    document.querySelectorAll('.obrigado__alt a').forEach(a => {
+      a.addEventListener('click', () => {
+        const dest = a.getAttribute('href');
+        if (typeof gtag !== 'undefined') gtag('event', 'obrigado_alt_cta_click', { destination: dest });
+      });
+    });
   </script>
 
 </body>
