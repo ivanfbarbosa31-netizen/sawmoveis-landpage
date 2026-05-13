@@ -976,16 +976,67 @@
         <div class="diag__step active" data-step="1">
           <h3>Pra qual ambiente é o projeto?</h3>
           <p class="diag__sub">Pode marcar mais de um se quiser projeto completo</p>
-          <div class="diag__cards diag__cards--3col" data-field="ambiente" data-multi="true">
-            <button type="button" class="diag-card" data-value="cozinha"><span class="diag-card__emoji">🍳</span><span>Cozinha</span></button>
-            <button type="button" class="diag-card" data-value="dormitorio"><span class="diag-card__emoji">🛏️</span><span>Dormitório</span></button>
-            <button type="button" class="diag-card" data-value="closet"><span class="diag-card__emoji">👗</span><span>Closet</span></button>
-            <button type="button" class="diag-card" data-value="sala-tv"><span class="diag-card__emoji">📺</span><span>Sala TV</span></button>
-            <button type="button" class="diag-card" data-value="sala-jantar"><span class="diag-card__emoji">🍽️</span><span>Sala Jantar</span></button>
-            <button type="button" class="diag-card" data-value="home-office"><span class="diag-card__emoji">💼</span><span>Home Office</span></button>
-            <button type="button" class="diag-card" data-value="banheiro"><span class="diag-card__emoji">🛁</span><span>Banheiro</span></button>
-            <button type="button" class="diag-card" data-value="lavanderia"><span class="diag-card__emoji">🧺</span><span>Lavanderia</span></button>
-            <button type="button" class="diag-card" data-value="completo"><span class="diag-card__emoji">🏡</span><span>Completo</span></button>
+          <div class="diag__cards diag__cards--3col diag__cards--photo" data-field="ambiente" data-multi="true">
+            <button type="button" class="diag-card diag-card--photo" data-value="cozinha">
+              <img src="fotos/gal-cozinha2.jpg" alt="" loading="lazy"/>
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-card__label">Cozinha</span>
+            </button>
+            <button type="button" class="diag-card diag-card--photo" data-value="dormitorio">
+              <img src="fotos/gal-dormitorio1.jpg" alt="" loading="lazy"/>
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-card__label">Dormitório</span>
+            </button>
+            <button type="button" class="diag-card diag-card--photo" data-value="closet">
+              <img src="fotos/Quarto Casal 01.jpg" alt="" loading="lazy"/>
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-card__label">Closet</span>
+            </button>
+            <button type="button" class="diag-card diag-card--photo" data-value="sala-tv">
+              <img src="fotos/Sala de Tv 01.jpg" alt="" loading="lazy"/>
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-card__label">Sala TV</span>
+            </button>
+            <button type="button" class="diag-card diag-card--photo" data-value="sala-jantar">
+              <img src="fotos/Sala de Jantar 01.jpg" alt="" loading="lazy"/>
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-card__label">Sala Jantar</span>
+            </button>
+            <button type="button" class="diag-card diag-card--photo" data-value="home-office">
+              <img src="fotos/foto-prof-1.jpg" alt="" loading="lazy"/>
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-card__label">Home Office</span>
+            </button>
+            <button type="button" class="diag-card diag-card--photo diag-card--icon" data-value="banheiro">
+              <span class="diag-card__svg" aria-hidden="true">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 28h48v8a16 16 0 01-16 16H24a16 16 0 01-16-16v-8z"/>
+                  <path d="M14 28V14a6 6 0 0112 0v4"/>
+                  <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+                  <path d="M44 52v6M28 52v6"/>
+                </svg>
+              </span>
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-card__label">Banheiro</span>
+            </button>
+            <button type="button" class="diag-card diag-card--photo diag-card--icon" data-value="lavanderia">
+              <span class="diag-card__svg" aria-hidden="true">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="12" y="8" width="40" height="48" rx="4"/>
+                  <circle cx="32" cy="34" r="12"/>
+                  <circle cx="32" cy="34" r="6"/>
+                  <circle cx="20" cy="18" r="2" fill="currentColor"/>
+                  <circle cx="28" cy="18" r="2" fill="currentColor"/>
+                </svg>
+              </span>
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-card__label">Lavanderia</span>
+            </button>
+            <button type="button" class="diag-card diag-card--photo diag-card--special" data-value="completo">
+              <img src="fotos/hero-bg.jpg" alt="" loading="lazy"/>
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-card__label diag-card__label--special">✨ Projeto Completo</span>
+            </button>
           </div>
           <div class="diag__nav">
             <button type="button" class="btn btn--primary btn--lg" data-action="next" disabled>Próximo →</button>
@@ -1148,6 +1199,141 @@
     .diag-card:hover { border-color: rgba(232,92,26,0.5); background: rgba(232,92,26,0.05); transform: translateY(-2px); }
     .diag-card.selected { border-color: #E85C1A; background: rgba(232,92,26,0.12); box-shadow: 0 4px 16px rgba(232,92,26,0.2); }
     .diag-card__emoji { font-size: 1.6rem; }
+
+    /* ════════ Cards com FOTO real do portfólio SAW ════════ */
+    .diag__cards--photo { gap: 14px; }
+    .diag-card--photo {
+      padding: 0;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      position: relative;
+      border-radius: 16px;
+      border-width: 2px;
+      align-items: stretch;
+      transform-origin: center;
+    }
+    .diag-card--photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), filter 0.3s;
+      filter: brightness(0.85) saturate(1.05);
+    }
+    .diag-card--photo::after {
+      /* Gradient escuro pra texto legível */
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.85) 100%);
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .diag-card--photo:hover img {
+      transform: scale(1.08);
+      filter: brightness(0.95) saturate(1.15);
+    }
+    .diag-card--photo .diag-card__label {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      right: 14px;
+      color: #fff;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      letter-spacing: -0.01em;
+      z-index: 2;
+      text-align: left;
+    }
+    .diag-card__check-mark {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 28px;
+      height: 28px;
+      background: #E85C1A;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 800;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 12px rgba(232,92,26,0.4);
+      z-index: 2;
+    }
+    .diag-card--photo.selected {
+      border-color: #E85C1A;
+      box-shadow: 0 0 0 4px rgba(232,92,26,0.25), 0 8px 24px rgba(232,92,26,0.4);
+      transform: translateY(-4px);
+    }
+    .diag-card--photo.selected img {
+      filter: brightness(1.05) saturate(1.2);
+      transform: scale(1.05);
+    }
+    .diag-card--photo.selected::after {
+      background: linear-gradient(180deg, rgba(232,92,26,0.1) 0%, rgba(0,0,0,0.85) 100%);
+    }
+    .diag-card--photo.selected .diag-card__check-mark {
+      opacity: 1;
+      transform: scale(1);
+    }
+    /* Icon variant (banheiro, lavanderia — sem foto) */
+    .diag-card--icon {
+      background: linear-gradient(135deg, #1A1A1C 0%, #232325 100%);
+    }
+    .diag-card--icon img { display: none; }
+    .diag-card--icon::after {
+      background: linear-gradient(180deg, rgba(232,92,26,0.06) 0%, rgba(0,0,0,0.4) 100%);
+    }
+    .diag-card__svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -75%);
+      width: 56px;
+      height: 56px;
+      color: #E85C1A;
+      transition: all 0.3s;
+      z-index: 1;
+    }
+    .diag-card__svg svg { width: 100%; height: 100%; }
+    .diag-card--icon:hover .diag-card__svg {
+      color: #FF7B3B;
+      transform: translate(-50%, -78%) scale(1.1);
+    }
+    .diag-card--icon.selected .diag-card__svg {
+      color: #fff;
+      transform: translate(-50%, -78%);
+    }
+    /* Special: Projeto Completo (mais destacado) */
+    .diag-card--special {
+      grid-column: span 1;
+    }
+    .diag-card--special .diag-card__label--special {
+      background: linear-gradient(135deg, rgba(232,92,26,0.95), rgba(200,74,14,0.95));
+      padding: 6px 14px;
+      border-radius: 999px;
+      display: inline-block;
+      font-size: 0.95rem;
+      bottom: 14px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      text-align: center;
+      white-space: nowrap;
+    }
+    @media (max-width: 680px) {
+      .diag-card--photo .diag-card__label { font-size: 1rem; bottom: 10px; left: 10px; right: 10px; }
+      .diag-card__svg { width: 44px; height: 44px; }
+    }
+
     .diag-card--lg { padding: 22px 18px; align-items: flex-start; text-align: left; }
     .diag-card--lg .diag-card__title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: #F4F4F4; }
     .diag-card--lg .diag-card__sub { color: #888; font-size: 0.85rem; }
