@@ -1183,20 +1183,6 @@
                 <span class="diag-card__sub">Madeira nobre, detalhes torneados, mármores</span>
               </div>
             </button>
-            <button type="button" class="diag-card diag-card--style" data-value="industrial">
-              <img src="fotos/gal-sala.jpg" alt="Industrial" loading="lazy"/>
-              <div>
-                <span class="diag-card__title">Industrial Refinado</span>
-                <span class="diag-card__sub">Aço preto, madeira escura, concreto aparente</span>
-              </div>
-            </button>
-            <button type="button" class="diag-card diag-card--style" data-value="minimalista">
-              <img src="fotos/gal-dormitorio1.jpg" alt="Minimalista" loading="lazy"/>
-              <div>
-                <span class="diag-card__title">Minimalista</span>
-                <span class="diag-card__sub">Tons neutros, formas limpas, integração total</span>
-              </div>
-            </button>
           </div>
           <div class="diag__nav">
             <button type="button" class="btn btn--ghost" data-action="back">← Voltar</button>
@@ -1947,16 +1933,14 @@
     const INSP = {
       moderno: ['fotos/gal-cozinha.jpg', 'fotos/sala-estar.jpg', 'fotos/gal-dormitorio1.jpg'],
       classico: ['fotos/gal-cozinha2.jpg', 'fotos/gal-jantar.jpg', 'fotos/gal-dormitorio.jpeg'],
-      industrial: ['fotos/gal-sala.jpg', 'fotos/gal-cozinha2.jpg', 'fotos/gal-adega.jpg'],
-      minimalista: ['fotos/gal-dormitorio1.jpg', 'fotos/sala-estar.jpg', 'fotos/gal-cozinha.jpg'],
     };
 
     // Faixas de valor por tamanho × estilo (referência 2026, Grande SP)
     const BUDGET = {
-      'ate-8':     { moderno: [6,12],   classico: [8,15],   industrial: [7,13],   minimalista: [6,11]  },
-      '8-15':      { moderno: [12,22],  classico: [15,28],  industrial: [13,24],  minimalista: [11,20] },
-      '15-25':     { moderno: [22,38],  classico: [28,48],  industrial: [24,42],  minimalista: [20,35] },
-      '25-plus':   { moderno: [38,80],  classico: [48,120], industrial: [42,90],  minimalista: [35,75] },
+      'ate-8':     { moderno: [6,12],   classico: [8,15]   },
+      '8-15':      { moderno: [12,22],  classico: [15,28]  },
+      '15-25':     { moderno: [22,38],  classico: [28,48]  },
+      '25-plus':   { moderno: [38,80],  classico: [48,120] },
     };
 
     function showStep(n) {
