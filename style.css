@@ -1388,10 +1388,30 @@ body {
 .catalogo-float__text strong { font-size: 13px; font-weight: 700; }
 .catalogo-float__text small { font-size: 11px; color: var(--text-2); }
 @media (max-width: 640px) {
-  .catalogo-float { bottom: 90px; left: 12px; padding: 10px 14px; }
-  .catalogo-float__icon { font-size: 18px; }
-  .catalogo-float__text strong { font-size: 12px; }
-  .catalogo-float__text small { font-size: 10px; }
+  /* Esconde no mobile: WhatsApp flutuante já cobre essa função, evita poluição visual sobrepondo conteúdo */
+  .catalogo-float { display: none !important; }
+}
+
+/* ════════ Mobile UX fixes (auditoria 2026-05-13) ════════ */
+@media (max-width: 768px) {
+  /* Prevenir overflow horizontal global (era 397>390px) */
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  /* Container respeita viewport */
+  .container { max-width: 100%; padding-left: 16px; padding-right: 16px; }
+  /* Tamanho mínimo legível pra textos do hero/form */
+  .hero__form-label, .hero__form-note, .hero__pills span,
+  .hero__form-fields input, .hero__form-fields select { font-size: 13px !important; }
+  /* Botão WhatsApp flutuante menor + posicionamento que não cobre form */
+  .whatsapp-float { bottom: 16px; right: 16px; padding: 12px !important; }
+}
+@media (max-width: 480px) {
+  /* No diagnóstico, esconde botão "Próximo" das etapas single-select (auto-avança) */
+  .diag__step[data-step="2"] [data-action="next"],
+  .diag__step[data-step="3"] [data-action="next"] { display: none; }
+  /* Etapa 1 mantém botão (alguns usuários podem hesitar antes de clicar) */
+  /* Mas se quiser auto-avançar também, descomentar:
+  .diag__step[data-step="1"] [data-action="next"] { display: none; }
+  */
 }
 
 /* ═══════════════════════════════════════════════════════════
