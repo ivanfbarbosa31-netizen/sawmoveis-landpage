@@ -31,6 +31,9 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
           local-dir: ./
+          protocol: ftps   # Pure-FTPd com TLS exige FTPS explícito
+          port: 21
+          log-level: verbose
           # Não subir esses arquivos pro servidor
           exclude: |
             **/.git*
