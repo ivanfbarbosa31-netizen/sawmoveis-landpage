@@ -1,0 +1,9 @@
+---
+# Deploy automático SAW Móveis no cPanel
+# Quando você clica "Deploy HEAD Commit" no Git Version Control,
+# este arquivo é executado e copia os arquivos pro public_html
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/sawmo3003/public_html/
+    - /bin/cp -af . $DEPLOYPATH
+    - /bin/rm -rf $DEPLOYPATH/.git $DEPLOYPATH/.github $DEPLOYPATH/.cpanel.yml $DEPLOYPATH/README.md
