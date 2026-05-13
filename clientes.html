@@ -1294,123 +1294,183 @@
     .diag-card.selected { border-color: #E85C1A; background: rgba(232,92,26,0.12); box-shadow: 0 4px 16px rgba(232,92,26,0.2); }
     .diag-card__emoji { font-size: 1.6rem; }
 
-    /* ════════ Cards MINIMAL (boutique premium · SVG line-art) ════════ */
-    .diag__cards--minimal { gap: 14px; }
+    /* ════════ Cards MINIMAL (boutique premium · SVG line-art) ════════
+       Refinamentos sutis (sites premium usam, ninguém percebe que percebeu):
+       - corner-pip no canto superior esquerdo (indica "clicável")
+       - sweep gradient ao selecionar (animação radial laranja)
+       - SVG stroke-dasharray "desenho" no hover
+       - aspect 4:3 mais compacto, padding ajustado
+    ════════════════════════════════════════════════════════════════════ */
+    .diag__cards--minimal { gap: 12px; }
     .diag-card--minimal {
-      padding: 28px 16px 22px;
-      aspect-ratio: 1/1;
+      padding: 18px 14px 16px;
+      aspect-ratio: 4/3;
       position: relative;
       background:
-        radial-gradient(ellipse 60% 100% at 50% 0%, rgba(232,92,26,0.04) 0%, transparent 70%),
-        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.012));
-      border: 1.5px solid rgba(255,255,255,0.07);
-      border-radius: 16px;
+        radial-gradient(ellipse 70% 80% at 50% 100%, rgba(232,92,26,0.03) 0%, transparent 75%),
+        linear-gradient(180deg, rgba(255,255,255,0.022), rgba(255,255,255,0.008));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
       transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 8px;
       overflow: hidden;
     }
+    /* SURPRESA 1 — corner-pip discreto no canto (indica "isso é clicável") */
     .diag-card--minimal::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 30%, rgba(232,92,26,0.12), transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
+      top: 8px;
+      left: 8px;
+      width: 6px;
+      height: 6px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      border-left: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.3s;
       pointer-events: none;
     }
-    .diag-card--minimal:hover {
-      border-color: rgba(232,92,26,0.4);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.3), 0 4px 12px rgba(232,92,26,0.1);
+    /* SURPRESA 2 — sweep gradient ao selecionar (faz "luz passar" pelo card) */
+    .diag-card--minimal::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: conic-gradient(from 0deg at 50% 50%,
+        transparent 0deg,
+        rgba(232,92,26,0.25) 60deg,
+        transparent 120deg,
+        transparent 360deg);
+      opacity: 0;
+      animation: none;
+      pointer-events: none;
+      border-radius: inherit;
+      z-index: 0;
     }
-    .diag-card--minimal:hover::before { opacity: 1; }
+    .diag-card--minimal:hover {
+      border-color: rgba(232,92,26,0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    .diag-card--minimal:hover::before {
+      border-color: rgba(232,92,26,0.6);
+      transform: scale(1.2);
+    }
     .diag-card--minimal .diag-card__svg {
-      width: 52px;
-      height: 52px;
+      width: 38px;
+      height: 38px;
       color: #C8C8C8;
-      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      transition: color 0.3s, transform 0.35s cubic-bezier(0.4,0,0.2,1);
       flex-shrink: 0;
-      margin-top: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    /* SURPRESA 3 — stroke "desenha" no hover (efeito assinatura premium) */
+    .diag-card--minimal .diag-card__svg svg * {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    .diag-card--minimal:hover .diag-card__svg svg * {
+      animation: drawStroke 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes drawStroke {
+      0%   { stroke-dashoffset: 200; }
+      100% { stroke-dashoffset: 0; }
     }
     .diag-card--minimal:hover .diag-card__svg {
       color: #E85C1A;
-      transform: scale(1.1) translateY(-2px);
+      transform: scale(1.05) translateY(-1px);
     }
     .diag-card--minimal .diag-card__label {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: #F4F4F4;
       letter-spacing: -0.01em;
       text-align: center;
-      line-height: 1.2;
+      line-height: 1.15;
       position: relative;
       z-index: 1;
     }
     .diag-card--minimal .diag-card__hint {
-      font-size: 0.7rem;
+      font-size: 0.62rem;
       color: #E85C1A;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.2px;
       font-weight: 600;
-      margin-top: 4px;
+      margin-top: -2px;
+      position: relative;
+      z-index: 1;
     }
     .diag-card--minimal.selected {
       border-color: #E85C1A;
       background:
-        radial-gradient(ellipse 70% 100% at 50% 0%, rgba(232,92,26,0.18) 0%, transparent 70%),
-        linear-gradient(180deg, rgba(232,92,26,0.10), rgba(232,92,26,0.04));
+        radial-gradient(ellipse 80% 100% at 50% 100%, rgba(232,92,26,0.15) 0%, transparent 75%),
+        linear-gradient(180deg, rgba(232,92,26,0.06), rgba(232,92,26,0.02));
       box-shadow:
-        0 0 0 3px rgba(232,92,26,0.20),
-        0 12px 32px rgba(232,92,26,0.25);
-      transform: translateY(-3px);
+        0 0 0 2px rgba(232,92,26,0.18),
+        0 8px 24px rgba(232,92,26,0.18);
+      transform: translateY(-2px);
+    }
+    .diag-card--minimal.selected::after {
+      opacity: 1;
+      animation: sweepGlow 0.7s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes sweepGlow {
+      0%   { opacity: 0; transform: rotate(0deg); }
+      50%  { opacity: 1; }
+      100% { opacity: 0; transform: rotate(180deg); }
+    }
+    .diag-card--minimal.selected::before {
+      border-color: #E85C1A;
+      transform: scale(1.4);
     }
     .diag-card--minimal.selected .diag-card__svg {
       color: #E85C1A;
-      transform: scale(1.1) translateY(-2px);
     }
     .diag-card--minimal.selected .diag-card__label {
       color: #fff;
     }
     .diag-card--minimal .diag-card__check-mark {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 24px;
-      height: 24px;
+      top: 8px;
+      right: 8px;
+      width: 22px;
+      height: 22px;
       background: #E85C1A;
       color: #fff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       font-weight: 800;
       opacity: 0;
       transform: scale(0.4) rotate(-90deg);
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 3px 10px rgba(232,92,26,0.45);
-      z-index: 2;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 3px 10px rgba(232,92,26,0.5);
+      z-index: 3;
     }
     .diag-card--minimal.selected .diag-card__check-mark {
       opacity: 1;
       transform: scale(1) rotate(0);
     }
-    /* Featured card (Projeto Completo) — borda gradient sutil */
+    /* Featured card (Projeto Completo) — recomendado */
     .diag-card--featured {
       background:
-        radial-gradient(ellipse 70% 100% at 50% 0%, rgba(232,92,26,0.10) 0%, transparent 70%),
-        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(232,92,26,0.03));
-      border-color: rgba(232,92,26,0.25);
+        radial-gradient(ellipse 80% 100% at 50% 100%, rgba(232,92,26,0.08) 0%, transparent 75%),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(232,92,26,0.02));
+      border-color: rgba(232,92,26,0.22);
     }
     .diag-card--featured .diag-card__svg { color: #E85C1A; }
+    .diag-card--featured::before { border-color: rgba(232,92,26,0.4); }
     @media (max-width: 680px) {
-      .diag-card--minimal { padding: 22px 12px 18px; aspect-ratio: auto; min-height: 130px; }
-      .diag-card--minimal .diag-card__svg { width: 40px; height: 40px; }
-      .diag-card--minimal .diag-card__label { font-size: 0.92rem; }
+      .diag-card--minimal { padding: 14px 10px 12px; aspect-ratio: 4/3; }
+      .diag-card--minimal .diag-card__svg { width: 32px; height: 32px; }
+      .diag-card--minimal .diag-card__label { font-size: 0.85rem; }
+      .diag-card--minimal .diag-card__hint { font-size: 0.58rem; }
     }
 
     /* ════════ Cards com FOTO real do portfólio SAW ════════ */
