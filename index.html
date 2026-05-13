@@ -1168,19 +1168,44 @@
         <div class="diag__step" data-step="3">
           <h3>Qual estilo combina mais com você?</h3>
           <p class="diag__sub">Se ficar na dúvida, escolha o que te atrai visualmente — você pode refinar depois.</p>
-          <div class="diag__cards diag__cards--2col" data-field="estilo">
-            <button type="button" class="diag-card diag-card--style" data-value="moderno">
-              <img src="fotos/gal-cozinha.jpg" alt="Moderno" loading="lazy"/>
-              <div>
-                <span class="diag-card__title">Moderno</span>
-                <span class="diag-card__sub">Linhas retas, laca fosca, eletros embutidos</span>
+          <div class="diag__cards diag__cards--2col diag__cards--editorial" data-field="estilo">
+            <button type="button" class="diag-card diag-card--editorial" data-value="moderno">
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-editorial__letter" aria-hidden="true">M</span>
+              <span class="diag-editorial__pattern" aria-hidden="true">
+                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1" preserveAspectRatio="xMidYMid slice">
+                  <rect x="20" y="20" width="80" height="80"/>
+                  <rect x="35" y="35" width="50" height="50"/>
+                  <rect x="50" y="50" width="20" height="20"/>
+                </svg>
+              </span>
+              <div class="diag-editorial__body">
+                <span class="diag-editorial__kicker">Estilo 01</span>
+                <h4 class="diag-editorial__title">Moderno</h4>
+                <p class="diag-editorial__desc">Linhas retas, laca fosca, eletros embutidos. Vibe contemporânea com pouco ornamento.</p>
+                <span class="diag-editorial__tags">
+                  <span>•&nbsp;Lacca&nbsp;</span><span>•&nbsp;MDF clean&nbsp;</span><span>•&nbsp;LED integrado</span>
+                </span>
               </div>
             </button>
-            <button type="button" class="diag-card diag-card--style" data-value="classico">
-              <img src="fotos/gal-cozinha2.jpg" alt="Clássico" loading="lazy"/>
-              <div>
-                <span class="diag-card__title">Clássico/Sofisticado</span>
-                <span class="diag-card__sub">Madeira nobre, detalhes torneados, mármores</span>
+            <button type="button" class="diag-card diag-card--editorial" data-value="classico">
+              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
+              <span class="diag-editorial__letter" aria-hidden="true">C</span>
+              <span class="diag-editorial__pattern" aria-hidden="true">
+                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1" preserveAspectRatio="xMidYMid slice">
+                  <circle cx="60" cy="60" r="40"/>
+                  <circle cx="60" cy="60" r="28"/>
+                  <circle cx="60" cy="60" r="16"/>
+                  <path d="M60 20v80M20 60h80M32 32l56 56M88 32l-56 56"/>
+                </svg>
+              </span>
+              <div class="diag-editorial__body">
+                <span class="diag-editorial__kicker">Estilo 02</span>
+                <h4 class="diag-editorial__title">Clássico<br/><em>Sofisticado</em></h4>
+                <p class="diag-editorial__desc">Madeira nobre, detalhes torneados, mármores. Atemporal com sofisticação discreta.</p>
+                <span class="diag-editorial__tags">
+                  <span>•&nbsp;Madeira nobre&nbsp;</span><span>•&nbsp;Mármore&nbsp;</span><span>•&nbsp;Ferragens artesanais</span>
+                </span>
               </div>
             </button>
           </div>
@@ -1600,6 +1625,172 @@
     .diag-card--style > div { padding: 14px 16px; text-align: left; }
     .diag-card--style .diag-card__title { display: block; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #F4F4F4; margin-bottom: 4px; }
     .diag-card--style .diag-card__sub { display: block; color: #888; font-size: 0.82rem; line-height: 1.4; }
+
+    /* ════════ Cards EDITORIAL (estilo "menu premium" tipográfico) ════════
+       Inspiração: cardápios de restaurantes alta gastronomia + revistas Wallpaper/Vogue
+       Sem foto, foco em tipografia + letra inicial gigante + pattern geométrico sutil
+    ════════════════════════════════════════════════════════════════════════ */
+    .diag__cards--editorial { gap: 16px; }
+    .diag-card--editorial {
+      padding: 0;
+      aspect-ratio: 3/4;
+      position: relative;
+      overflow: hidden;
+      align-items: stretch;
+      background: linear-gradient(160deg, #14141a 0%, #1c1c22 40%, #14141a 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+      isolation: isolate;
+    }
+    @media (max-width: 680px) { .diag-card--editorial { aspect-ratio: 4/5; } }
+    .diag-card--editorial:hover {
+      border-color: rgba(232,92,26,0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.4), 0 0 32px rgba(232,92,26,0.08);
+    }
+    /* Letra inicial gigante decorativa */
+    .diag-editorial__letter {
+      position: absolute;
+      top: -24px;
+      right: -16px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(180px, 24vw, 280px);
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(232,92,26,0.08);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      z-index: 0;
+      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+      font-style: italic;
+    }
+    .diag-card--editorial:hover .diag-editorial__letter {
+      color: rgba(232,92,26,0.15);
+      transform: scale(1.05) rotate(-2deg);
+    }
+    /* Pattern geométrico de fundo */
+    .diag-editorial__pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.12;
+      color: #E85C1A;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    .diag-editorial__pattern svg {
+      width: 100%; height: 100%;
+      stroke-dasharray: 400;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .diag-card--editorial:hover .diag-editorial__pattern svg {
+      animation: editorialDraw 2s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes editorialDraw {
+      0%   { stroke-dashoffset: 400; opacity: 0.18; }
+      100% { stroke-dashoffset: 0; opacity: 0.12; }
+    }
+    /* Corpo do card */
+    .diag-editorial__body {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      width: 100%;
+      height: 100%;
+      padding: 26px 24px;
+      text-align: left;
+    }
+    .diag-editorial__kicker {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #E85C1A;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(232,92,26,0.3);
+      align-self: flex-start;
+    }
+    .diag-editorial__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 800;
+      color: #F4F4F4;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+    }
+    .diag-editorial__title em {
+      font-style: italic;
+      font-weight: 400;
+      color: #E85C1A;
+    }
+    .diag-editorial__desc {
+      font-size: 0.92rem;
+      color: #C8C8C8;
+      line-height: 1.5;
+      margin: 0 0 14px;
+      max-width: 340px;
+    }
+    .diag-editorial__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      font-size: 0.72rem;
+      color: #888;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    /* Selected state */
+    .diag-card--editorial.selected {
+      border-color: #E85C1A;
+      box-shadow: 0 0 0 2px rgba(232,92,26,0.25), 0 20px 48px rgba(232,92,26,0.25);
+      transform: translateY(-4px);
+      background: linear-gradient(160deg, #1f1610 0%, #251a13 40%, #1c1410 100%);
+    }
+    .diag-card--editorial.selected .diag-editorial__letter {
+      color: rgba(232,92,26,0.25);
+    }
+    .diag-card--editorial.selected .diag-editorial__pattern {
+      opacity: 0.22;
+    }
+    .diag-card--editorial.selected .diag-editorial__title {
+      color: #fff;
+    }
+    .diag-card--editorial .diag-card__check-mark {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 28px;
+      height: 28px;
+      background: #E85C1A;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      opacity: 0;
+      transform: scale(0.4) rotate(-90deg);
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 12px rgba(232,92,26,0.5);
+      z-index: 3;
+    }
+    .diag-card--editorial.selected .diag-card__check-mark {
+      opacity: 1;
+      transform: scale(1) rotate(0);
+    }
+    @media (max-width: 680px) {
+      .diag-editorial__body { padding: 22px 18px; }
+      .diag-editorial__letter { font-size: 180px; top: -20px; right: -10px; }
+    }
     .diag__form { display: flex; flex-direction: column; gap: 12px; max-width: 480px; margin: 0 auto 28px; }
     .diag__form input { width: 100%; padding: 14px 16px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; color: #F4F4F4; font-family: inherit; font-size: 1rem; transition: border 0.2s; }
     .diag__form input:focus { outline: none; border-color: #E85C1A; }
