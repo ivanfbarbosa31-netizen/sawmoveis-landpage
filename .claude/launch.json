@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "landpage",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": ["-ExecutionPolicy", "Bypass", "-File", "serve.ps1"],
+      "port": 3000
+    },
+    {
+      "name": "banner",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": ["-Command", "$listener = [System.Net.HttpListener]::new(); $listener.Prefixes.Add('http://localhost:3001/'); $listener.Start(); while($listener.IsListening){ $ctx = $listener.GetContext(); $file = 'banner_saw_moveis.html'; $bytes = [System.IO.File]::ReadAllBytes((Join-Path (Get-Location) $file)); $ctx.Response.ContentType = 'text/html'; $ctx.Response.OutputStream.Write($bytes, 0, $bytes.Length); $ctx.Response.Close() }"],
+      "port": 3001
+    }
+  ]
+}

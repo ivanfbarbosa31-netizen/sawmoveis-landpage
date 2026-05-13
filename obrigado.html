@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Obrigado! | SAW Móveis — Estamos te chamando no WhatsApp</title>
+  <meta name="description" content="Recebemos seu pedido de Projeto 3D. Em instantes te chamamos no WhatsApp." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- ═══════════════════════════════════════════
+       GOOGLE ANALYTICS 4 + Google Ads
+  ════════════════════════════════════════════ -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VTE07M6DXV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-VTE07M6DXV');
+    gtag('config', 'AW-18138350559');
+  </script>
+
+  <!-- ═══════════════════════════════════════════
+       META PIXEL
+  ════════════════════════════════════════════ -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1781211002580448');
+    fbq('track', 'PageView');
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      color: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      margin: 0;
+    }
+    .obrigado-card {
+      max-width: 600px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 24px;
+      padding: 48px 32px;
+      text-align: center;
+      backdrop-filter: blur(20px);
+    }
+    .obrigado-card__logo {
+      max-width: 180px;
+      margin: 0 auto 32px;
+      display: block;
+    }
+    .obrigado-card__check {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #d4af37 0%, #c9a432 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes pop {
+      0% { transform: scale(0); }
+      70% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .obrigado-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      color: #d4af37;
+    }
+    .obrigado-card__subtitle {
+      font-size: 18px;
+      color: #d0d0d0;
+      margin: 0 0 32px;
+      line-height: 1.5;
+    }
+    .obrigado-card__nome {
+      color: #d4af37;
+      font-weight: 600;
+    }
+    .obrigado-card__status {
+      background: rgba(37, 211, 102, 0.1);
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 0 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 15px;
+      color: #25d366;
+    }
+    .obrigado-card__status::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: #25d366;
+      border-radius: 50%;
+      animation: pulse 1.4s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .obrigado-card__counter {
+      font-size: 14px;
+      color: #888;
+      margin: 0 0 32px;
+    }
+    .obrigado-card__btn {
+      display: inline-block;
+      padding: 16px 32px;
+      background: #25d366;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+    }
+    .obrigado-card__btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.4);
+    }
+    .obrigado-card__home {
+      display: inline-block;
+      margin-top: 20px;
+      color: #888;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .obrigado-card__home:hover {
+      color: #d4af37;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="obrigado-card">
+    <img src="assets/logo-principal.png" alt="SAW Móveis" class="obrigado-card__logo" />
+
+    <div class="obrigado-card__check">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+
+    <h1>Recebemos seu pedido<span id="nomeUsuario"></span>!</h1>
+    <p class="obrigado-card__subtitle">
+      Em instantes nossa equipe vai te chamar no WhatsApp para iniciar seu <strong>Projeto 3D Gratuito</strong>.
+    </p>
+
+    <div class="obrigado-card__status">
+      Abrindo o WhatsApp automaticamente
+    </div>
+
+    <p class="obrigado-card__counter">
+      Caso o WhatsApp não abra em <span id="contador">3</span> segundos, clique abaixo
+    </p>
+
+    <a id="btnWhatsApp" href="https://wa.me/551134959479" target="_blank" rel="noopener" class="obrigado-card__btn">
+      Abrir WhatsApp agora
+    </a>
+
+    <br>
+
+    <a href="/" class="obrigado-card__home">← Voltar para o site</a>
+  </div>
+
+  <script>
+    /* ── Lê parâmetros da URL ── */
+    const params = new URLSearchParams(window.location.search);
+    const nome      = params.get('nome')      || '';
+    const telefone  = params.get('telefone')  || '';
+    const ambiente  = params.get('ambiente')  || '';
+    const descricao = params.get('descricao') || '';
+
+    /* ── Personaliza saudação ── */
+    if (nome) {
+      document.getElementById('nomeUsuario').textContent = ', ' + nome.split(' ')[0];
+    }
+
+    /* ── Dispara conversões — Meta Pixel ── */
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead', { value: 1500, currency: 'BRL' });
+    }
+
+    /* ── Dispara conversões — GA4 / Google Ads ── */
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'generate_lead', {
+        currency: 'BRL',
+        value: 1500,
+        lead_source: 'landing_page_form',
+        interest: ambiente || 'nao_especificado'
+      });
+      /* Google Ads — evento de conversão (formulário de lead) */
+      gtag('event', 'conversion', {
+        'send_to': 'AW-18138350559/ytv-CMGmgaccEN-HhclD',
+        'value': 1500,
+        'currency': 'BRL'
+      });
+    }
+
+    /* ── Monta mensagem do WhatsApp ── */
+    let msg = `Olá! Gostaria de solicitar um orçamento de móveis planejados.\n\n`;
+    if (nome)      msg += `*Nome:* ${nome}\n`;
+    if (telefone)  msg += `*WhatsApp:* ${telefone}\n`;
+    if (ambiente)  msg += `*Ambiente:* ${ambiente}\n`;
+    if (descricao) msg += `\n*Sobre o projeto:*\n${descricao}`;
+
+    const whatsappUrl = `https://wa.me/551134959479?text=${encodeURIComponent(msg)}`;
+    document.getElementById('btnWhatsApp').href = whatsappUrl;
+
+    /* ── Contagem regressiva e abertura automática ── */
+    let segundos = 3;
+    const contadorEl = document.getElementById('contador');
+    const intervalId = setInterval(() => {
+      segundos--;
+      if (contadorEl) contadorEl.textContent = String(segundos);
+      if (segundos <= 0) {
+        clearInterval(intervalId);
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>

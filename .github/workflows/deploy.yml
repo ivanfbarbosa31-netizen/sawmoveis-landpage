@@ -1,0 +1,47 @@
+# Deploy automático do site SAW Móveis pro Turbo Cloud via FTP
+# Roda toda vez que houver push na branch main
+#
+# Configurar Secrets no GitHub:
+#   Settings → Secrets and variables → Actions → New repository secret
+#   - FTP_HOST       (ex: ftp.sawmoveis.com.br)
+#   - FTP_USERNAME   (ex: deploy@sawmoveis.com.br)
+#   - FTP_PASSWORD   (senha da conta FTP)
+#   - FTP_SERVER_DIR (ex: /public_html/ — caminho remoto)
+
+name: Deploy site SAW
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # permite acionar manualmente pela aba Actions
+
+jobs:
+  deploy:
+    name: Upload via FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Deploy FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          local-dir: ./
+          # Não subir esses arquivos pro servidor
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.github/**
+            **/*.md
+            **/*.bak
+            **/*.bak.*
+            **/.env*
+
+      - name: Notificar sucesso
+        if: success()
+        run: echo "✅ Deploy concluído em $(date)"

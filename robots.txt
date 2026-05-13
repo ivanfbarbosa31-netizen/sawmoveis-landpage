@@ -1,0 +1,16 @@
+# robots.txt — SAW Móveis
+# https://www.sawmoveis.com.br
+
+User-agent: *
+Allow: /
+Disallow: /obrigado.html
+
+# Bloqueia crawlers de IA agressivos (opcional — remova se quiser indexação por LLMs)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# Sitemap
+Sitemap: https://www.sawmoveis.com.br/sitemap.xml

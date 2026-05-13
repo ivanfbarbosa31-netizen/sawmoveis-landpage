@@ -1,0 +1,22 @@
+# Backups do script.js
+*.bak
+*.bak.*
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos grandes (PDFs/PPTXs gerados ficam só no servidor)
+# Se quiser versionar, comenta as linhas abaixo
+*.pptx
+*.docx
+catalogo-saw-moveis.pdf
+
+# Node (se rodar algum script local)
+node_modules/
+package-lock.json
+
+# Secrets (nunca commitar)
+.env
+.env.local

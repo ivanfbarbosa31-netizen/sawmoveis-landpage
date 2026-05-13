@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banner - Marcenaria Saw Móveis</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 2560px;
+    height: 1440px;
+    overflow: hidden;
+    background: #0a0a0a;
+    font-family: 'Segoe UI', 'Arial Black', sans-serif;
+  }
+
+  .banner {
+    width: 2560px;
+    height: 1440px;
+    position: relative;
+    background: linear-gradient(135deg, #0a0a0a 0%, #111111 40%, #1a1a1a 70%, #0d0d0d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .bg-texture {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 120px,
+        rgba(255, 102, 0, 0.03) 120px,
+        rgba(255, 102, 0, 0.03) 122px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 80px,
+        rgba(255,255,255,0.015) 80px,
+        rgba(255,255,255,0.015) 81px
+      );
+  }
+
+  .accent-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: linear-gradient(180deg, #FF6600 0%, #FF8C00 50%, #FF6600 100%);
+  }
+
+  .accent-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: linear-gradient(180deg, #FF6600 0%, #FF8C00 50%, #FF6600 100%);
+  }
+
+  .line-top {
+    position: absolute;
+    top: 180px;
+    left: 80px;
+    right: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,102,0,0.4) 20%, rgba(255,102,0,0.4) 80%, transparent);
+  }
+
+  .line-bottom {
+    position: absolute;
+    bottom: 180px;
+    left: 80px;
+    right: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,102,0,0.4) 20%, rgba(255,102,0,0.4) 80%, transparent);
+  }
+
+  .safe-zone {
+    position: relative;
+    width: 1546px;
+    height: 423px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+  }
+
+  .left-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .brand-icon {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .icon-mark {
+    width: 80px;
+    height: 80px;
+    border: 3px solid #FF6600;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,102,0,0.08);
+  }
+
+  .icon-mark svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .brand-name {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-main {
+    font-size: 68px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+
+  .brand-main span {
+    color: #FF6600;
+  }
+
+  .brand-sub {
+    font-size: 28px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .divider {
+    width: 2px;
+    height: 280px;
+    background: linear-gradient(180deg, transparent, #FF6600 30%, #FF6600 70%, transparent);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .center-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 24px;
+    padding: 0 40px;
+    flex: 1;
+  }
+
+  .tagline {
+    font-size: 38px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.4;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .tagline strong {
+    display: block;
+    font-size: 48px;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .tagline em {
+    display: block;
+    font-style: normal;
+    color: #FF6600;
+    font-size: 42px;
+    font-weight: 700;
+  }
+
+  .pill {
+    display: inline-block;
+    background: rgba(255,102,0,0.15);
+    border: 1px solid rgba(255,102,0,0.5);
+    border-radius: 50px;
+    padding: 10px 32px;
+    font-size: 22px;
+    color: #FF6600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .divider-right {
+    width: 2px;
+    height: 280px;
+    background: linear-gradient(180deg, transparent, #FF6600 30%, #FF6600 70%, transparent);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .right-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .social-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .social-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .social-icon.yt { background: #FF0000; }
+  .social-icon.ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+
+  .social-icon svg {
+    width: 26px;
+    height: 26px;
+    fill: white;
+  }
+
+  .social-text {
+    font-size: 26px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .social-text span {
+    color: #FF6600;
+    font-weight: 700;
+  }
+
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(255,102,0,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .corner {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+  }
+  .corner-tl { top: 40px; left: 40px; border-top: 3px solid rgba(255,102,0,0.5); border-left: 3px solid rgba(255,102,0,0.5); }
+  .corner-tr { top: 40px; right: 40px; border-top: 3px solid rgba(255,102,0,0.5); border-right: 3px solid rgba(255,102,0,0.5); }
+  .corner-bl { bottom: 40px; left: 40px; border-bottom: 3px solid rgba(255,102,0,0.5); border-left: 3px solid rgba(255,102,0,0.5); }
+  .corner-br { bottom: 40px; right: 40px; border-bottom: 3px solid rgba(255,102,0,0.5); border-right: 3px solid rgba(255,102,0,0.5); }
+
+  .particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,102,0,0.15);
+  }
+</style>
+</head>
+<body>
+<div class="banner">
+  <div class="bg-texture"></div>
+  <div class="glow"></div>
+
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="accent-left"></div>
+  <div class="accent-right"></div>
+
+  <div class="line-top"></div>
+  <div class="line-bottom"></div>
+
+  <div class="particles">
+    <div class="particle" style="width:4px;height:4px;top:15%;left:8%;opacity:0.6;"></div>
+    <div class="particle" style="width:6px;height:6px;top:75%;left:12%;opacity:0.4;"></div>
+    <div class="particle" style="width:3px;height:3px;top:30%;left:92%;opacity:0.5;"></div>
+    <div class="particle" style="width:5px;height:5px;top:65%;left:88%;opacity:0.6;"></div>
+    <div class="particle" style="width:8px;height:8px;top:20%;left:50%;opacity:0.2;"></div>
+    <div class="particle" style="width:3px;height:3px;top:80%;left:60%;opacity:0.4;"></div>
+    <div class="particle" style="width:5px;height:5px;top:45%;left:25%;opacity:0.3;"></div>
+    <div class="particle" style="width:4px;height:4px;top:55%;left:75%;opacity:0.5;"></div>
+  </div>
+
+  <!-- ÁREA SEGURA CENTRAL -->
+  <div class="safe-zone">
+
+    <!-- ESQUERDA: Nome da marca -->
+    <div class="left-block">
+      <div class="brand-icon">
+        <div class="icon-mark">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="18" stroke="#FF6600" stroke-width="2.5" fill="none"/>
+            <circle cx="24" cy="24" r="6" fill="#FF6600"/>
+            <path d="M24 6 L26 10 L24 8 L22 10 Z" fill="#FF6600"/>
+            <path d="M24 42 L26 38 L24 40 L22 38 Z" fill="#FF6600"/>
+            <path d="M6 24 L10 22 L8 24 L10 26 Z" fill="#FF6600"/>
+            <path d="M42 24 L38 22 L40 24 L38 26 Z" fill="#FF6600"/>
+            <path d="M9.5 9.5 L13 12 L10.5 10.5 L12 13 Z" fill="#FF6600"/>
+            <path d="M38.5 38.5 L35 36 L37.5 37.5 L36 35 Z" fill="#FF6600"/>
+            <path d="M38.5 9.5 L36 12 L37.5 10.5 L35 13 Z" fill="#FF6600"/>
+            <path d="M9.5 38.5 L12 35 L10.5 37.5 L13 36 Z" fill="#FF6600"/>
+            <line x1="14" y1="20" x2="34" y2="20" stroke="rgba(255,102,0,0.4)" stroke-width="1"/>
+            <line x1="14" y1="24" x2="34" y2="24" stroke="rgba(255,102,0,0.4)" stroke-width="1"/>
+            <line x1="14" y1="28" x2="34" y2="28" stroke="rgba(255,102,0,0.4)" stroke-width="1"/>
+          </svg>
+        </div>
+
+        <div class="brand-name">
+          <div class="brand-main">MARCENARIA<br><span>SAW</span> MÓVEIS</div>
+        </div>
+      </div>
+      <div class="brand-sub">Marcenaria Profissional</div>
+    </div>
+
+    <!-- SEPARADOR -->
+    <div class="divider"></div>
+
+    <!-- CENTRO: Tagline -->
+    <div class="center-block">
+      <div class="tagline">
+        <strong>Técnica Profissional</strong>
+        <em>Visão de Empresário</em>
+      </div>
+      <div class="pill">@marcenariasawmoveis</div>
+    </div>
+
+    <!-- SEPARADOR -->
+    <div class="divider-right"></div>
+
+    <!-- DIREITA: Redes sociais -->
+    <div class="right-block">
+      <div class="social-item">
+        <div class="social-icon yt">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+          </svg>
+        </div>
+        <div class="social-text"><span>YouTube</span> · Marcenaria Saw Móveis</div>
+      </div>
+
+      <div class="social-item">
+        <div class="social-icon ig">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1-3.2 0-3.6 0-4.8-.1-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12c0-3.2 0-3.6.1-4.8C2.4 3.9 4 2.3 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1.0 8.3 0 8.7 0 12c0 3.3 0 3.7.1 4.9.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24c3.3 0 3.7 0 4.9-.1 4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9 0-3.3 0-3.7-.1-4.9C23.7 2.7 21.3.3 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/>
+          </svg>
+        </div>
+        <div class="social-text"><span>Instagram</span> · @marcenariasawmoveis</div>
+      </div>
+
+      <div class="social-item">
+        <div class="social-icon" style="background: rgba(255,102,0,0.2); border: 1px solid rgba(255,102,0,0.5);">
+          <svg viewBox="0 0 24 24" fill="#FF6600" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+        </div>
+        <div class="social-text">vendas02@sawmoveis.com.br</div>
+      </div>
+    </div>
+
+  </div><!-- /safe-zone -->
+
+</div><!-- /banner -->
+</body>
+</html>
