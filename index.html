@@ -2245,12 +2245,22 @@
             if (idx >= 0) state[field].splice(idx, 1);
             else state[field].push(val);
             card.classList.toggle('selected');
+            updateNext();
           } else {
+            // Single-select: marca + AUTO-AVANÇA depois de 500ms
+            // (delay pra usuário ver o feedback visual da seleção: glow, check, sweep)
             group.querySelectorAll('.diag-card').forEach(c => c.classList.remove('selected'));
             card.classList.add('selected');
             state[field] = val;
+            updateNext();
+            // Auto-avança se não for a última etapa
+            if (state.step < 4) {
+              setTimeout(() => {
+                if (state.step < 4) showStep(state.step + 1);
+                updateNext();
+              }, 500);
+            }
           }
-          updateNext();
         });
       });
     });
