@@ -456,94 +456,9 @@ document.querySelectorAll('.ad-slider').forEach(slider => {
 });
 
 /* ═══════════════════════════════════════════════════════════
-   CALCULADORA DE ORÇAMENTO
+   CALCULADORA DE ORÇAMENTO — REMOVIDA na refatoração v2
+   Substituída pelo Diagnóstico de Projeto (HTML + JS inline em clientes.html)
    ═══════════════════════════════════════════════════════════ */
-(function () {
-  const btn = document.getElementById('calc-btn');
-  const sa = document.getElementById('calc-ambiente');
-  const st = document.getElementById('calc-tamanho');
-  const sk = document.getElementById('calc-acabamento');
-  const placeholder = document.querySelector('.calc__placeholder');
-  const output = document.querySelector('.calc__output');
-  const out_min = document.getElementById('calcMin');
-  const out_max = document.getElementById('calcMax');
-  const whatsBtn = document.getElementById('calcWhatsBtn');
-  if (!btn) return;
-
-  /* Tabela base de preços (R$) — ajustar conforme realidade SAW */
-  /* preço base = ambiente · multiplicador tamanho · multiplicador acabamento */
-  const baseAmbiente = {
-    'cozinha':       { min: 8000,  max: 14000 },
-    'dormitorio':    { min: 6000,  max: 11000 },
-    'closet':        { min: 7000,  max: 13000 },
-    'sala-tv':       { min: 5000,  max: 10000 },
-    'sala-jantar':   { min: 4000,  max: 8000 },
-    'home-office':   { min: 4500,  max: 9000 },
-    'completo':      { min: 35000, max: 80000 },
-    'corporativo':   { min: 12000, max: 35000 }
-  };
-  const multTamanho = {
-    'pequeno':      1.0,
-    'medio':        1.5,
-    'grande':       2.0,
-    'muito-grande': 2.8
-  };
-  const multAcabamento = {
-    'mdf':       1.0,
-    'madeirado': 1.4,
-    'laqueado':  1.8,
-    'premium':   2.3
-  };
-  const labelAmbiente = {
-    'cozinha':'Cozinha','dormitorio':'Dormitório','closet':'Closet',
-    'sala-tv':'Sala de TV','sala-jantar':'Sala de Jantar',
-    'home-office':'Home Office','completo':'Projeto Completo','corporativo':'Corporativo'
-  };
-  const labelTamanho = {
-    'pequeno':'até 8m²','medio':'8-15m²','grande':'15-25m²','muito-grande':'25m²+'
-  };
-  const labelAcabamento = {
-    'mdf':'MDF','madeirado':'Madeirado','laqueado':'Laqueado','premium':'Premium'
-  };
-
-  function fmt(v) {
-    return Math.round(v / 100) * 100; /* arredonda pra centena */
-  }
-  function brl(v) {
-    return v.toLocaleString('pt-BR');
-  }
-
-  btn.addEventListener('click', () => {
-    const a = sa.value, t = st.value, k = sk.value;
-    if (!a || !t || !k) {
-      alert('Selecione os 3 campos para calcular.');
-      return;
-    }
-    const base = baseAmbiente[a];
-    const mt = multTamanho[t];
-    const mk = multAcabamento[k];
-    const min = fmt(base.min * mt * mk);
-    const max = fmt(base.max * mt * mk);
-
-    placeholder.style.display = 'none';
-    output.style.display = 'block';
-    out_min.textContent = brl(min);
-    out_max.textContent = brl(max);
-
-    /* Monta link WhatsApp pré-preenchido */
-    const msg = 'Olá! Calculei minha estimativa no site:\n\n' +
-                '• Ambiente: ' + labelAmbiente[a] + '\n' +
-                '• Tamanho: ' + labelTamanho[t] + '\n' +
-                '• Acabamento: ' + labelAcabamento[k] + '\n' +
-                '• Estimativa: R$ ' + brl(min) + ' a R$ ' + brl(max) + '\n\n' +
-                'Quero um orçamento exato. Quando vocês podem agendar a visita técnica gratuita?';
-    whatsBtn.href = 'https://wa.me/551134959479?text=' + encodeURIComponent(msg);
-
-    /* Conversões / tracking */
-    if (typeof fbq !== 'undefined') fbq('trackCustom', 'CalculatedEstimate', { ambiente: a, value_min: min, value_max: max, currency: 'BRL' });
-    if (typeof gtag !== 'undefined') gtag('event', 'calculate_estimate', { ambiente: a, tamanho: t, acabamento: k, value_min: min, value_max: max, currency: 'BRL' });
-  });
-})();
 
 /* ═══════════════════════════════════════════════════════════
    MODAL CATÁLOGO PDF
