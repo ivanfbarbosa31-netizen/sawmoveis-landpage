@@ -1071,8 +1071,8 @@
         <!-- ETAPA 1 — Ambiente -->
         <div class="diag__step active" data-step="1">
           <h3>Pra qual ambiente é o projeto?</h3>
-          <p class="diag__sub">Pode marcar mais de um se quiser projeto completo</p>
-          <div class="diag__cards diag__cards--3col diag__cards--minimal" data-field="ambiente" data-multi="true">
+          <p class="diag__sub">Escolha uma opção. Pra mais de um ambiente, marque <strong>Projeto Completo</strong>.</p>
+          <div class="diag__cards diag__cards--3col diag__cards--minimal" data-field="ambiente">
             <button type="button" class="diag-card diag-card--minimal diag-card--featured" data-value="completo">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
@@ -2177,7 +2177,7 @@
 
     const state = {
       step: 1,
-      ambiente: [],
+      ambiente: null,
       tamanho: null,
       estilo: null,
       nome: '',
@@ -2225,7 +2225,7 @@
       const nextBtn = stepEl.querySelector('[data-action="next"], [data-action="finish"]');
       if (!nextBtn) return;
       let ok = false;
-      if (state.step === 1) ok = state.ambiente.length > 0;
+      if (state.step === 1) ok = !!state.ambiente;
       else if (state.step === 2) ok = !!state.tamanho;
       else if (state.step === 3) ok = !!state.estilo;
       else if (state.step === 4) ok = state.nome.length > 2 && state.tel.length >= 10;
@@ -2292,7 +2292,7 @@
     document.getElementById('diagRestart')?.addEventListener('click', e => {
       e.preventDefault();
       // Reset state
-      state.ambiente = []; state.tamanho = null; state.estilo = null;
+      state.ambiente = null; state.tamanho = null; state.estilo = null;
       state.nome = ''; state.tel = ''; state.email = '';
       wizard.querySelectorAll('.diag-card.selected').forEach(c => c.classList.remove('selected'));
       ['diag-nome','diag-tel','diag-email'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
@@ -2318,7 +2318,7 @@
       document.getElementById('diagBudgetRange').textContent = `R$ ${min} mil – R$ ${max} mil`;
 
       // Mensagem WhatsApp pré-preenchida
-      const ambientes = state.ambiente.map(a => a.charAt(0).toUpperCase() + a.slice(1)).join(', ');
+      const ambientes = state.ambiente ? state.ambiente.charAt(0).toUpperCase() + state.ambiente.slice(1) : '';
       const msg =
         `Olá! Acabei de fazer o Pré-Briefing pelo site.%0A%0A` +
         `*Nome:* ${state.nome}%0A` +
