@@ -1243,8 +1243,14 @@
 
         <!-- ETAPA 3 — Estilo -->
         <div class="diag__step" data-step="3">
-          <h3>Qual estilo combina mais com você?</h3>
-          <p class="diag__sub">Se ficar na dúvida, escolha o que te atrai visualmente — você pode refinar depois.</p>
+          <!-- Chamada magnética antes dos cards -->
+          <div class="diag-style__intro">
+            <span class="diag-style__pretitle">⌜ Pergunta 03 / 04 ⌝</span>
+            <h3 class="diag-style__title">Cada <em>estilo</em> tem sua assinatura</h3>
+            <p class="diag-style__sub">A SAW se especializou em <strong>dois caminhos</strong> que dominamos a fundo. Escolha o que te atrai — você pode refinar depois.</p>
+            <div class="diag-style__divider" aria-hidden="true"></div>
+          </div>
+
           <div class="diag__cards diag__cards--2col diag__cards--editorial" data-field="estilo">
             <button type="button" class="diag-card diag-card--editorial" data-value="moderno">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
@@ -1257,11 +1263,16 @@
                 </svg>
               </span>
               <div class="diag-editorial__body">
-                <span class="diag-editorial__kicker">Estilo 01</span>
+                <span class="diag-editorial__kicker">— Estilo 01</span>
                 <h4 class="diag-editorial__title">Moderno</h4>
+                <span class="diag-editorial__accent-line" aria-hidden="true"></span>
                 <p class="diag-editorial__desc">Linhas retas, laca fosca, eletros embutidos. Vibe contemporânea com pouco ornamento.</p>
                 <span class="diag-editorial__tags">
-                  <span>•&nbsp;Lacca&nbsp;</span><span>•&nbsp;MDF clean&nbsp;</span><span>•&nbsp;LED integrado</span>
+                  <span>Lacca</span>
+                  <span class="diag-editorial__sep">·</span>
+                  <span>MDF clean</span>
+                  <span class="diag-editorial__sep">·</span>
+                  <span>LED integrado</span>
                 </span>
               </div>
             </button>
@@ -1277,11 +1288,16 @@
                 </svg>
               </span>
               <div class="diag-editorial__body">
-                <span class="diag-editorial__kicker">Estilo 02</span>
+                <span class="diag-editorial__kicker">— Estilo 02</span>
                 <h4 class="diag-editorial__title">Clássico<br/><em>Sofisticado</em></h4>
+                <span class="diag-editorial__accent-line" aria-hidden="true"></span>
                 <p class="diag-editorial__desc">Madeira nobre, detalhes torneados, mármores. Atemporal com sofisticação discreta.</p>
                 <span class="diag-editorial__tags">
-                  <span>•&nbsp;Madeira nobre&nbsp;</span><span>•&nbsp;Mármore&nbsp;</span><span>•&nbsp;Ferragens artesanais</span>
+                  <span>Madeira nobre</span>
+                  <span class="diag-editorial__sep">·</span>
+                  <span>Mármore</span>
+                  <span class="diag-editorial__sep">·</span>
+                  <span>Ferragens artesanais</span>
                 </span>
               </div>
             </button>
@@ -1703,6 +1719,58 @@
     .diag-card--style .diag-card__title { display: block; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #F4F4F4; margin-bottom: 4px; }
     .diag-card--style .diag-card__sub { display: block; color: #888; font-size: 0.82rem; line-height: 1.4; }
 
+    /* ════════ Chamada magnética antes dos cards de estilo ════════ */
+    .diag-style__intro {
+      text-align: center;
+      margin: 0 auto 32px;
+      max-width: 560px;
+      position: relative;
+    }
+    .diag-style__pretitle {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      color: #E85C1A;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+    .diag-style__title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #F4F4F4;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+    }
+    .diag-style__title em {
+      font-style: italic;
+      color: #E85C1A;
+      background: linear-gradient(135deg, #E85C1A, #FF7B3B);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .diag-style__sub {
+      color: #C8C8C8;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      margin: 0 0 22px;
+    }
+    .diag-style__sub strong {
+      color: #F4F4F4;
+      border-bottom: 2px solid rgba(232,92,26,0.4);
+      padding-bottom: 1px;
+    }
+    .diag-style__divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #E85C1A, transparent);
+      margin: 0 auto;
+    }
+
     /* ════════ Cards EDITORIAL (estilo "menu premium" tipográfico) ════════
        Inspiração: cardápios de restaurantes alta gastronomia + revistas Wallpaper/Vogue
        Sem foto, foco em tipografia + letra inicial gigante + pattern geométrico sutil
@@ -1769,60 +1837,93 @@
       0%   { stroke-dashoffset: 400; opacity: 0.18; }
       100% { stroke-dashoffset: 0; opacity: 0.12; }
     }
-    /* Corpo do card */
+    /* Corpo do card — nova ordem: kicker → título → linha laranja → descrição → tags */
     .diag-editorial__body {
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: flex-start;  /* mudou: agora flui de cima pra baixo */
+      align-items: flex-start;
       width: 100%;
       height: 100%;
-      padding: 26px 24px;
+      padding: 24px 22px 22px;
       text-align: left;
+      gap: 10px;
     }
     .diag-editorial__kicker {
       display: inline-block;
       font-size: 0.7rem;
-      font-weight: 600;
+      font-weight: 700;
       color: #E85C1A;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(232,92,26,0.3);
-      align-self: flex-start;
+      margin: 0;
     }
     .diag-editorial__title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-size: clamp(1.7rem, 3.2vw, 2.3rem);
       font-weight: 800;
       color: #F4F4F4;
-      line-height: 1.05;
+      line-height: 1.0;
       letter-spacing: -0.02em;
-      margin: 0 0 12px;
+      margin: 0;
     }
     .diag-editorial__title em {
       font-style: italic;
       font-weight: 400;
-      color: #E85C1A;
+      background: linear-gradient(135deg, #E85C1A, #FF7B3B);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    /* Linha laranja decorativa entre título e descrição */
+    .diag-editorial__accent-line {
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(90deg, #E85C1A, transparent);
+      border-radius: 2px;
+      margin: 6px 0 4px;
+      transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .diag-card--editorial:hover .diag-editorial__accent-line {
+      width: 80px;
+      background: linear-gradient(90deg, #FF7B3B, #E85C1A 50%, transparent);
+    }
+    .diag-card--editorial.selected .diag-editorial__accent-line {
+      width: 100px;
+      background: linear-gradient(90deg, #FF7B3B, #E85C1A 60%, transparent);
+      height: 4px;
     }
     .diag-editorial__desc {
       font-size: 0.92rem;
-      color: #C8C8C8;
+      color: #D0D0D0;
       line-height: 1.5;
-      margin: 0 0 14px;
-      max-width: 340px;
+      margin: 0;
+      max-width: 100%;
     }
     .diag-editorial__tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0;
-      font-size: 0.72rem;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
       color: #888;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      font-weight: 500;
+      font-weight: 600;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(232,92,26,0.18);
+      width: 100%;
+    }
+    .diag-editorial__tags > span:not(.diag-editorial__sep) {
+      color: #C8C8C8;
+    }
+    .diag-editorial__sep {
+      color: #E85C1A;
+      font-weight: 800;
     }
     /* Selected state */
     .diag-card--editorial.selected {
