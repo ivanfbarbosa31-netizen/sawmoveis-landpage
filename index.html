@@ -491,12 +491,8 @@
           <div class="gal-item__overlay"><span class="gal-item__label">Sala de Estar</span></div>
         </div>
         <div class="gal-item" data-categoria="sala">
-          <img src="fotos/gal-jantar.jpg" alt="Sala de jantar com painel" loading="lazy" />
-          <div class="gal-item__overlay"><span class="gal-item__label">Sala com Painel</span></div>
-        </div>
-        <div class="gal-item" data-categoria="sala">
-          <img src="fotos/gal-sala.jpg" alt="Sala completa planejada" loading="lazy" />
-          <div class="gal-item__overlay"><span class="gal-item__label">Sala Completa</span></div>
+          <img src="fotos/_D754356-Edit.jpg" alt="Aparador planejado em ambiente corporativo" loading="lazy" />
+          <div class="gal-item__overlay"><span class="gal-item__label">Aparador Planejado</span></div>
         </div>
 
         <!-- Adega / Lazer -->
@@ -505,8 +501,8 @@
           <div class="gal-item__overlay"><span class="gal-item__label">Adega Planejada</span></div>
         </div>
         <div class="gal-item" data-categoria="lazer">
-          <img src="fotos/gal-adega.jpg" alt="Adega de vinhos planejada" loading="lazy" />
-          <div class="gal-item__overlay"><span class="gal-item__label">Adega de Vinhos</span></div>
+          <img src="fotos/_D754353.jpg" alt="Móvel planejado com cervejeira embutida" loading="lazy" />
+          <div class="gal-item__overlay"><span class="gal-item__label">Bar com Cervejeira</span></div>
         </div>
         <div class="gal-item" data-categoria="lazer">
           <img src="fotos/Area de Lazer.jpg" alt="Área de lazer planejada" loading="lazy" />
@@ -2292,7 +2288,7 @@
     // Mapeamento de inspirações por estilo (3 fotos do catálogo SAW)
     const INSP = {
       moderno: ['fotos/gal-cozinha.jpg', 'fotos/sala-estar.jpg', 'fotos/gal-dormitorio1.jpg'],
-      classico: ['fotos/gal-cozinha2.jpg', 'fotos/gal-jantar.jpg', 'fotos/gal-dormitorio.jpeg'],
+      classico: ['fotos/gal-cozinha2.jpg', 'fotos/Sala ok.jpg', 'fotos/gal-dormitorio.jpeg'],
     };
 
     // Faixas de valor por tamanho × estilo (referência 2026, Grande SP)
@@ -2476,7 +2472,10 @@
 
     // Gera PDF simples (texto, autocontido — sem jsPDF pra zero dependência)
     function gerarPDF(s, min, max) {
-      const ambientes = s.ambiente.join(', ');
+      // ambiente agora é string (single-select), não array
+      const ambientes = Array.isArray(s.ambiente)
+        ? s.ambiente.join(', ')
+        : (s.ambiente || '(não informado)');
       const conteudo = `
 ═══════════════════════════════════════════════════
         SAW MÓVEIS — Pré-Briefing personalizado
