@@ -736,6 +736,45 @@ body {
   margin-top: 11px; font-size: .71rem; color: var(--text-3);
 }
 
+/* ════════ Hero novo (consolidação CTAs — diagnóstico como caminho principal) ════════ */
+.hero__form--cta-only { padding: 24px; }
+.hero__cta-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.hero__cta-stack .btn--primary {
+  padding: 16px 28px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: 0 8px 24px rgba(232,92,26,0.35);
+}
+.hero__cta-stack .btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(232,92,26,0.5);
+}
+.hero__link-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-2);
+  font-size: 0.86rem;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+.hero__link-secondary:hover {
+  color: #25D366;
+  border-color: rgba(37,211,102,0.25);
+  background: rgba(37,211,102,0.05);
+}
+.hero__link-secondary svg { opacity: 0.5; transition: opacity 0.2s; }
+.hero__link-secondary:hover svg { opacity: 1; }
+
 /* ══════════════════════════════
    WHATSAPP FLUTUANTE
 ══════════════════════════════ */
@@ -1387,11 +1426,15 @@ body {
    BOTÃO FLUTUANTE — CATÁLOGO
    ═══════════════════════════════════════════════════════════ */
 .catalogo-float {
+  /* REMOVIDO do site em todos os breakpoints — virou link no rodapé.
+     Decisão CRO: reduzir CTAs concorrentes (Lei de Hick).
+     Catálogo ainda acessível via rodapé pra cliente que procura. */
+  display: none !important;
   position: fixed; bottom: 24px; left: 24px; z-index: 999;
   background: linear-gradient(135deg, var(--bg-3), var(--bg-4));
   color: var(--text); border: 1px solid var(--orange-border);
   padding: 12px 18px; border-radius: 50px;
-  display: flex; align-items: center; gap: 12px; cursor: pointer;
+  align-items: center; gap: 12px; cursor: pointer;
   box-shadow: 0 8px 24px rgba(0,0,0,.4), 0 0 0 1px rgba(232,92,26,.1);
   transition: var(--transition); font-family: inherit;
   animation: catalogoBounce 2.5s ease-in-out 3s infinite;
