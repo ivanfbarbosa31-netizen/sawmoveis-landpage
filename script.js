@@ -385,9 +385,17 @@ if (projetoForm) {
   const filterBtns = document.querySelectorAll('.gal-filter');
   const galGrid = document.getElementById('galeriaGrid');
   const galEmpty = document.getElementById('galeriaEmpty');
+  const toggle = document.getElementById('galeriaToggle');
+  const filtersWrap = document.getElementById('galeriaFilters');
+  const toggleCurrent = document.getElementById('galeriaToggleCurrent');
   if (!filterBtns.length || !galGrid) return;
 
   const items = galGrid.querySelectorAll('.gal-item');
+
+  // Helper: extrai label do filtro (remove emoji/svg, mantém texto)
+  function getFilterLabel(btn) {
+    return btn.textContent.replace(/\s+/g, ' ').trim();
+  }
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -401,8 +409,31 @@ if (projetoForm) {
         if (matches) visibleCount++;
       });
       galEmpty.style.display = visibleCount === 0 ? 'block' : 'none';
+
+      // Atualiza label do toggle mobile + fecha accordion
+      if (toggleCurrent) toggleCurrent.textContent = getFilterLabel(btn);
+      if (filtersWrap && window.innerWidth <= 768) {
+        filtersWrap.classList.remove('is-open');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      }
     });
   });
+
+  // Toggle do accordion mobile
+  if (toggle && filtersWrap) {
+    toggle.addEventListener('click', () => {
+      const open = filtersWrap.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    // Fecha ao clicar fora
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth > 768) return;
+      if (!filtersWrap.classList.contains('is-open')) return;
+      if (toggle.contains(e.target) || filtersWrap.contains(e.target)) return;
+      filtersWrap.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
 
   /* Lightbox */
   let lightbox = document.getElementById('lightbox');

@@ -376,8 +376,19 @@
         <p>+350 ambientes criados com cuidado nos detalhes. Filtre por tipo e veja qual mais combina com você.</p>
       </div>
 
+      <!-- Toggle mobile pra abrir filtros (escondido no desktop) -->
+      <button class="galeria__toggle" id="galeriaToggle" type="button" aria-expanded="false" aria-controls="galeriaFilters">
+        <span class="galeria__toggle-text">
+          <span class="galeria__toggle-label">Filtrar por ambiente</span>
+          <span class="galeria__toggle-current" id="galeriaToggleCurrent">Todos</span>
+        </span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="galeria__toggle-chev">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+
       <!-- Filtros -->
-      <div class="galeria__filters reveal">
+      <div class="galeria__filters reveal" id="galeriaFilters">
         <button class="gal-filter is-active" data-filter="all">
           <svg class="gal-filter__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
