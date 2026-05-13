@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAW Móveis para Arquitetos — Parceria de Marcenaria que Entrega no Prazo</title>
+  <meta name="description" content="Programa de parceria SAW Móveis para arquitetos: especificação técnica, prazo previsível, atendimento direto e comissão. 11 anos, +350 projetos entregues." />
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="canonical" href="https://www.sawmoveis.com.br/arquitetos" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SAW Móveis" />
+  <meta property="og:title" content="SAW Móveis — Parceria para Arquitetos" />
+  <meta property="og:description" content="Programa de parceria de marcenaria com atendimento direto, prazo de 45 dias e comissão para arquitetos." />
+  <meta property="og:url" content="https://www.sawmoveis.com.br/arquitetos" />
+  <meta property="og:image" content="https://www.sawmoveis.com.br/assets/logo-principal.png" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Overrides arquitetos — tom mais técnico/sóbrio */
+    .arq-hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 24px 80px;
+      background:
+        linear-gradient(180deg, rgba(10,10,10,0.85), rgba(10,10,10,0.95)),
+        url('fotos/fachada-loja.jpg') center / cover no-repeat;
+      position: relative;
+    }
+    .arq-hero__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 920px) {
+      .arq-hero__inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .arq-hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--text-0);
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .arq-hero h1 em {
+      color: var(--orange);
+      font-style: normal;
+    }
+    .arq-hero p.lead {
+      font-size: 1.15rem;
+      color: var(--text-1);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+    .arq-hero__ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .arq-hero__form {
+      background: rgba(20, 20, 22, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 32px 28px;
+    }
+    .arq-hero__form h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--text-0);
+      margin-bottom: 8px;
+    }
+    .arq-hero__form .form-sub {
+      font-size: 0.9rem;
+      color: var(--text-2);
+      margin-bottom: 20px;
+    }
+    .arq-hero__form input,
+    .arq-hero__form select,
+    .arq-hero__form textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--text-0);
+      font-family: inherit;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      transition: border 0.2s;
+    }
+    .arq-hero__form input:focus,
+    .arq-hero__form select:focus,
+    .arq-hero__form textarea:focus {
+      outline: none;
+      border-color: var(--orange);
+    }
+    .arq-hero__form button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .arq-hero__form button:hover { transform: translateY(-2px); }
+
+    /* Sections base */
+    .sec {
+      padding: 80px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .sec__title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      color: var(--text-0);
+      text-align: center;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+    .sec__sub {
+      text-align: center;
+      color: var(--text-1);
+      font-size: 1.05rem;
+      max-width: 640px;
+      margin: 0 auto 56px;
+    }
+
+    /* Programa de parceria */
+    .parceria {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 840px) {
+      .parceria { grid-template-columns: 1fr; }
+    }
+    .parceria__card {
+      padding: 32px 28px;
+      background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      position: relative;
+    }
+    .parceria__card .num {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: rgba(232,92,26,0.18);
+      line-height: 1;
+    }
+    .parceria__card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--text-0);
+      margin-bottom: 12px;
+    }
+    .parceria__card p {
+      color: var(--text-1);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Especificações técnicas */
+    .specs {
+      background: var(--bg-1);
+      padding: 80px 24px;
+    }
+    .specs__grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 840px) {
+      .specs__grid { grid-template-columns: 1fr; }
+    }
+    .specs__list {
+      list-style: none;
+      padding: 0;
+    }
+    .specs__list li {
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .specs__list li:last-child { border-bottom: none; }
+    .specs__list .label {
+      font-weight: 500;
+      color: var(--text-1);
+      font-size: 0.95rem;
+    }
+    .specs__list .val {
+      color: var(--text-0);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: right;
+    }
+    .specs__img {
+      width: 100%;
+      border-radius: 18px;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
+
+    /* Cases B2B compactos */
+    .cases {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 840px) {
+      .cases { grid-template-columns: 1fr; }
+    }
+    .case-card {
+      background: var(--bg-1);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .case-card:hover { transform: translateY(-4px); }
+    .case-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
+    .case-card .case-body {
+      padding: 20px 22px;
+    }
+    .case-card h5 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+      color: var(--text-0);
+    }
+    .case-card .case-meta {
+      color: var(--text-2);
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+    .case-card .case-desc {
+      color: var(--text-1);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* CTA final */
+    .cta-final {
+      background: linear-gradient(135deg, rgba(232,92,26,0.12), rgba(232,92,26,0.04));
+      border: 1px solid rgba(232,92,26,0.3);
+      border-radius: 24px;
+      padding: 56px 32px;
+      text-align: center;
+      margin: 64px auto;
+      max-width: 1100px;
+    }
+    .cta-final h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom: 16px;
+    }
+    .cta-final p {
+      color: var(--text-1);
+      max-width: 540px;
+      margin: 0 auto 28px;
+    }
+    .cta-final__btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Switch persona */
+    .switch-persona {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      background: rgba(20,20,22,0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 8px 16px;
+      border-radius: 999px;
+      color: var(--text-1);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .switch-persona:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="/" class="switch-persona">← Trocar perfil</a>
+
+  <!-- ════════ HERO TÉCNICO ════════ -->
+  <section class="arq-hero">
+    <div class="arq-hero__inner">
+      <div>
+        <h1>Parceria de marcenaria que <em>entrega no prazo</em> e respeita seu projeto</h1>
+        <p class="lead">11 anos atendendo escritórios de arquitetura em São Paulo. Fábrica própria de 570m², 15 profissionais, +350 projetos entregues. Especificação fiel, prazo de 45 dias e comissão sobre o orçamento aprovado.</p>
+        <div class="arq-hero__ctas">
+          <a href="#parceria" class="btn btn--primary btn--lg">Programa de parceria</a>
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1%21%20Sou%20arquiteto%20e%20gostaria%20de%20conhecer%20a%20parceria%20SAW." target="_blank" rel="noopener" class="btn btn--whatsapp">Falar com comercial</a>
+        </div>
+      </div>
+
+      <form class="arq-hero__form" id="arquitetoForm">
+        <h3>Solicitar Dossiê Técnico</h3>
+        <p class="form-sub">Catálogo de ferragens, materiais e processo — PDF entregue no seu email em 2 minutos.</p>
+        <input type="text" id="arq-nome" name="nome" placeholder="Seu nome" required />
+        <input type="tel" id="arq-tel" name="telefone" placeholder="WhatsApp" required />
+        <input type="email" id="arq-email" name="email" placeholder="Email profissional" required />
+        <input type="text" id="arq-escritorio" name="escritorio" placeholder="Escritório / CAU (opcional)" />
+        <button type="submit">Receber Dossiê</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ════════ PROGRAMA DE PARCERIA ════════ -->
+  <section id="parceria" class="sec">
+    <h2 class="sec__title">Programa de Parceria SAW</h2>
+    <p class="sec__sub">3 pilares pra você fechar mais projetos sem dor de cabeça com marcenaria.</p>
+
+    <div class="parceria">
+      <div class="parceria__card">
+        <span class="num">01</span>
+        <h4>Atendimento direto</h4>
+        <p>Comercial sênior cuida do seu projeto do briefing à entrega. Sem repasse pra terceiros, sem perder histórico. Resposta em até 4h úteis.</p>
+      </div>
+      <div class="parceria__card">
+        <span class="num">02</span>
+        <h4>Especificação fiel</h4>
+        <p>Cumprimos materiais, ferragens e medidas do seu projeto. Quando precisamos sugerir alternativa, explicamos por escrito antes de produzir.</p>
+      </div>
+      <div class="parceria__card">
+        <span class="num">03</span>
+        <h4>Comissão transparente</h4>
+        <p>Percentual fixo sobre o orçamento aprovado, repassado em até 30 dias após a entrega. Sem amarração de exclusividade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ ESPECIFICAÇÕES TÉCNICAS ════════ -->
+  <section class="specs">
+    <div class="specs__grid">
+      <div>
+        <h2 class="sec__title" style="text-align:left;">Padrão técnico SAW</h2>
+        <ul class="specs__list">
+          <li><span class="label">MDF</span><span class="val">Eucatex / Duratex (UV/BP)</span></li>
+          <li><span class="label">Ferragens</span><span class="val">Blum, Hettich, Häfele (consulte alternativas)</span></li>
+          <li><span class="label">Acabamentos</span><span class="val">Foscarini, Arauco, laca premium, ripado</span></li>
+          <li><span class="label">Iluminação LED</span><span class="val">Perfis integrados / sensor de presença</span></li>
+          <li><span class="label">Prazo médio</span><span class="val">45 dias projeto → entrega</span></li>
+          <li><span class="label">Capacidade mensal</span><span class="val">~12 projetos completos</span></li>
+          <li><span class="label">Cobertura</span><span class="val">Grande SP + interior sob consulta</span></li>
+          <li><span class="label">Garantia</span><span class="val">3 anos (estrutura + ferragens)</span></li>
+        </ul>
+      </div>
+      <img class="specs__img" src="fotos/processo-fabricacao.jpg" alt="Fábrica SAW Móveis" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- ════════ CASES B2B ════════ -->
+  <section class="sec">
+    <h2 class="sec__title">Cases com Arquitetos Parceiros</h2>
+    <p class="sec__sub">Exemplos de projetos entregues. Atualizamos com novos cases trimestralmente.</p>
+
+    <div class="cases">
+      <article class="case-card">
+        <img src="fotos/gal-cozinha1.jpg" alt="Apartamento Moema" loading="lazy" />
+        <div class="case-body">
+          <h5>Apartamento Moema</h5>
+          <div class="case-meta">Cozinha + dormitórios · 38 dias</div>
+          <p class="case-desc">120m² · MDF Eucatex laca fosca + Blum Tip-On · Projeto fiel, zero retrabalho.</p>
+        </div>
+      </article>
+      <article class="case-card">
+        <img src="fotos/gal-dormitorio1.jpg" alt="Casa Alphaville" loading="lazy" />
+        <div class="case-body">
+          <h5>Casa Alphaville</h5>
+          <div class="case-meta">Closet + home office · 42 dias</div>
+          <p class="case-desc">Closet 18m² com iluminação LED integrada + home office com tampo Marmoglass.</p>
+        </div>
+      </article>
+      <article class="case-card">
+        <img src="fotos/gal-sala1.jpg" alt="Cobertura Itaim" loading="lazy" />
+        <div class="case-body">
+          <h5>Cobertura Itaim</h5>
+          <div class="case-meta">Living completo · 50 dias</div>
+          <p class="case-desc">Painel TV ripado, adega climatizada e bar com porta-taças. Hettich + acabamento laca.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ════════ SHOWROOM ════════ -->
+  <section class="sec">
+    <h2 class="sec__title">Visite o Showroom</h2>
+    <p class="sec__sub">570m² de fábrica + sala de amostras. Agendamento exclusivo pra arquitetos.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:900px;margin:0 auto;align-items:center;">
+      <div>
+        <p style="color:var(--text-1);line-height:1.8;font-size:1rem;">
+          <strong style="color:var(--text-0);">Endereço:</strong><br/>
+          Rua Taquaral, Sala 10<br/>
+          Jardim Itapecerica · Itapecerica da Serra/SP<br/>
+          CEP 06853-400<br/><br/>
+          <strong style="color:var(--text-0);">Horário:</strong><br/>
+          Seg–Sex 08h–18h · Sáb 09h–13h<br/><br/>
+          <strong style="color:var(--text-0);">Telefone:</strong><br/>
+          <a href="tel:1134959479" style="color:var(--orange);text-decoration:none;">(11) 3495-9479</a>
+        </p>
+      </div>
+      <a href="https://wa.me/551134959479?text=Ol%C3%A1%21%20Sou%20arquiteto%20e%20gostaria%20de%20agendar%20visita%20ao%20showroom%20SAW." target="_blank" rel="noopener" class="btn btn--primary btn--lg" style="text-align:center;align-self:center;">
+        Agendar visita técnica
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════ FAQ ARQUITETO ════════ -->
+  <section class="sec">
+    <h2 class="sec__title">Perguntas frequentes</h2>
+    <div style="max-width:780px;margin:0 auto;">
+      <details style="background:var(--bg-1);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 22px;margin-bottom:12px;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--text-0);">Como funciona a comissão?</summary>
+        <p style="color:var(--text-1);margin-top:12px;line-height:1.6;">Percentual fixo sobre o valor do orçamento aprovado, definido em conversa inicial. Repasse em até 30 dias após a entrega do projeto. Sem amarração de exclusividade.</p>
+      </details>
+      <details style="background:var(--bg-1);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 22px;margin-bottom:12px;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--text-0);">Posso especificar marca/modelo de ferragem?</summary>
+        <p style="color:var(--text-1);margin-top:12px;line-height:1.6;">Sim. Trabalhamos com Blum, Hettich e Häfele como padrão. Outras marcas sob consulta — repassamos o custo direto, sem markup adicional.</p>
+      </details>
+      <details style="background:var(--bg-1);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 22px;margin-bottom:12px;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--text-0);">Qual o prazo de produção?</summary>
+        <p style="color:var(--text-1);margin-top:12px;line-height:1.6;">45 dias é nossa média entre projeto aprovado e entrega instalada. Projetos urgentes (até 30 dias) sob disponibilidade da fábrica, com acréscimo combinado.</p>
+      </details>
+      <details style="background:var(--bg-1);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 22px;margin-bottom:12px;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--text-0);">Vocês emitem ART/RRT?</summary>
+        <p style="color:var(--text-1);margin-top:12px;line-height:1.6;">Não emitimos — a responsabilidade técnica do projeto fica com você. Fornecemos NF, garantia e laudo de instalação por escrito.</p>
+      </details>
+      <details style="background:var(--bg-1);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px 22px;margin-bottom:12px;">
+        <summary style="cursor:pointer;font-weight:600;color:var(--text-0);">Atendem projetos fora da Grande SP?</summary>
+        <p style="color:var(--text-1);margin-top:12px;line-height:1.6;">Sob consulta. Já entregamos em Campinas, Sorocaba e Litoral Sul. Frete e equipe de instalação cotados separados.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ════════ CTA FINAL ════════ -->
+  <div class="cta-final">
+    <h3>Vamos conversar sobre seu próximo projeto?</h3>
+    <p>15 min pra entender seu fluxo e ver se a parceria faz sentido. Sem compromisso, sem venda no primeiro contato.</p>
+    <div class="cta-final__btns">
+      <a href="https://wa.me/551134959479?text=Ol%C3%A1%21%20Sou%20arquiteto%20e%20gostaria%20de%20agendar%20uma%20conversa%20inicial." target="_blank" rel="noopener" class="btn btn--whatsapp btn--lg">WhatsApp comercial</a>
+      <a href="tel:1134959479" class="btn btn--outline btn--lg">(11) 3495-9479</a>
+    </div>
+  </div>
+
+  <!-- ════════ FOOTER ENXUTO ════════ -->
+  <footer style="background:var(--bg-1);padding:48px 24px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+    <img src="assets/logo-principal.png" alt="SAW Móveis" style="height:48px;margin-bottom:16px;" />
+    <p style="color:var(--text-2);font-size:0.9rem;margin-bottom:8px;">SAW Móveis · Marcenaria desde 2015 · CNPJ 22.353.418/0001-91</p>
+    <p style="color:var(--text-2);font-size:0.85rem;">
+      Rua Taquaral, Sala 10 · Itapecerica da Serra/SP · CEP 06853-400 ·
+      <a href="tel:1134959479" style="color:var(--orange);text-decoration:none;">(11) 3495-9479</a>
+    </p>
+    <p style="margin-top:16px;font-size:0.8rem;color:var(--text-2);">
+      <a href="/" style="color:var(--text-1);text-decoration:none;">← Trocar perfil</a> ·
+      <a href="/clientes" style="color:var(--text-1);text-decoration:none;margin-left:12px;">Sou cliente final</a>
+    </p>
+  </footer>
+
+  <!-- WhatsApp flutuante -->
+  <a href="https://wa.me/551134959479?text=Ol%C3%A1%21%20Sou%20arquiteto%20e%20gostaria%20de%20conhecer%20a%20parceria%20SAW." target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor"><path d="M16 0C7.163 0 0 7.163 0 16c0 2.842.74 5.516 2.04 7.842L0 32l8.392-2.013A15.91 15.91 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333c-2.43 0-4.738-.612-6.78-1.78l-.486-.29-5.04 1.21 1.226-4.92-.317-.504A13.243 13.243 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.413-9.987c-.408-.204-2.404-1.187-2.778-1.323-.373-.136-.645-.204-.917.204-.272.408-1.05 1.323-1.288 1.595-.237.272-.475.306-.882.102-.408-.204-1.722-.635-3.28-2.023-1.213-1.082-2.032-2.418-2.27-2.826-.237-.408-.025-.628.18-.831.184-.183.408-.476.612-.713.204-.237.272-.408.408-.68.136-.272.068-.51-.034-.713-.102-.204-.917-2.21-1.257-3.026-.331-.794-.667-.687-.917-.7-.237-.011-.51-.014-.781-.014-.272 0-.713.102-1.087.51-.373.408-1.428 1.395-1.428 3.4 0 2.005 1.462 3.943 1.666 4.214.204.272 2.877 4.39 6.97 6.156.975.42 1.735.671 2.326.86.977.31 1.867.266 2.57.161.785-.117 2.404-.982 2.744-1.93.34-.948.34-1.76.237-1.93-.102-.17-.373-.272-.781-.476z"/></svg>
+  </a>
+
+  <!-- ════════ Script captura lead arquiteto ════════ -->
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('arquitetoForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nome = document.getElementById('arq-nome').value.trim();
+      const tel = document.getElementById('arq-tel').value.trim();
+      const email = document.getElementById('arq-email').value.trim();
+      const escritorio = document.getElementById('arq-escritorio').value.trim();
+      if (!nome || !tel || !email) return alert('Preencha nome, WhatsApp e email');
+
+      const CAMPANHAS_API = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+        ? 'http://localhost:3000'
+        : 'https://saw-leads.ivan-fbarbosa31.workers.dev';
+
+      fetch(CAMPANHAS_API + '/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome, telefone: tel,
+          origem: 'arquitetos_dossie',
+          tags: ['arquiteto-b2b', 'dossie', 'lead-qualificado'],
+          metadata: { email, escritorio }
+        })
+      })
+      .then(r => r.json())
+      .then(d => console.log('[lead arquiteto]', d?.lead?.id || 'ok'))
+      .catch(err => console.error('[lead arquiteto]', err));
+
+      if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { event_category: 'arquiteto_dossie' });
+      if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_category: 'arquiteto' });
+
+      const msg = `Olá! Sou arquiteto(a). Acabei de pedir o Dossiê pelo site.%0A%0ANome: ${nome}%0AEmail: ${email}${escritorio ? '%0AEscritório: ' + escritorio : ''}`;
+      window.open(`https://wa.me/551134959479?text=${msg}`, '_blank', 'noopener');
+    });
+  </script>
+
+  <!-- GA4 + Pixel -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VTE07M6DXV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VTE07M6DXV', { page_path: '/arquitetos' });
+  </script>
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1781211002580448');
+    fbq('track', 'PageView', { content_category: 'arquiteto' });
+  </script>
+</body>
+</html>
