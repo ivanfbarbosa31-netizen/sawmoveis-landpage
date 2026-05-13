@@ -1404,14 +1404,14 @@ body {
   /* Botão WhatsApp flutuante menor + posicionamento que não cobre form */
   .whatsapp-float { bottom: 16px; right: 16px; padding: 12px !important; }
 }
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   /* No diagnóstico, esconde botão "Próximo" das etapas single-select (auto-avança) */
+  .diag__step[data-step="1"] [data-action="next"],
   .diag__step[data-step="2"] [data-action="next"],
   .diag__step[data-step="3"] [data-action="next"] { display: none; }
-  /* Etapa 1 mantém botão (alguns usuários podem hesitar antes de clicar) */
-  /* Mas se quiser auto-avançar também, descomentar:
-  .diag__step[data-step="1"] [data-action="next"] { display: none; }
-  */
+  /* Labels dos cards do diagnóstico maiores (eram 11.52px, agora 13px+) */
+  .diag-card--minimal .diag-card__label { font-size: 0.95rem !important; }
+  .diag-card--minimal .diag-card__hint { font-size: 0.66rem !important; }
 }
 
 /* ═══════════════════════════════════════════════════════════
