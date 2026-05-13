@@ -1574,3 +1574,13 @@ body {
   margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border);
   font-size: 12px; color: var(--text-3);
 }
+
+/* ===== FIXES DE LEGIBILIDADE MOBILE — audit 2026-05-13 ===== */
+/* Fonte mínima 12px em mobile pra labels pequenos (era 10.56-11.52px) */
+.galeria__toggle-label { font-size: 12px; }
+.transf-card__badge { font-size: 12px; font-weight: 600; }
+.diag-card--minimal .diag-card__hint { font-size: 0.75rem !important; }
+.diag-card__hint { font-size: 12px; }
+/* Hamburger nav — touch target >= 44px (era 28px) */
+.nav__burger { padding: 12px; }
+
