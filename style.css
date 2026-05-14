@@ -201,7 +201,7 @@ body {
 
 .hero__img {
   position: absolute; inset: 0;
-  background-image: url('fotos/hero-bg.jpg');
+  background-image: url('fotos/hero-bg.webp');
   background-size: cover;
   background-position: center;
   z-index: 0;
