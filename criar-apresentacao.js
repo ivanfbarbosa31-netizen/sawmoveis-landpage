@@ -514,7 +514,7 @@ const mkShadow = () => ({ type: "outer", color: "000000", blur: 6, offset: 2, an
 
   const contacts = [
     { icon: "☎", label: "Telefone / WhatsApp", val: "(11) 3495-9479" },
-    { icon: "✉", label: "E-mail", val: "atendimento@sawmoveis.com.br" },
+    { icon: "✉", label: "E-mail", val: "vendas02@sawmoveis.com.br" },
     { icon: "📍", label: "Localização", val: "Rua Teixeira, 99 — Itapecerica da Serra/SP" },
     { icon: "🌐", label: "Site / Instagram", val: "sawmoveis.com.br\n@marcenariasawmoveis" },
   ];

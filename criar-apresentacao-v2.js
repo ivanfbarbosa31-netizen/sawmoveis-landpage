@@ -629,7 +629,7 @@ const mkS = () => ({ type: "outer", color: "000000", blur: 8, offset: 3, angle: 
   // 3 contact cards
   const contacts = [
     { icon: "☎", label: "WhatsApp / Telefone", val: "(11) 3495-9479" },
-    { icon: "✉", label: "E-mail", val: "atendimento@sawmoveis.com.br" },
+    { icon: "✉", label: "E-mail", val: "vendas02@sawmoveis.com.br" },
     { icon: "🌐", label: "Site", val: "www.sawmoveis.com.br" },
   ];
   contacts.forEach((c, i) => {

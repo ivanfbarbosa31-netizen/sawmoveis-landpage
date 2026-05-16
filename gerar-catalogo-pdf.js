@@ -314,7 +314,7 @@ doc.fillColor(WHITE).font('Helvetica-Bold').fontSize(11)
   .text('SAW MÓVEIS', M, 680, { align: 'center', width: CW });
 doc.fillColor(GRAY).font('Helvetica').fontSize(10)
   .text('Rua Teixeira, 99 — Jardim Itapecerica · Itapecerica da Serra/SP', M, 700, { align: 'center', width: CW })
-  .text('atendimento@sawmoveis.com.br · @marcenariasawmoveis', M, 715, { align: 'center', width: CW })
+  .text('vendas02@sawmoveis.com.br · @marcenariasawmoveis', M, 715, { align: 'center', width: CW })
   .text('Atendemos toda a Grande São Paulo', M, 730, { align: 'center', width: CW });
 
 /* timestamp */
