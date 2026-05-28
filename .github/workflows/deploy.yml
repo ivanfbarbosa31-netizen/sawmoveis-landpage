@@ -1,14 +1,16 @@
-# Deploy automático do site SAW Móveis pro Turbo Cloud via FTP
+# Deploy automático do site SAW Móveis para Cloudflare Pages
 # Roda toda vez que houver push na branch main
 #
-# Configurar Secrets no GitHub:
+# Configurar Secrets no GitHub (repo sawmoveis-landpage):
 #   Settings → Secrets and variables → Actions → New repository secret
-#   - FTP_HOST       (ex: ftp.sawmoveis.com.br)
-#   - FTP_USERNAME   (ex: deploy@sawmoveis.com.br)
-#   - FTP_PASSWORD   (senha da conta FTP)
-#   - FTP_SERVER_DIR (ex: /public_html/ — caminho remoto)
+#   - CLOUDFLARE_API_TOKEN  (criar em https://dash.cloudflare.com/profile/api-tokens)
+#   - CLOUDFLARE_ACCOUNT_ID (fixo: 1ebc4f25ae272b526973d1b76734c826)
+#
+# MIGRAÇÃO: workflow FTP (Turbo Cloud/cPanel) substituído por Cloudflare Pages
+# Motivo: site migrado para sawmoveis-site.pages.dev em 2026-05-28
+# Responsável: Rafael (DevOps SAW)
 
-name: Deploy site SAW
+name: Deploy site SAW → Cloudflare Pages
 
 on:
   push:
@@ -17,34 +19,23 @@ on:
 
 jobs:
   deploy:
-    name: Upload via FTP
+    name: Deploy para Cloudflare Pages
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Deploy FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy para Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          local-dir: ./
-          protocol: ftps   # Pure-FTPd com TLS exige FTPS explícito
-          port: 21
-          log-level: verbose
-          # Não subir esses arquivos pro servidor
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.github/**
-            **/*.md
-            **/*.bak
-            **/*.bak.*
-            **/.env*
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy . --project-name=sawmoveis-site --branch=main
 
       - name: Notificar sucesso
         if: success()
-        run: echo "✅ Deploy concluído em $(date)"
+        run: echo "Deploy concluido em $(date) - ver https://www.sawmoveis.com.br"
