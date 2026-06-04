@@ -1,10 +1,9 @@
 # Deploy automático do site SAW Móveis para Cloudflare Pages
 # Roda toda vez que houver push na branch main
 #
-# Configurar Secrets no GitHub (repo sawmoveis-landpage):
+# Secrets necessários no GitHub (repo sawmoveis-landpage):
 #   Settings → Secrets and variables → Actions → New repository secret
 #   - CLOUDFLARE_API_TOKEN  (criar em https://dash.cloudflare.com/profile/api-tokens)
-#   - CLOUDFLARE_ACCOUNT_ID (fixo: 1ebc4f25ae272b526973d1b76734c826)
 #
 # MIGRAÇÃO: workflow FTP (Turbo Cloud/cPanel) substituído por Cloudflare Pages
 # Motivo: site migrado para sawmoveis-site.pages.dev em 2026-05-28
@@ -29,12 +28,11 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
+      - name: Instala wrangler
+        run: npm install -g wrangler@3
+
       - name: Deploy para Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: "1ebc4f25ae272b526973d1b76734c826"
-          command: pages deploy . --project-name=sawmoveis-site --branch=main
+        run: wrangler pages deploy . --project-name=sawmoveis-site --branch=main
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: "1ebc4f25ae272b526973d1b76734c826"
