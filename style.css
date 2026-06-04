@@ -211,10 +211,10 @@ body {
   position: absolute; inset: 0;
   background: linear-gradient(
     105deg,
-    rgba(17,17,19,.97) 0%,
-    rgba(17,17,19,.85) 45%,
-    rgba(17,17,19,.55) 75%,
-    rgba(17,17,19,.30) 100%
+    rgba(17,17,19,.85) 0%,
+    rgba(17,17,19,.65) 45%,
+    rgba(17,17,19,.40) 75%,
+    rgba(17,17,19,.20) 100%
   );
 }
 
@@ -1152,10 +1152,10 @@ body {
   .form-simples__aside { grid-template-columns: 1fr; }
   .aside-trust { grid-column: span 1; }
   .hero__inner { grid-template-columns: 1fr; gap: 40px; padding: 60px 0; }
-  .hero__img::after { background: rgba(17,17,19,.88); }
+  .hero__img::after { background: rgba(17,17,19,.75); }
   .hero__content { align-items: center; text-align: center; }
   .hero__title { font-size: clamp(2.5rem, 7vw, 3.5rem); text-align: center; }
-  .hero__sub { text-align: center; }
+  .hero__sub { text-align: center; max-width: 100%; }
   .hero__cta { justify-content: center; }
   .hero__trust { align-items: center; }
   .hero__card-wrap { display: none; }
@@ -1186,6 +1186,8 @@ body {
   .aside-stats { grid-template-columns: 1fr 1fr; }
   .section { padding: 64px 0; }
   .hero { padding-top: 88px; }
+  .hero__title { font-size: clamp(2rem, 9vw, 2.8rem); }
+  .hero__sub { font-size: 1rem; line-height: 1.7; padding-inline: 4px; }
   .hero__cta { flex-direction: column; align-items: stretch; }
   .numeros__grid { grid-template-columns: 1fr 1fr; }
   .segmentos__grid { grid-template-columns: 1fr; }

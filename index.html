@@ -44,7 +44,7 @@
   <meta property="og:title" content="SAW Móveis — Móveis Planejados sob Medida em Itapecerica da Serra/SP" />
   <meta property="og:description" content="Fábrica de móveis planejados em Itapecerica da Serra/SP. 11 anos, +350 obras, projeto 3D gratuito e 3 anos de garantia. Entrega em 45 dias." />
   <meta property="og:url" content="https://www.sawmoveis.com.br/" />
-  <meta property="og:image" content="https://www.sawmoveis.com.br/assets/logo-principal.png" />
+  <meta property="og:image" content="https://www.sawmoveis.com.br/assets/gal-cozinha2.webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="pt_BR" />
@@ -55,7 +55,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="SAW Móveis — Móveis Planejados sob Medida em SP" />
   <meta name="twitter:description" content="Fábrica de móveis planejados em Itapecerica da Serra. +350 obras entregues, projeto 3D gratuito, entrega em 45 dias." />
-  <meta name="twitter:image" content="https://www.sawmoveis.com.br/assets/logo-principal.png" />
+  <meta name="twitter:image" content="https://www.sawmoveis.com.br/assets/gal-cozinha2.webp" />
 
   <!-- ═══════════════════════════════════════════
        SCHEMA.ORG / JSON-LD - LocalBusiness
@@ -149,6 +149,30 @@
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-VTE07M6DXV');
+    /* Google Ads conversion pixel */
+    gtag('config', 'AW-18138350559');
+  </script>
+
+  <!-- CLIQUE WHATSAPP → CONVERSÃO Google Ads -->
+  <script>
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href*="wa.me"]');
+      if (!link) return;
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-18138350559/tYVQCMOXgK8cEN-HhclD',
+          'value': 70.0,
+          'currency': 'BRL'
+        });
+        gtag('event', 'whatsapp_click', {
+          'link_url': link.href,
+          'link_text': (link.innerText || '').trim().slice(0, 80)
+        });
+      }
+      if (typeof fbq === 'function') {
+        fbq('track', 'Contact');
+      }
+    });
   </script>
 
   <!-- ═══════════════════════════════════════════
@@ -174,18 +198,18 @@
   <header class="nav" id="nav">
     <div class="container nav__inner">
       <a href="#" class="nav__logo">
-        <img src="assets/logo-principal.png" alt="SAW Móveis" />
+        <img src="assets/logo-principal.png" alt="SAW Móveis" width="771" height="216" />
       </a>
       <div class="nav__phone">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
         <a href="tel:1134959479">(11) 3495-9479</a>
       </div>
       <div class="nav__actions">
-        <a href="https://wa.me/551134959479" target="_blank" rel="noopener" class="btn btn--whatsapp">
+        <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW%20e%20gostaria%20de%20saber%20mais%20sobre%20m%C3%B3veis%20planejados." target="_blank" rel="noopener" class="btn btn--whatsapp">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           WhatsApp
         </a>
-        <a href="#diagnostico" class="btn btn--primary">Fazer meu Pré-Briefing →</a>
+        <a href="#diag-wizard" class="btn btn--primary">Fazer meu Pré-Briefing →</a>
       </div>
       <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -195,8 +219,8 @@
       <a href="#galeria">Ver Projetos</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#faq">Dúvidas Frequentes</a>
-      <a href="https://wa.me/551134959479" target="_blank" rel="noopener" class="btn btn--whatsapp">WhatsApp</a>
-      <a href="#diagnostico" class="btn btn--primary">Fazer meu Pré-Briefing →</a>
+      <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW%20e%20gostaria%20de%20saber%20mais%20sobre%20m%C3%B3veis%20planejados." target="_blank" rel="noopener" class="btn btn--whatsapp">WhatsApp</a>
+      <a href="#diag-wizard" class="btn btn--primary">Fazer meu Pré-Briefing →</a>
     </div>
   </header>
 
@@ -212,20 +236,17 @@
           ★★★★★ 5.0 Google · +350 projetos entregues em São Paulo
         </div>
 
-        <h1 class="hero__title reveal">
-          Sua casa, <span class="gradient-text">redesenhada</span><br />
-          em 90 segundos.
-        </h1>
+        <h1 class="hero__title reveal">Móveis Planejados <span class="gradient-text">sob Medida</span> em Itapecerica da Serra e Grande SP</h1>
 
         <p class="hero__sub reveal">
-          Faça o <strong>Pré-Briefing grátis</strong> e descubra o estilo que combina com você + valor de referência real pro seu projeto.
+          <strong>+350 projetos entregues para arquitetos e construtoras em São Paulo.</strong> Projeto 3D técnico, precisão CNC, prazo de 45 dias respeitado.
         </p>
 
         <!-- CTA primário único pro Diagnóstico (substitui mini-form) -->
         <div class="hero__form reveal hero__form--cta-only">
           <span class="hero__form-label">✨ Comece agora · Em 90 segundos você tem seu briefing personalizado</span>
           <div class="hero__cta-stack">
-            <a href="#diagnostico" id="heroPreBriefingBtn" class="btn btn--primary btn--lg btn--full">
+            <a href="#diag-wizard" id="heroPreBriefingBtn" class="btn btn--primary btn--lg btn--full">
               Fazer meu Pré-Briefing
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
@@ -254,13 +275,13 @@
             <span class="hcard__tag">Avaliação verificada</span>
           </div>
           <blockquote class="hcard__quote">
-            "Nossos móveis ficaram lindos! Muito capricho e atenção nos detalhes. Ótimo atendimento do início ao fim. Indicamos para todos!"
+            "Entregaram dentro do prazo e com acabamento impecável. Fechamos o segundo contrato."
           </blockquote>
           <div class="hcard__author">
-            <div class="avatar-circle">KV</div>
+            <div class="avatar-circle">CY</div>
             <div>
-              <strong>Karla Vilantt</strong>
-              <span>Local Guide · 66 avaliações · 9 fotos</span>
+              <strong>CYMS · Projetos Hospitalares</strong>
+              <span>Cliente B2B verificado · São Paulo</span>
             </div>
           </div>
           <div class="hcard__dots" id="hcardDots"></div>
@@ -435,115 +456,115 @@
 
         <!-- Cozinhas -->
         <div class="gal-item" data-categoria="cozinha">
-          <img src="fotos/gal-cozinha.webp" alt="Cozinha planejada sob medida em SP" loading="lazy" />
+          <img src="fotos/gal-cozinha-v2.webp" alt="Cozinha planejada sob medida em SP" loading="lazy" width="720" height="1280" />
           <div class="gal-item__overlay"><span class="gal-item__label">Cozinha Planejada</span></div>
         </div>
         <div class="gal-item" data-categoria="cozinha">
-          <img src="fotos/gal-cozinha2.webp" alt="Cozinha planejada com ilha em São Paulo" loading="lazy" />
+          <img src="fotos/gal-cozinha2.webp" alt="Cozinha planejada com ilha em São Paulo" loading="lazy" width="900" height="1200" />
           <div class="gal-item__overlay"><span class="gal-item__label">Cozinha com Ilha</span></div>
         </div>
         <div class="gal-item" data-categoria="cozinha">
-          <img src="fotos/foto-prof-1.webp" alt="Cozinha gourmet planejada" loading="lazy" />
+          <img src="fotos/foto-prof-1.webp" alt="Cozinha gourmet planejada" loading="lazy" width="1200" height="801" />
           <div class="gal-item__overlay"><span class="gal-item__label">Cozinha Gourmet</span></div>
         </div>
         <div class="gal-item" data-categoria="cozinha">
-          <img src="fotos/foto-prof-2.webp" alt="Cozinha completa planejada" loading="lazy" />
+          <img src="fotos/foto-prof-2.webp" alt="Cozinha completa planejada" loading="lazy" width="1200" height="801" />
           <div class="gal-item__overlay"><span class="gal-item__label">Cozinha Completa</span></div>
         </div>
 
         <!-- Dormitórios/Closets -->
         <div class="gal-item" data-categoria="dormitorio">
-          <img src="fotos/Quarto Casal.webp" alt="Quarto de casal planejado" loading="lazy" />
+          <img src="fotos/Quarto Casal.webp" alt="Quarto de casal planejado" loading="lazy" width="1920" height="1440" />
           <div class="gal-item__overlay"><span class="gal-item__label">Quarto Casal</span></div>
         </div>
         <div class="gal-item" data-categoria="dormitorio">
-          <img src="fotos/Quarto Casal 01.webp" alt="Suíte de casal sob medida" loading="lazy" />
+          <img src="fotos/quarto-casal-01-v2.webp" alt="Suíte de casal sob medida" loading="lazy" width="1600" height="720" />
           <div class="gal-item__overlay"><span class="gal-item__label">Suíte de Casal</span></div>
         </div>
         <div class="gal-item" data-categoria="dormitorio">
-          <img src="fotos/gal-dormitorio.webp" alt="Dormitório planejado completo" loading="lazy" />
+          <img src="fotos/gal-dormitorio.webp" alt="Dormitório planejado completo" loading="lazy" width="1600" height="900" />
           <div class="gal-item__overlay"><span class="gal-item__label">Dormitório Completo</span></div>
         </div>
         <div class="gal-item" data-categoria="dormitorio">
-          <img src="fotos/gal-dormitorio-v2.webp" alt="Quarto sob medida em SP" loading="lazy" />
+          <img src="fotos/gal-dormitorio-v2.webp" alt="Quarto sob medida em SP" loading="lazy" width="900" height="506" />
           <div class="gal-item__overlay"><span class="gal-item__label">Closet Planejado</span></div>
         </div>
         <div class="gal-item" data-categoria="dormitorio">
-          <img src="fotos/Quarto Menino 01.webp" alt="Quarto infantil planejado" loading="lazy" />
+          <img src="fotos/Quarto Menino 01.webp" alt="Quarto infantil planejado" loading="lazy" width="1920" height="1440" />
           <div class="gal-item__overlay"><span class="gal-item__label">Quarto Infantil</span></div>
         </div>
         <div class="gal-item" data-categoria="dormitorio">
-          <img src="fotos/Quarto Menino 02.webp" alt="Quarto criança sob medida" loading="lazy" />
+          <img src="fotos/Quarto Menino 02.webp" alt="Quarto criança sob medida" loading="lazy" width="1920" height="1440" />
           <div class="gal-item__overlay"><span class="gal-item__label">Quarto Infantil</span></div>
         </div>
         <div class="gal-item" data-categoria="dormitorio">
-          <img src="fotos/gal-dormitorio1.webp" alt="Dormitório clássico planejado" loading="lazy" />
+          <img src="fotos/gal-dormitorio1.webp" alt="Dormitório clássico planejado" loading="lazy" width="900" height="609" />
           <div class="gal-item__overlay"><span class="gal-item__label">Dormitório Clássico</span></div>
         </div>
         <div class="gal-item" data-categoria="dormitorio">
-          <img src="fotos/quarto.webp" alt="Quarto planejado moderno" loading="lazy" />
+          <img src="fotos/quarto.webp" alt="Quarto planejado moderno" loading="lazy" width="900" height="600" />
           <div class="gal-item__overlay"><span class="gal-item__label">Quarto Moderno</span></div>
         </div>
 
         <!-- Salas -->
         <div class="gal-item" data-categoria="sala">
-          <img src="fotos/Sala de Tv 01.webp" alt="Sala de TV planejada" loading="lazy" />
+          <img src="fotos/Sala de Tv 01.webp" alt="Sala de TV planejada" loading="lazy" width="1920" height="1440" />
           <div class="gal-item__overlay"><span class="gal-item__label">Sala de TV</span></div>
         </div>
         <div class="gal-item" data-categoria="sala">
-          <img src="fotos/Sala de Jantar 01.webp" alt="Sala de jantar planejada" loading="lazy" />
+          <img src="fotos/Sala de Jantar 01.webp" alt="Sala de jantar planejada" loading="lazy" width="1920" height="1440" />
           <div class="gal-item__overlay"><span class="gal-item__label">Sala de Jantar</span></div>
         </div>
         <div class="gal-item" data-categoria="sala">
-          <img src="fotos/Sala ok.webp" alt="Sala integrada planejada" loading="lazy" />
+          <img src="fotos/sala-ok-v2.webp" alt="Sala integrada planejada" loading="lazy" width="1600" height="720" />
           <div class="gal-item__overlay"><span class="gal-item__label">Sala Integrada</span></div>
         </div>
         <div class="gal-item" data-categoria="sala">
-          <img src="fotos/sala-estar.webp" alt="Sala de estar moderna" loading="lazy" />
+          <img src="fotos/sala-estar.webp" alt="Sala de estar moderna" loading="lazy" width="900" height="506" />
           <div class="gal-item__overlay"><span class="gal-item__label">Sala de Estar</span></div>
         </div>
         <div class="gal-item" data-categoria="sala">
-          <img src="fotos/_D754356-Edit.webp" alt="Aparador planejado em ambiente corporativo" loading="lazy" />
+          <img src="fotos/_D754356-Edit.webp" alt="Aparador planejado em ambiente corporativo" loading="lazy" width="1400" height="935" />
           <div class="gal-item__overlay"><span class="gal-item__label">Aparador Planejado</span></div>
         </div>
 
         <!-- Adega / Lazer -->
         <div class="gal-item" data-categoria="lazer">
-          <img src="fotos/Adega 01.webp" alt="Adega planejada sob medida" loading="lazy" />
+          <img src="fotos/Adega 01.webp" alt="Adega planejada sob medida" loading="lazy" width="1536" height="2048" />
           <div class="gal-item__overlay"><span class="gal-item__label">Adega Planejada</span></div>
         </div>
         <div class="gal-item" data-categoria="lazer">
-          <img src="fotos/_D754353.webp" alt="Móvel planejado com cervejeira embutida" loading="lazy" />
+          <img src="fotos/_D754353.webp" alt="Móvel planejado com cervejeira embutida" loading="lazy" width="1400" height="935" />
           <div class="gal-item__overlay"><span class="gal-item__label">Bar com Cervejeira</span></div>
         </div>
         <div class="gal-item" data-categoria="lazer">
-          <img src="fotos/Area de Lazer.webp" alt="Área de lazer planejada" loading="lazy" />
+          <img src="fotos/Area de Lazer.webp" alt="Área de lazer planejada" loading="lazy" width="1920" height="1440" />
           <div class="gal-item__overlay"><span class="gal-item__label">Área de Lazer</span></div>
         </div>
 
         <!-- Hospitalar / Corporativo / Apartamentos -->
         <div class="gal-item" data-categoria="comercial">
-          <img src="fotos/seg-hospitais.webp" alt="Mobiliário hospitalar planejado" loading="lazy" />
+          <img src="fotos/seg-hospitais-v2.webp" alt="Mobiliário hospitalar planejado" loading="lazy" width="960" height="1280" />
           <div class="gal-item__overlay"><span class="gal-item__label">Hospital · Case CYMS</span></div>
         </div>
         <div class="gal-item" data-categoria="comercial">
-          <img src="fotos/seg-corporativo.webp" alt="Escritório corporativo planejado" loading="lazy" />
+          <img src="fotos/seg-corporativo-v2.webp" alt="Escritório corporativo planejado" loading="lazy" width="720" height="1280" />
           <div class="gal-item__overlay"><span class="gal-item__label">Corporativo · Case Cordicell</span></div>
         </div>
         <div class="gal-item" data-categoria="comercial">
-          <img src="fotos/seg-corporativo1.webp" alt="Sala de reunião corporativa" loading="lazy" />
+          <img src="fotos/seg-corporativo1.webp" alt="Sala de reunião corporativa" loading="lazy" width="600" height="401" />
           <div class="gal-item__overlay"><span class="gal-item__label">Sala de Reunião</span></div>
         </div>
         <div class="gal-item" data-categoria="comercial">
-          <img src="fotos/seg-apartamentos.webp" alt="Apartamento decorado MEGA" loading="lazy" />
+          <img src="fotos/seg-apartamentos-v2.webp" alt="Apartamento decorado MEGA" loading="lazy" width="1280" height="576" />
           <div class="gal-item__overlay"><span class="gal-item__label">Apto Decorado · MEGA</span></div>
         </div>
         <div class="gal-item" data-categoria="comercial">
-          <img src="fotos/seg-apartamentos1.webp" alt="Apartamento Panamby planejado" loading="lazy" />
+          <img src="fotos/seg-apartamentos1.webp" alt="Apartamento Panamby planejado" loading="lazy" width="600" height="446" />
           <div class="gal-item__overlay"><span class="gal-item__label">Apto Decorado · Panamby</span></div>
         </div>
         <div class="gal-item" data-categoria="comercial">
-          <img src="fotos/seg-laboratorio.webp" alt="Laboratório planejado" loading="lazy" />
+          <img src="fotos/seg-laboratorio-v2.webp" alt="Laboratório planejado" loading="lazy" width="1204" height="1600" />
           <div class="gal-item__overlay"><span class="gal-item__label">Laboratório · Case GRF</span></div>
         </div>
 
@@ -556,7 +577,7 @@
 
       <!-- CTA dupla -->
       <div class="galeria__cta reveal">
-        <a href="#diagnostico" class="btn btn--primary btn--lg">
+        <a href="#diag-wizard" class="btn btn--primary btn--lg">
           Fazer meu Pré-Briefing →
         </a>
         <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Quero%20ver%20mais%20projetos%20da%20SAW%20M%C3%B3veis." target="_blank" rel="noopener" class="btn btn--outline btn--lg">
@@ -579,7 +600,7 @@
 
         <article class="transf-card reveal">
           <div class="transf-card__media">
-            <img src="fotos/gal-cozinha.webp" alt="Cozinha planejada · Itapecerica da Serra" loading="lazy" />
+            <img src="fotos/gal-cozinha-v2.webp" alt="Cozinha planejada · Itapecerica da Serra" loading="lazy" width="720" height="1280" />
             <span class="transf-card__badge">Cozinha</span>
           </div>
           <div class="transf-card__body">
@@ -590,14 +611,14 @@
               <span class="dot">·</span>
               <span>MDF Branco + Madeirado</span>
               <span class="dot">·</span>
-              <span>Blum Tip-On</span>
+              <span>FGV soft-close</span>
             </div>
           </div>
         </article>
 
         <article class="transf-card reveal">
           <div class="transf-card__media">
-            <img src="fotos/Quarto Casal 01.webp" alt="Suíte de casal · Cotia" loading="lazy" />
+            <img src="fotos/quarto-casal-01-v2.webp" alt="Suíte de casal · Cotia" loading="lazy" width="1600" height="720" />
             <span class="transf-card__badge">Dormitório</span>
           </div>
           <div class="transf-card__body">
@@ -615,7 +636,7 @@
 
         <article class="transf-card reveal">
           <div class="transf-card__media">
-            <img src="fotos/Sala ok.webp" alt="Sala integrada · São Paulo" loading="lazy" />
+            <img src="fotos/sala-ok-v2.webp" alt="Sala integrada · São Paulo" loading="lazy" width="1600" height="720" />
             <span class="transf-card__badge">Sala</span>
           </div>
           <div class="transf-card__body">
@@ -626,7 +647,7 @@
               <span class="dot">·</span>
               <span>Laqueado + Madeirado</span>
               <span class="dot">·</span>
-              <span>Hettich</span>
+              <span>Häfele</span>
             </div>
           </div>
         </article>
@@ -634,7 +655,7 @@
       </div>
 
       <div class="antes-depois__cta reveal">
-        <a href="#diagnostico" class="btn btn--primary btn--lg">Fazer meu Pré-Briefing →</a>
+        <a href="#diag-wizard" class="btn btn--primary btn--lg">Fazer meu Pré-Briefing →</a>
       </div>
     </div>
   </section>
@@ -771,7 +792,7 @@
 
         <div class="seg-card reveal">
           <div class="seg-card__img">
-            <img src="fotos/seg-residencial-v2.webp" alt="Cozinha planejada" loading="lazy" />
+            <img src="fotos/seg-residencial-v2.webp" alt="Cozinha planejada" loading="lazy" width="700" height="394" />
           </div>
           <div class="seg-card__icon seg-card__icon--orange">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -779,11 +800,12 @@
           <h3>Residencial</h3>
           <p>Cozinhas, dormitórios, closets, home offices, áreas gourmet e projetos completos.</p>
           <div class="seg-card__case">+350 famílias atendidas</div>
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20residencial%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
         </div>
 
         <div class="seg-card reveal">
           <div class="seg-card__img">
-            <img src="fotos/seg-corporativo.webp" alt="Ambiente corporativo" loading="lazy" />
+            <img src="fotos/seg-corporativo-v2.webp" alt="Ambiente corporativo" loading="lazy" width="720" height="1280" />
           </div>
           <div class="seg-card__icon seg-card__icon--orange">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M12 12v4M10 14h4"/></svg>
@@ -791,11 +813,12 @@
           <h3>Corporativo</h3>
           <p>Escritórios, salas de reunião, recepções e estações de trabalho.</p>
           <div class="seg-card__case">Case: Cordicell</div>
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20corporativo%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
         </div>
 
         <div class="seg-card reveal">
           <div class="seg-card__img">
-            <img src="fotos/seg-hospitais.webp" alt="Mobiliário hospitalar planejado" loading="lazy" />
+            <img src="fotos/seg-hospitais-v2.webp" alt="Mobiliário hospitalar planejado" loading="lazy" width="960" height="1280" />
           </div>
           <div class="seg-card__icon seg-card__icon--orange">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
@@ -803,11 +826,12 @@
           <h3>Hospitais e Clínicas</h3>
           <p>Balcões, consultórios, áreas de espera e mobiliário hospitalar especializado.</p>
           <div class="seg-card__case">Case: CYMS Hospital Alemão</div>
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20hospitalar%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
         </div>
 
         <div class="seg-card reveal">
           <div class="seg-card__img">
-            <img src="fotos/seg-apartamentos.webp" alt="Apartamento decorado" loading="lazy" />
+            <img src="fotos/seg-apartamentos-v2.webp" alt="Apartamento decorado" loading="lazy" width="1280" height="576" />
           </div>
           <div class="seg-card__icon seg-card__icon--orange">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
@@ -815,11 +839,12 @@
           <h3>Apartamentos Decorados</h3>
           <p>Ambientes integrados de alto padrão para construtoras e lançamentos.</p>
           <div class="seg-card__case">Cases: MEGA · CP · Interlagos · Panamby</div>
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20de%20apartamento%20decorado%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
         </div>
 
         <div class="seg-card reveal">
           <div class="seg-card__img">
-            <img src="fotos/seg-laboratorio.webp" alt="Laboratório" loading="lazy" />
+            <img src="fotos/seg-laboratorio-v2.webp" alt="Laboratório" loading="lazy" width="1204" height="1600" />
           </div>
           <div class="seg-card__icon seg-card__icon--orange">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
@@ -827,11 +852,12 @@
           <h3>Laboratórios</h3>
           <p>Bancadas técnicas, armários especializados e mobiliário para equipamentos.</p>
           <div class="seg-card__case">Case: G.R.F. Laboratórios LTDA</div>
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20de%20laborat%C3%B3rio%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
         </div>
 
         <div class="seg-card reveal">
           <div class="seg-card__img">
-            <img src="fotos/seg-areas-comuns.webp" alt="Área de lazer planejada" loading="lazy" />
+            <img src="fotos/seg-areas-comuns.webp" alt="Área de lazer planejada" loading="lazy" width="600" height="399" />
           </div>
           <div class="seg-card__icon seg-card__icon--orange">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
@@ -839,11 +865,12 @@
           <h3>Áreas Comuns</h3>
           <p>Salões de festas, áreas gourmet, espaços de convivência em condomínios.</p>
           <div class="seg-card__case">Grandes condomínios em SP</div>
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20de%20%C3%A1rea%20comum%20de%20condom%C3%ADnio%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
         </div>
 
         <div class="seg-card reveal">
           <div class="seg-card__img">
-            <img src="fotos/lojas.webp" alt="Stand de vendas planejado" loading="lazy" />
+            <img src="fotos/lojas.webp" alt="Stand de vendas planejado" loading="lazy" width="700" height="525" />
           </div>
           <div class="seg-card__icon seg-card__icon--orange">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -851,6 +878,7 @@
           <h3>Stands de Vendas</h3>
           <p>Estandes impactantes para lançamentos imobiliários com design atrativo.</p>
           <div class="seg-card__case">Lançamentos em São Paulo</div>
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20de%20stand%20de%20vendas%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
         </div>
 
         <div class="seg-card seg-card--highlight reveal">
@@ -860,7 +888,7 @@
           <h3>Projetos Especiais</h3>
           <p>Soluções customizadas sob demanda: gôndolas, móveis exclusivos e projetos arquitetônicos únicos.</p>
           <div class="seg-card__case">Consulte para projetos únicos</div>
-          <a href="https://wa.me/551134959479" target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20especial%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
         </div>
 
       </div>
@@ -937,7 +965,7 @@
         </div>
 
         <div class="processo__visual">
-          <img src="fotos/processo.webp" alt="Fabricação e instalação de móveis planejados" loading="lazy" />
+          <img src="fotos/processo.webp" alt="Fabricação e instalação de móveis planejados" loading="lazy" width="800" height="1198" />
           <div class="processo__prazo">
             <span class="prazo-card__num">45</span>
             <div class="prazo-card">
@@ -955,7 +983,7 @@
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">Por que escolher a SAW</span>
-        <h2>5 razões que nos<br />diferenciam no mercado</h2>
+        <h2>O que o arquiteto exige<br />de um parceiro de execução —<br />e a SAW entrega.</h2>
         <p>Critérios que os melhores clientes avaliam antes de contratar uma marcenaria.</p>
       </div>
       <div class="diferenciais__grid">
@@ -1003,20 +1031,19 @@
       </div>
 
       <div class="depoimentos__grid">
-        <div class="depo-card reveal">
-          <div class="depo-card__stars">★★★★★</div>
-          <p>"Excelente empresa! Excelente atendimento, produtos de muita qualidade e prazo diferenciado!"</p>
-          <div class="depo-card__author">
-            <div class="avatar-pill">AS</div>
-            <div><strong>Alexandra Silva Grassmann</strong><span>20 avaliações no Google</span></div>
-          </div>
-        </div>
+        <!-- CYMS B2B — posição 1 (destaque grade) -->
         <div class="depo-card depo-card--featured reveal">
-          <div class="depo-card__stars">★★★★★</div>
-          <p>"A SAW Móveis atendeu às expectativas e entregou tudo o que prometeu. Colaboradores zelosos e atenciosos do início ao fim. Estou muito satisfeito com o resultado!"</p>
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:-4px;">
+            <div class="depo-card__stars">★★★★★</div>
+            <span style="font-size:.68rem; font-weight:700; letter-spacing:.08em; background:rgba(232,92,26,.15); color:#E85C1A; border:1px solid rgba(232,92,26,.3); border-radius:4px; padding:2px 8px; white-space:nowrap;">PARCEIRO B2B</span>
+          </div>
+          <p>"Entregaram dentro do prazo e com acabamento impecável. Fechamos o segundo contrato com a SAW para o próximo projeto hospitalar."</p>
           <div class="depo-card__author">
-            <div class="avatar-pill">EM</div>
-            <div><strong>Eliade Matos</strong><span>4 avaliações no Google</span></div>
+            <div class="avatar-pill" style="background:#C0480F;">CY</div>
+            <div>
+              <strong>CYMS · Projetos Hospitalares</strong>
+              <span>Diretor de Obras · Parceiro verificado</span>
+            </div>
           </div>
         </div>
         <div class="depo-card reveal">
@@ -1025,6 +1052,14 @@
           <div class="depo-card__author">
             <div class="avatar-pill">KV</div>
             <div><strong>Karla Vilantt</strong><span>Local Guide · 66 avaliações · 9 fotos</span></div>
+          </div>
+        </div>
+        <div class="depo-card reveal">
+          <div class="depo-card__stars">★★★★★</div>
+          <p>"Excelente empresa! Excelente atendimento, produtos de muita qualidade e prazo diferenciado!"</p>
+          <div class="depo-card__author">
+            <div class="avatar-pill">AS</div>
+            <div><strong>Alexandra Silva Grassmann</strong><span>20 avaliações no Google</span></div>
           </div>
         </div>
         <div class="depo-card reveal">
@@ -1055,18 +1090,23 @@
     </div>
   </section>
 
-  <!-- ===== DIAGNÓSTICO DE PROJETO (substitui calculadora) ===== -->
-  <section class="diagnostico section" id="diagnostico">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Pré-briefing personalizado · em 90 segundos</span>
-        <h2>Descubra o estilo perfeito<br />pro seu projeto</h2>
-        <p>4 perguntas rápidas. Você recebe um <strong>guia exclusivo</strong> com inspirações reais SAW + checklist de visita técnica + valores de referência reais.</p>
-      </div>
+  <!-- ===== DIAGNÓSTICO DE PROJETO — visual Conceito A fullscreen ===== -->
+  <section class="diagnostico diagnostico--imersiva" id="diagnostico">
+    <!-- âncora de scroll: id="diag-wizard" está direto no .diag, etapa 1 ativa -->
+    <div class="diag-imersiva__bg" id="diagBg" aria-hidden="true"></div>
+    <div class="container diag-imersiva__container">
 
       <div class="diag" id="diagWizard">
 
-        <!-- Progress -->
+        <!-- Progress dots minimalistas — Conceito A -->
+        <div class="diag__progress-dots" id="diagDots">
+          <div class="diag__dot active" data-step="1"></div>
+          <div class="diag__dot" data-step="2"></div>
+          <div class="diag__dot" data-step="3"></div>
+          <div class="diag__dot" data-step="4"></div>
+        </div>
+
+        <!-- Progress bar legacy (oculto via CSS) -->
         <div class="diag__progress">
           <div class="diag__progress-bar" id="diagBar" style="width:25%"></div>
           <div class="diag__progress-steps">
@@ -1078,18 +1118,24 @@
         </div>
 
         <!-- ETAPA 1 — Ambiente -->
-        <div class="diag__step active" data-step="1">
+        <div class="diag__step active" data-step="1" id="diag-wizard">
           <h3>Pra qual ambiente é o projeto?</h3>
           <p class="diag__sub">Escolha uma opção. Pra mais de um ambiente, marque <strong>Projeto Completo</strong>.</p>
           <div class="diag__cards diag__cards--3col diag__cards--minimal" data-field="ambiente">
             <button type="button" class="diag-card diag-card--minimal diag-card--featured" data-value="completo">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M8 32L32 12l24 20"/>
-                  <path d="M14 28v24h36V28"/>
-                  <rect x="22" y="36" width="8" height="16"/>
-                  <rect x="34" y="36" width="10" height="8"/>
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- planta baixa: quatro cômodos vista superior -->
+                  <rect x="10" y="10" width="44" height="44" rx="1.5"/>
+                  <line x1="10" y1="32" x2="54" y2="32"/>
+                  <line x1="32" y1="10" x2="32" y2="54"/>
+                  <!-- porta cômodo inferior esq -->
+                  <path d="M18 54 v-6 a6 6 0 0 1 6 0"/>
+                  <!-- janela cômodo superior dir -->
+                  <line x1="38" y1="10" x2="48" y2="10"/>
+                  <!-- bancada cômodo inferior dir -->
+                  <rect x="36" y="40" width="12" height="5" rx="0.5"/>
                 </svg>
               </span>
               <span class="diag-card__label">Projeto Completo</span>
@@ -1098,13 +1144,22 @@
             <button type="button" class="diag-card diag-card--minimal" data-value="cozinha">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="8" y="12" width="48" height="40" rx="2"/>
-                  <line x1="8" y1="28" x2="56" y2="28"/>
-                  <circle cx="18" cy="20" r="2"/><circle cx="26" cy="20" r="2"/>
-                  <circle cx="38" cy="20" r="2"/><circle cx="46" cy="20" r="2"/>
-                  <rect x="18" y="34" width="14" height="14" rx="1"/>
-                  <circle cx="44" cy="41" r="3"/>
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- bancada: tampo longo -->
+                  <rect x="8" y="36" width="48" height="10" rx="1.5"/>
+                  <!-- cuba embutida -->
+                  <rect x="14" y="38" width="12" height="6" rx="1"/>
+                  <!-- cooktop: 2 queimadores + grill -->
+                  <circle cx="38" cy="41" r="4"/>
+                  <circle cx="38" cy="41" r="2"/>
+                  <circle cx="50" cy="41" r="2.5"/>
+                  <!-- capote: perfil acima da bancada -->
+                  <rect x="12" y="18" width="40" height="6" rx="1.5"/>
+                  <!-- suporte capote esq/dir -->
+                  <line x1="16" y1="24" x2="16" y2="36"/>
+                  <line x1="48" y1="24" x2="48" y2="36"/>
+                  <!-- armários superiores -->
+                  <rect x="8" y="10" width="48" height="7" rx="1"/>
                 </svg>
               </span>
               <span class="diag-card__label">Cozinha</span>
@@ -1112,11 +1167,19 @@
             <button type="button" class="diag-card diag-card--minimal" data-value="dormitorio">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M8 44V20a2 2 0 012-2h44a2 2 0 012 2v24"/>
-                  <path d="M4 44h56v8"/>
-                  <path d="M14 30h16M34 30h16"/>
-                  <path d="M10 52v4M54 52v4"/>
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- cabeceira -->
+                  <rect x="8" y="12" width="48" height="12" rx="2"/>
+                  <!-- colchão / plataforma cama -->
+                  <rect x="8" y="24" width="48" height="24" rx="1"/>
+                  <!-- divisória travesseiros -->
+                  <line x1="32" y1="24" x2="32" y2="34"/>
+                  <!-- criado-mudo esquerdo -->
+                  <rect x="8" y="50" width="10" height="8" rx="1"/>
+                  <!-- criado-mudo direito -->
+                  <rect x="46" y="50" width="10" height="8" rx="1"/>
+                  <!-- pé da cama -->
+                  <line x1="8" y1="48" x2="56" y2="48"/>
                 </svg>
               </span>
               <span class="diag-card__label">Dormitório</span>
@@ -1124,14 +1187,19 @@
             <button type="button" class="diag-card diag-card--minimal" data-value="closet">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="10" y="8" width="44" height="48" rx="2"/>
-                  <line x1="32" y1="8" x2="32" y2="56"/>
-                  <line x1="14" y1="20" x2="28" y2="20"/>
-                  <line x1="36" y1="20" x2="50" y2="20"/>
-                  <path d="M18 24v8M22 24v8M26 24v8"/>
-                  <path d="M40 24l4 8M48 24l-4 8"/>
-                  <circle cx="44" cy="40" r="3"/>
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- trilho cabide: haste horizontal -->
+                  <line x1="16" y1="18" x2="48" y2="18"/>
+                  <!-- 3 cabides pendurados -->
+                  <path d="M24 18 v4 m0 0 c0 0 -6 5 -6 8 h12 c0-3-6-8-6-8"/>
+                  <path d="M32 18 v4 m0 0 c0 0 -6 5 -6 8 h12 c0-3-6-8-6-8"/>
+                  <path d="M40 18 v4 m0 0 c0 0 -6 5 -6 8 h12 c0-3-6-8-6-8"/>
+                  <!-- gaveta abaixo: bloco com puxador -->
+                  <rect x="12" y="42" width="40" height="14" rx="1.5"/>
+                  <line x1="22" y1="42" x2="22" y2="56"/>
+                  <line x1="42" y1="42" x2="42" y2="56"/>
+                  <!-- puxador central gaveta -->
+                  <line x1="28" y1="49" x2="36" y2="49"/>
                 </svg>
               </span>
               <span class="diag-card__label">Closet</span>
@@ -1139,11 +1207,20 @@
             <button type="button" class="diag-card diag-card--minimal" data-value="sala-tv">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="6" y="14" width="52" height="30" rx="2"/>
-                  <line x1="24" y1="50" x2="40" y2="50"/>
-                  <line x1="32" y1="44" x2="32" y2="50"/>
-                  <circle cx="14" cy="22" r="1.5" fill="currentColor"/>
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- TV: moldura fina -->
+                  <rect x="8" y="12" width="48" height="28" rx="2"/>
+                  <!-- tela interna (bisel) -->
+                  <rect x="12" y="16" width="40" height="20" rx="0.5"/>
+                  <!-- pescoço + base -->
+                  <line x1="32" y1="40" x2="32" y2="46"/>
+                  <!-- rack baixo: tampo -->
+                  <rect x="10" y="46" width="44" height="8" rx="1.5"/>
+                  <!-- 2 patas rack -->
+                  <line x1="18" y1="54" x2="18" y2="58"/>
+                  <line x1="46" y1="54" x2="46" y2="58"/>
+                  <!-- detalhe led rack -->
+                  <line x1="20" y1="50" x2="44" y2="50"/>
                 </svg>
               </span>
               <span class="diag-card__label">Sala TV</span>
@@ -1151,13 +1228,21 @@
             <button type="button" class="diag-card diag-card--minimal" data-value="sala-jantar">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <ellipse cx="32" cy="32" rx="22" ry="10"/>
-                  <ellipse cx="32" cy="32" rx="14" ry="6"/>
-                  <line x1="32" y1="22" x2="32" y2="14"/>
-                  <line x1="28" y1="14" x2="36" y2="14"/>
-                  <circle cx="10" cy="40" r="3"/>
-                  <circle cx="54" cy="40" r="3"/>
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- mesa retangular vista superior -->
+                  <rect x="14" y="22" width="36" height="20" rx="1.5"/>
+                  <!-- 4 cadeiras: 2 em cima, 2 embaixo -->
+                  <!-- cadeira topo esq -->
+                  <rect x="17" y="14" width="10" height="7" rx="1"/>
+                  <!-- cadeira topo dir -->
+                  <rect x="37" y="14" width="10" height="7" rx="1"/>
+                  <!-- cadeira base esq -->
+                  <rect x="17" y="43" width="10" height="7" rx="1"/>
+                  <!-- cadeira base dir -->
+                  <rect x="37" y="43" width="10" height="7" rx="1"/>
+                  <!-- encosto das cadeiras de baixo -->
+                  <line x1="18" y1="50" x2="26" y2="50"/>
+                  <line x1="38" y1="50" x2="46" y2="50"/>
                 </svg>
               </span>
               <span class="diag-card__label">Sala Jantar</span>
@@ -1165,14 +1250,22 @@
             <button type="button" class="diag-card diag-card--minimal" data-value="home-office">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="14" y="14" width="36" height="22" rx="1.5"/>
-                  <line x1="32" y1="36" x2="32" y2="42"/>
-                  <line x1="22" y1="42" x2="42" y2="42"/>
-                  <rect x="6" y="44" width="52" height="4" rx="1"/>
-                  <line x1="10" y1="48" x2="10" y2="56"/>
-                  <line x1="54" y1="48" x2="54" y2="56"/>
-                  <rect x="20" y="20" width="24" height="12" rx="0.5"/>
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- monitor: moldura -->
+                  <rect x="16" y="10" width="32" height="22" rx="1.5"/>
+                  <!-- tela interna -->
+                  <rect x="20" y="13" width="24" height="15" rx="0.5"/>
+                  <!-- pescoço monitor -->
+                  <line x1="32" y1="32" x2="32" y2="37"/>
+                  <!-- mesa: tampo longo e fino -->
+                  <rect x="6" y="37" width="52" height="5" rx="1"/>
+                  <!-- pernas mesa -->
+                  <line x1="14" y1="42" x2="14" y2="54"/>
+                  <line x1="50" y1="42" x2="50" y2="54"/>
+                  <!-- travessa inferior mesa -->
+                  <line x1="14" y1="54" x2="50" y2="54"/>
+                  <!-- cadeira: encosto atrás da mesa -->
+                  <path d="M24 37 v-6 a8 8 0 0 1 16 0 v6"/>
                 </svg>
               </span>
               <span class="diag-card__label">Home Office</span>
@@ -1180,12 +1273,25 @@
             <button type="button" class="diag-card diag-card--minimal" data-value="banheiro">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M8 30h48v6a14 14 0 01-14 14H22a14 14 0 01-14-14v-6z"/>
-                  <path d="M16 30V16a6 6 0 0112 0v2"/>
-                  <circle cx="22" cy="20" r="2" fill="currentColor"/>
-                  <path d="M44 50v6M22 50v6"/>
-                  <line x1="4" y1="30" x2="60" y2="30"/>
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- espelho retangular -->
+                  <rect x="16" y="8" width="32" height="20" rx="1.5"/>
+                  <!-- suporte espelho -->
+                  <line x1="24" y1="28" x2="24" y2="32"/>
+                  <line x1="40" y1="28" x2="40" y2="32"/>
+                  <!-- bancada -->
+                  <rect x="8" y="32" width="48" height="8" rx="1.5"/>
+                  <!-- cuba embutida no tampo -->
+                  <rect x="20" y="34" width="16" height="4" rx="1"/>
+                  <!-- misturador (torneira) -->
+                  <line x1="28" y1="34" x2="28" y2="30"/>
+                  <line x1="25" y1="30" x2="31" y2="30"/>
+                  <!-- armário abaixo da bancada -->
+                  <rect x="8" y="40" width="48" height="16" rx="1"/>
+                  <line x1="32" y1="40" x2="32" y2="56"/>
+                  <!-- puxadores -->
+                  <line x1="17" y1="48" x2="23" y2="48"/>
+                  <line x1="41" y1="48" x2="47" y2="48"/>
                 </svg>
               </span>
               <span class="diag-card__label">Banheiro</span>
@@ -1193,14 +1299,26 @@
             <button type="button" class="diag-card diag-card--minimal" data-value="lavanderia">
               <span class="diag-card__check-mark" aria-hidden="true">✓</span>
               <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="14" y="8" width="36" height="48" rx="3"/>
-                  <line x1="14" y1="22" x2="50" y2="22"/>
-                  <circle cx="32" cy="38" r="11"/>
-                  <circle cx="32" cy="38" r="6"/>
-                  <circle cx="22" cy="15" r="1.5" fill="currentColor"/>
-                  <circle cx="28" cy="15" r="1.5" fill="currentColor"/>
-                  <rect x="38" y="13" width="8" height="4" rx="0.5"/>
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <!-- máquina de lavar: caixa -->
+                  <rect x="8" y="10" width="26" height="46" rx="2"/>
+                  <!-- painel superior máquina -->
+                  <line x1="8" y1="22" x2="34" y2="22"/>
+                  <!-- visor circular -->
+                  <circle cx="21" cy="37" r="8"/>
+                  <circle cx="21" cy="37" r="4.5"/>
+                  <!-- botão painel esq -->
+                  <circle cx="13" cy="16" r="1.5"/>
+                  <circle cx="18" cy="16" r="1.5"/>
+                  <!-- tanque ao lado: caixa -->
+                  <rect x="38" y="18" width="18" height="38" rx="2"/>
+                  <!-- borda superior tanque -->
+                  <line x1="38" y1="26" x2="56" y2="26"/>
+                  <!-- torneira tanque -->
+                  <line x1="47" y1="18" x2="47" y2="12"/>
+                  <line x1="44" y1="12" x2="50" y2="12"/>
+                  <!-- ralo tanque -->
+                  <circle cx="47" cy="36" r="3"/>
                 </svg>
               </span>
               <span class="diag-card__label">Lavanderia</span>
@@ -1315,8 +1433,11 @@
             <input type="tel" id="diag-tel" placeholder="WhatsApp com DDD" required />
             <input type="email" id="diag-email" placeholder="Seu melhor email" />
             <label class="diag__check">
-              <input type="checkbox" id="diag-consent" checked /> Aceito receber o material e novidades da SAW (sem spam, sem ligações)
+              <input type="checkbox" id="diag-consent" checked /> Aceito receber contato via WhatsApp/email sobre meu projeto
             </label>
+            <p style="font-size:.78rem; color:#888; margin-top:-4px; line-height:1.5;">
+              Ao continuar, você concorda com nossa <a href="/politica-de-privacidade.html" target="_blank" rel="noopener" style="color:#E85C1A; text-decoration:underline;">Política de Privacidade</a>. Seus dados são tratados conforme a LGPD e não são compartilhados com terceiros para fins comerciais.
+            </p>
           </div>
           <div class="diag__nav">
             <button type="button" class="btn btn--ghost" data-action="back">← Voltar</button>
@@ -1364,7 +1485,7 @@
 
       </div>
 
-      <div class="calc__trust reveal" style="margin-top:32px;">
+      <div class="diag-imersiva__trust">
         <span>✓ +350 projetos de referência</span>
         <span>✓ Resposta no WhatsApp em até 2h úteis</span>
         <span>✓ Sem cadastro espião, sem spam</span>
@@ -1372,20 +1493,79 @@
     </div>
   </section>
 
-  <!-- Estilos do Diagnóstico (inline pra não inflar style.css) -->
+  <!-- Estilos do Diagnóstico — visual Conceito A fullscreen imersivo -->
   <style>
-    .diag { max-width: 900px; margin: 0 auto; background: var(--bg-1,#111113); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 32px 28px; box-shadow: 0 24px 60px rgba(0,0,0,0.4); }
-    @media (max-width:680px){ .diag{ padding: 24px 16px; border-radius: 18px; } }
-    .diag__progress { margin-bottom: 32px; }
-    .diag__progress-bar { height: 4px; background: linear-gradient(90deg,#E85C1A,#FF7B3B); border-radius: 999px; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
-    .diag__progress-steps { display: flex; justify-content: space-between; margin-top: 12px; counter-reset: step; }
-    .diag__progress-steps span { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); color: #888; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-    .diag__progress-steps span.active, .diag__progress-steps span.done { background: #E85C1A; color: #fff; border-color: #E85C1A; }
-    .diag__step { display: none; animation: diagFade 0.4s cubic-bezier(0.4,0,0.2,1); }
-    .diag__step.active { display: block; }
-    @keyframes diagFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    .diag__step h3 { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 2.4vw, 1.85rem); color: #F4F4F4; margin-bottom: 6px; }
-    .diag__sub { color: #C8C8C8; margin-bottom: 24px; font-size: 0.95rem; }
+    /* ════ SEÇÃO FULLSCREEN IMERSIVA ════ */
+    .diagnostico--imersiva {
+      position: relative;
+      min-height: 100vh;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .diag-imersiva__bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 0.6s ease, opacity 0.4s ease;
+      z-index: 0;
+    }
+    .diag-imersiva__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(10,10,10,0.72), rgba(10,10,10,0.72));
+    }
+    .diag-imersiva__container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding-top: 80px;
+      padding-bottom: 60px;
+    }
+
+    /* ════ DOTS DE PROGRESSO MINIMALISTAS ════ */
+    .diag__progress-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .diag__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      cursor: default;
+    }
+    .diag__dot.active {
+      background: #E85C1A;
+      border-color: #E85C1A;
+      box-shadow: 0 0 10px rgba(232,92,26,0.6);
+      transform: scale(1.25);
+    }
+    .diag__dot.done {
+      background: rgba(232,92,26,0.45);
+      border-color: rgba(232,92,26,0.5);
+    }
+
+    /* ════ CARD WIZARD TRANSPARENTE NO FULLSCREEN ════ */
+    .diag { max-width: 900px; margin: 0 auto; background: rgba(10,10,10,0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 40px 36px; box-shadow: 0 32px 80px rgba(0,0,0,0.6); }
+    @media (max-width:680px){ .diag{ padding: 28px 18px; border-radius: 18px; } }
+
+    /* Progresso bar original — oculto (substituído pelos dots) */
+    .diag__progress { display: none; }
+
+    #diag-wizard { scroll-margin-top: 80px; }
+    @keyframes diagFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    /* Headline Playfair gigante — Conceito A */
+    .diag__step h3 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.6rem); color: #fff; margin-bottom: 10px; text-align: center; line-height: 1.1; letter-spacing: -0.02em; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+    .diag__sub { color: rgba(255,255,255,0.75); margin-bottom: 28px; font-size: 1rem; text-align: center; }
     .diag__cards { display: grid; gap: 12px; margin-bottom: 28px; }
     .diag__cards--3col { grid-template-columns: repeat(3, 1fr); }
     .diag__cards--2col { grid-template-columns: repeat(2, 1fr); }
@@ -1469,7 +1649,7 @@
     }
     /* SURPRESA 3 — stroke "desenha" no hover (efeito assinatura premium) */
     .diag-card--minimal .diag-card__svg svg * {
-      stroke-dasharray: 200;
+      stroke-dasharray: 500;
       stroke-dashoffset: 0;
       transition: stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1);
     }
@@ -1477,7 +1657,7 @@
       animation: drawStroke 1.2s cubic-bezier(0.4,0,0.2,1);
     }
     @keyframes drawStroke {
-      0%   { stroke-dashoffset: 200; }
+      0%   { stroke-dashoffset: 500; }
       100% { stroke-dashoffset: 0; }
     }
     .diag-card--minimal:hover .diag-card__svg {
@@ -1990,6 +2170,37 @@
     .diag__final-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
     .diag__final-foot { font-size: 0.85rem; color: #888; }
     .diag__final-foot a { color: #E85C1A; text-decoration: none; }
+
+    /* ════ TRUST BAR IMERSIVA ════ */
+    .diag-imersiva__trust {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px 32px;
+      margin-top: 32px;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+    }
+    .diag-imersiva__trust span::before { content: '✓ '; color: #E85C1A; }
+
+    /* ════ CARD HOVER LARANJA SAW — reforço Conceito A ════ */
+    .diag-card:hover {
+      border-color: #E85C1A !important;
+      background: rgba(232,92,26,0.1) !important;
+      transform: translateY(-2px);
+    }
+    .diag-card.selected {
+      border-color: #E85C1A !important;
+      background: rgba(232,92,26,0.14) !important;
+      box-shadow: 0 0 0 2px rgba(232,92,26,0.25), 0 8px 24px rgba(232,92,26,0.2);
+    }
+
+    /* ════ NAV ════ */
+    .diag__nav { display: flex; gap: 12px; justify-content: space-between; align-items: center; margin-top: 8px; }
+    .diag__nav .btn--ghost { background: transparent; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.12); padding: 12px 16px; cursor: pointer; font-family: inherit; border-radius: 10px; transition: all 0.2s; }
+    .diag__nav .btn--ghost:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+    .diag__nav .btn[disabled] { opacity: 0.35; cursor: not-allowed; }
   </style>
 
   <!-- ===== FAQ ===== -->
@@ -2038,6 +2249,175 @@
         </details>
 
       </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ B2B — ARQUITETOS & PARCEIROS ===== -->
+  <section class="faq section" id="faq-b2b" style="background: var(--bg-2); border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Para arquitetos e parceiros</span>
+        <h2>Dúvidas frequentes<br />de quem projeta</h2>
+        <p>A SAW pensa antes de cortar a primeira chapa. Aqui estão as respostas que escritórios de arquitetura e design pedem antes de indicar.</p>
+      </div>
+
+      <!-- BLOCO 1: Parceria e suporte técnico -->
+      <div class="faq__list reveal" style="margin-bottom: 32px;">
+        <p style="font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--orange); margin-bottom:12px;">Parceria e suporte técnico</p>
+
+        <!-- P1 — ABERTA por padrão (top 5) -->
+        <details class="faq__item reveal" open>
+          <summary>Como funciona a parceria da SAW com arquitetos e designers de interiores?</summary>
+          <div class="faq__body">
+            <p>A SAW trabalha diretamente com escritórios de arquitetura e design há mais de 11 anos. O fluxo é simples: você traz o projeto, a gente viabiliza — com medição técnica, compatibilização de plantas, renderização em Promob e acompanhamento até a instalação.</p>
+            <p>Seu cliente é atendido com o padrão SAW, e você mantém a curadoria do projeto. Não existe conflito de relacionamento: nunca abordamos o cliente final fora do seu projeto sem sua ciência.</p>
+          </div>
+        </details>
+
+        <!-- P2 — ABERTA por padrão (top 5) -->
+        <details class="faq__item reveal" open>
+          <summary>Qual suporte técnico vocês oferecem ao projeto do arquiteto?</summary>
+          <div class="faq__body">
+            <p>Compatibilizamos o seu projeto executivo com nossa linha de produção. Oferecemos projeto 3D em Promob para validação visual, consultoria de especificação (materiais, ferragens, acabamentos), visita técnica de medição e laudo de instalação ao final.</p>
+            <p>Se o projeto tiver detalhes fora do padrão — nicho de embutir, perfil de alumínio específico, altura fora do módulo — nosso projetista analisa a viabilidade antes de qualquer compromisso de prazo.</p>
+          </div>
+        </details>
+
+        <!-- P3 — ABERTA por padrão (top 5) -->
+        <details class="faq__item reveal" open>
+          <summary>A SAW executa exatamente o que está no projeto — inclusive chapas e acabamentos fora do catálogo padrão?</summary>
+          <div class="faq__body">
+            <p>Sim, dentro do que a cadeia de fornecimento permite. Trabalhamos com chapas MDF e MDP de fabricantes nacionais de primeira linha e conseguimos acessar referências especiais mediante consulta. Antes de fechar o contrato, validamos com o setor de compras se o material especificado está disponível no prazo da obra.</p>
+            <p>O que não aceitamos: comprometer prazo de entrega por material com lead time imprevisível sem sinalizar isso ao arquiteto com antecedência. Transparência na entrada evita problema na entrega.</p>
+          </div>
+        </details>
+
+        <!-- P4 — ABERTA por padrão (top 5) -->
+        <details class="faq__item reveal" open>
+          <summary>Quais ferragens vocês usam? É possível especificar marca?</summary>
+          <div class="faq__body">
+            <p>Nossa alocação padrão: corrediças <strong>FGV</strong> (italiana) e <strong>Häfele</strong> (alemã), dobradiças <strong>Rena</strong> (brasileira). São marcas que entregam consistência de qualidade em escala, com peças de reposição disponíveis no mercado nacional.</p>
+            <p>Se o seu projeto especifica outra ferragem por razão técnica ou estética, avaliamos caso a caso. Desde que o fornecimento seja garantido dentro do prazo da obra, adaptamos. O que não fazemos é trocar ferragem sem alinhar com você — a especificação do projeto é sua.</p>
+          </div>
+        </details>
+
+        <!-- P5 — ABERTA por padrão (top 5) -->
+        <details class="faq__item reveal" open>
+          <summary>Vocês conseguem absorver obras com prazo apertado ou em andamento?</summary>
+          <div class="faq__body">
+            <p>Depende da agenda de produção no momento da consulta. Não prometemos prazo sem verificar. O que fazemos: ao receber o briefing do seu projeto, consultamos a linha de produção e damos um retorno honesto em até 24h sobre viabilidade e data de início.</p>
+            <p>Para obras com data de chaves fixa, recomendamos acionar com no mínimo 60 dias de antecedência. Projetos com menos prazo entram em análise especial — e se não tivermos janela, falamos isso antes, não depois de assinar.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <!-- BLOCO 2: Comissão e relacionamento comercial -->
+      <div class="faq__list reveal" style="margin-bottom: 32px;">
+        <p style="font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--orange); margin-bottom:12px;">Comissão e relacionamento comercial</p>
+
+        <!-- P6 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>A SAW tem política formal de comissão para arquiteto indicador?</summary>
+          <div class="faq__body">
+            <p>Sim. Arquitetos e designers que indicam clientes e acompanham o projeto recebem comissão de até <strong>10%</strong> sobre o valor total do orçamento aprovado. O pagamento é feito após a assinatura do contrato com o cliente final.</p>
+            <p>A política é formal e documentada. Antes de qualquer indicação, assinamos um acordo de parceria que define percentual, forma de pagamento e responsabilidades de cada parte. Não trabalhamos com acerto informal — isso protege você tanto quanto protege a gente.</p>
+          </div>
+        </details>
+
+        <!-- P7 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>Posso usar os projetos SAW no meu portfólio? Como funciona o NDA?</summary>
+          <div class="faq__body">
+            <p>Respeitamos NDAs solicitados. Os cases publicados no nosso site e redes sociais têm autorização explícita do cliente final. Projetos sob sigilo contratual são discutidos somente após assinatura de acordo de confidencialidade entre SAW e o escritório parceiro.</p>
+            <p>Se você quer usar o projeto no seu portfólio, a tratativa é direta: alinhamos com o cliente final antes de qualquer publicação. Você não precisa deixar de mostrar o seu trabalho por causa de sigilo SAW.</p>
+          </div>
+        </details>
+
+        <!-- P8 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>A SAW emite nota fiscal e documentação completa para construtoras e obras corporativas?</summary>
+          <div class="faq__body">
+            <p>Sim. A <strong>Marcenaria SAW Móveis Ltda</strong> (Itapecerica da Serra/SP) emite NF de prestação de serviço e venda de produto conforme exigência do contratante. Para obras corporativas, consórcios ou construtoras que exigem documentação específica (ART, laudo de instalação, certificado de garantia por ambiente), consulte nossa equipe antes de fechar — documentamos o que for necessário.</p>
+          </div>
+        </details>
+
+        <!-- P9 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>Como funcionam os marcos de pagamento para projetos B2B?</summary>
+          <div class="faq__body">
+            <p>O formato padrão é: <strong>30% de sinal</strong> na assinatura do contrato, <strong>30% na medição definitiva</strong>, <strong>30% no início da instalação</strong> e <strong>10% na entrega com aceite</strong>. Ajustável conforme contrato — aceitamos boleto, PIX e transferência bancária.</p>
+            <p>Para projetos com múltiplos ambientes ou entregas parciais, estruturamos marcos de pagamento por fase de entrega. O cronograma financeiro é definido antes da assinatura e não muda sem acordo por escrito das duas partes.</p>
+          </div>
+        </details>
+
+        <!-- P10 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>Quais regiões vocês atendem? Fazem projetos fora da Grande SP?</summary>
+          <div class="faq__body">
+            <p>Atendemos a <strong>Grande São Paulo</strong> com estrutura completa de medição, produção e instalação própria. Itapecerica da Serra, capital, ABC, Osasco/Barueri e cidades do entorno são cobertura padrão.</p>
+            <p>Interior do estado e outras regiões: atendemos mediante consulta. O orçamento nesses casos inclui logística de transporte e equipe de instalação — colocamos esse custo na mesa antes de qualquer proposta. Se a obra for relevante, não negamos de cara; analisamos com você.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <!-- BLOCO 3: Produção, prazo e garantia -->
+      <div class="faq__list reveal" style="margin-bottom: 32px;">
+        <p style="font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--orange); margin-bottom:12px;">Produção, prazo e garantia</p>
+
+        <!-- P11 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>Qual a garantia contratual de prazo para projetos com data de obra definida?</summary>
+          <div class="faq__body">
+            <p>Garantimos <strong>45 dias úteis</strong> de prazo de produção e instalação contados a partir da assinatura do contrato e da medição definitiva aprovada. Em caso de atraso por responsabilidade SAW, aplicamos multa contratual conforme acordado.</p>
+            <p>Atraso causado por terceiros — obra atrasada, mudança de projeto pelo cliente, acesso negado ao imóvel, entrega de materiais de responsabilidade do contratante — resulta em reagendamento sem ônus para a SAW. Essas condições ficam explícitas no contrato antes da assinatura.</p>
+          </div>
+        </details>
+
+        <!-- P12 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>A SAW consegue atender múltiplos projetos simultâneos do mesmo escritório?</summary>
+          <div class="faq__body">
+            <p>Sim, e é justamente esse o modelo que funciona melhor para escritórios com demanda recorrente. Com parceria formalizada, priorizamos a fila de projetos do escritório parceiro na programação de produção.</p>
+            <p>O que não fazemos é comprometer uma entrega existente para encaixar um projeto novo sem margem. Quando a agenda permite, informamos. Quando não permite, falamos antes de comprometer. Volume de trabalho contínuo é bem-vindo — desde que gerenciado com transparência nos dois lados.</p>
+          </div>
+        </details>
+
+        <!-- P13 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>Vocês fornecem amostras e padrões de chapas para aprovação antes da produção?</summary>
+          <div class="faq__body">
+            <p>Sim. Disponibilizamos catálogo físico de chapas e acabamentos para consulta no showroom ou, para escritórios parceiros, enviamos amostras das referências mais solicitadas. Para projetos com especificação de material fora do catálogo padrão, consultamos disponibilidade do fornecedor antes de incluir no orçamento.</p>
+            <p>A aprovação de material é uma etapa do projeto, não um detalhe de última hora. Fazemos questão de resolver isso antes de qualquer produção começar.</p>
+          </div>
+        </details>
+
+        <!-- P14 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>Como funciona a visita técnica para projetos em andamento ou pré-entrega de obra?</summary>
+          <div class="faq__body">
+            <p>A visita técnica de medição é gratuita e realizada pela equipe SAW. Para obras em andamento, agendamos a visita na janela mais próxima da entrega da alvenaria — momento ideal para medição definitiva sem risco de correção posterior.</p>
+            <p>Para obras em estágio inicial, podemos fazer uma visita prévia de levantamento com planta — mas o contrato e a produção só iniciam após medição definitiva do imóvel finalizado. Isso evita retrabalho dos dois lados.</p>
+          </div>
+        </details>
+
+        <!-- P15 — colapsada -->
+        <details class="faq__item reveal">
+          <summary>Qual o projeto mínimo para uma parceria B2B com a SAW?</summary>
+          <div class="faq__body">
+            <p>Não trabalhamos com ticket mínimo fixo para parceiros — avaliamos o projeto. O que define a viabilidade de atendimento é a complexidade do projeto, o prazo disponível e a localização da obra, não um número de corte.</p>
+            <p>Se você tem um projeto residencial de alto padrão com um único ambiente ou um complexo corporativo com 40 ambientes, o processo de consulta é o mesmo: traga o projeto, a gente analisa e responde com honestidade sobre o que consegue entregar e quando.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <div class="reveal" style="text-align:center; margin-top: 8px;">
+        <p style="font-size:.92rem; color:var(--text-2); margin-bottom:20px;">Tem uma dúvida que não está aqui? Fala direto com nossa equipe técnica.</p>
+        <a href="https://wa.me/5511947345529?text=Ol%C3%A1%2C+sou+arquiteto%2Fa+e+tenho+d%C3%BAvidas+sobre+parceria+com+a+SAW." class="btn btn--primary" target="_blank" rel="noopener">Falar com a equipe SAW</a>
+      </div>
+
     </div>
   </section>
 
@@ -2092,7 +2472,7 @@
             <span>🔒 Sem spam</span>
             <span>✓ Resposta em até 2h</span>
             <span>✓ Visita gratuita</span>
-            <span>✓ Sem compromisso</span>
+            <span>✓ Atendimento técnico</span>
           </div>
 
         </form>
@@ -2120,7 +2500,7 @@
               <strong>45 dias</strong><span>prazo médio</span>
             </div>
           </div>
-          <a href="https://wa.me/551134959479" target="_blank" rel="noopener" class="aside-whatsapp">
+          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vi%20os%20projetos%20no%20site%20e%20quero%20conversar%20sobre%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="aside-whatsapp">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Prefere chamar direto no WhatsApp?
           </a>
@@ -2138,9 +2518,9 @@
         <div class="orcamento__content">
           <span class="section-tag">Solicite seu orçamento</span>
           <h2>Transforme seu projeto<br />em realidade agora</h2>
-          <p>Entre em contato e receba atendimento personalizado. Da medição ao projeto 3D — sem compromisso.</p>
+          <p>Entre em contato e receba atendimento personalizado. Da medição ao projeto 3D — render incluso no orçamento.</p>
           <div class="orcamento__actions">
-            <a href="https://wa.me/551134959479" target="_blank" rel="noopener" class="btn btn--whatsapp btn--lg">
+            <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vi%20os%20projetos%20no%20site%20e%20quero%20conversar%20sobre%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="btn btn--whatsapp btn--lg">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               Falar no WhatsApp
             </a>
@@ -2178,7 +2558,7 @@
     <div class="container footer__inner">
       <div class="footer__brand">
         <a href="#" class="nav__logo" style="margin-bottom:14px; display:inline-flex;">
-          <img src="assets/logo-principal.png" alt="SAW Móveis" style="height:64px;" />
+          <img src="assets/logo-principal.png" alt="SAW Móveis" width="771" height="216" style="height:64px; width:auto;" />
         </a>
         <p>"Produtividade de fábrica<br />com essência artesanal"</p>
         <div class="footer__google">
@@ -2203,6 +2583,7 @@
           <a href="#depoimentos">Depoimentos</a>
           <a href="#galeria">Portfólio</a>
           <a href="catalogo-saw-moveis.pdf" download="Catalogo-SAW-Moveis.pdf" id="footerCatalogoLink">📄 Baixar Catálogo</a>
+          <a href="/politica-de-privacidade.html">Política de Privacidade</a>
         </div>
         <div class="footer__col">
           <strong>Contato</strong>
@@ -2218,10 +2599,18 @@
       <span>R. Teixeira, 99 · Jardim Itapecerica · Itapecerica da Serra/SP · CEP 06853-460</span>
       <span>vendas02@sawmoveis.com.br · (11) 3495-9479</span>
     </div>
+    <div class="container footer__legal" style="padding: 16px 0 24px; font-size: 0.78rem; color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 920px;">
+      <p style="margin: 0;">
+        <strong>Dados da empresa:</strong> a marca <strong>SAW Móveis</strong> é operada pela pessoa jurídica
+        <strong>Marcenaria SAW Móveis Ltda</strong> (CNPJ <strong>42.345.456/0001-33</strong>), com sede em Itapecerica da Serra/SP — Região Metropolitana de São Paulo.
+        Todos os contratos, notas fiscais e atendimentos comerciais são emitidos por esta entidade legal.
+        Contato oficial: <a href="mailto:atendimento@sawmoveis.com.br" style="color: inherit; text-decoration: underline;">atendimento@sawmoveis.com.br</a>.
+      </p>
+    </div>
   </footer>
 
   <!-- ===== WHATSAPP FLUTUANTE ===== -->
-  <a href="https://wa.me/551134959479?text=Olá! Vim pelo site e gostaria de solicitar um orçamento de móveis planejados." target="_blank" rel="noopener" class="whatsapp-float" aria-label="Falar no WhatsApp">
+  <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW%20e%20gostaria%20de%20saber%20mais%20sobre%20m%C3%B3veis%20planejados." target="_blank" rel="noopener" class="whatsapp-float" aria-label="Falar no WhatsApp">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     <span>Falar no WhatsApp</span>
   </a>
@@ -2287,6 +2676,12 @@
     const wizard = document.getElementById('diagWizard');
     if (!wizard) return;
 
+    // Inicializa background da seção imersiva na etapa 1
+    (function() {
+      const bg = document.getElementById('diagBg');
+      if (bg) bg.style.backgroundImage = "url('fotos/gal-cozinha-v2.webp')";
+    })();
+
     const state = {
       step: 1,
       ambiente: null,
@@ -2300,8 +2695,8 @@
 
     // Mapeamento de inspirações por estilo (3 fotos do catálogo SAW)
     const INSP = {
-      moderno: ['fotos/gal-cozinha.webp', 'fotos/sala-estar.webp', 'fotos/gal-dormitorio1.webp'],
-      classico: ['fotos/gal-cozinha2.webp', 'fotos/Sala ok.webp', 'fotos/gal-dormitorio.webp'],
+      moderno: ['fotos/gal-cozinha-v2.webp', 'fotos/sala-estar.webp', 'fotos/gal-dormitorio1.webp'],
+      classico: ['fotos/gal-cozinha2.webp', 'fotos/sala-ok-v2.webp', 'fotos/gal-dormitorio.webp'],
     };
 
     // Faixas de valor por tamanho × estilo (referência 2026, Grande SP)
@@ -2312,23 +2707,65 @@
       '25-plus':   { moderno: [38,80],  classico: [48,120] },
     };
 
+    // Mapa de nome de etapa pro GA4/Meta
+    const STEP_NAMES = { 1: 'ambiente', 2: 'tamanho', 3: 'estilo', 4: 'contato' };
+
+    // Mapa de background por etapa — Conceito A
+    const STEP_BG = {
+      1: 'fotos/gal-cozinha-v2.webp',
+      2: 'fotos/gal-dormitorio-v2.webp',
+      3: 'fotos/sala-ok-v2.webp',
+      4: 'fotos/gal-sala.webp',
+      5: 'fotos/gal-cozinha2.webp'
+    };
+    const diagBgEl = document.getElementById('diagBg');
+
+    function updateDiagBg(n) {
+      if (!diagBgEl) return;
+      const img = STEP_BG[n] || STEP_BG[1];
+      diagBgEl.style.backgroundImage = `url('${img}')`;
+    }
+
+    function updateDots(n) {
+      document.querySelectorAll('#diagDots .diag__dot').forEach(dot => {
+        const s = parseInt(dot.dataset.step, 10);
+        dot.classList.remove('active', 'done');
+        if (s < n) dot.classList.add('done');
+        else if (s === n) dot.classList.add('active');
+      });
+    }
+
     function showStep(n) {
       wizard.querySelectorAll('.diag__step').forEach(s => s.classList.remove('active'));
       wizard.querySelector(`.diag__step[data-step="${n}"]`)?.classList.add('active');
-      // progress bar
+      // progress bar legacy
       const totalSteps = 4;
       const pct = Math.min(100, (Math.min(n, totalSteps) / totalSteps) * 100);
       document.getElementById('diagBar').style.width = pct + '%';
-      // step indicators
+      // step indicators legacy
       wizard.querySelectorAll('.diag__progress-steps span').forEach(el => {
         const step = parseInt(el.dataset.step, 10);
         el.classList.remove('active', 'done');
         if (step < n) el.classList.add('done');
         else if (step === n) el.classList.add('active');
       });
+      // NOVO — dots + bg por etapa (Conceito A)
+      updateDots(n);
+      updateDiagBg(n);
       state.step = n;
-      // Scroll suave pro topo do wizard
-      wizard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Scroll suave pro topo da seção fullscreen
+      const diagSec = document.getElementById('diagnostico');
+      if (diagSec) diagSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Tracking de etapa (GA4 + Meta) — só etapas 1-4
+      if (n >= 1 && n <= 4) {
+        const stepName = STEP_NAMES[n] || String(n);
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'diagnostic_step', { step: n, step_name: stepName, event_category: 'wizard' });
+        }
+        if (typeof fbq !== 'undefined') {
+          fbq('trackCustom', 'DiagnosticStep', { step: n, step_name: stepName });
+        }
+      }
     }
 
     function updateNext() {
@@ -2457,8 +2894,8 @@
           nome: state.nome,
           telefone: state.tel,
           interesse: ambientes,
-          origem: 'diagnostico_projeto',
-          tags: ['diagnostico', 'cliente-final', 'morno'],
+          origem: 'pre_briefing_imersivo',
+          tags: ['pre-briefing', 'cliente-final', 'morno'],
           metadata: {
             email: state.email,
             ambiente: state.ambiente,
@@ -2472,8 +2909,18 @@
         })
       })
       .then(r => r.json())
-      .then(d => console.log('[diagnostico] OK lead:', d?.lead?.id || 'sem-id'))
-      .catch(err => console.error('[diagnostico] FALHOU:', err.message));
+      .then(d => {
+        console.log('[pre-briefing] OK lead:', d?.lead?.id || 'sem-id');
+        // Redireciona pra obrigado com nome
+        const primeiroNome = encodeURIComponent((state.nome || '').split(' ')[0]);
+        window.location.href = 'obrigado.html?nome=' + primeiroNome;
+      })
+      .catch(err => {
+        console.error('[pre-briefing] FALHOU:', err.message);
+        // Mesmo com erro de rede: redireciona (lead pode não ter gravado, mas UX não quebra)
+        const primeiroNome = encodeURIComponent((state.nome || '').split(' ')[0]);
+        window.location.href = 'obrigado.html?nome=' + primeiroNome;
+      });
 
       // Tracking
       if (typeof gtag !== 'undefined') gtag('event', 'diagnostic_completed', { event_category: 'lead_qualification', value: 70 });
@@ -2716,7 +3163,7 @@
       });
     }
     // Outros CTAs primários que vão pro Diagnóstico
-    document.querySelectorAll('a[href="#diagnostico"].btn--primary').forEach(function(a) {
+    document.querySelectorAll('a[href="#diag-wizard"].btn--primary').forEach(function(a) {
       if (a.id === 'heroPreBriefingBtn') return; // já tem tracking
       a.addEventListener('click', function() {
         if (typeof gtag !== 'undefined') gtag('event', 'pre_briefing_start', { location: 'inline', cta: 'primary' });

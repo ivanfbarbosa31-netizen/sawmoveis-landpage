@@ -309,8 +309,86 @@ const CAMPANHAS_API_URL = (
   location.hostname === 'localhost' || location.hostname === '127.0.0.1'
 ) ? 'http://localhost:3000' : CAMPANHAS_API_URL_PROD;
 
-/* ── Helper: captura de lead com logging visível em caso de erro ── */
+/* ═══════════════════════════════════════════════════════════
+   ATRIBUIÇÃO (Diana) — captura de origem do lead
+   Roda no load, guarda UTMs/gclid/referrer da PRIMEIRA visita em
+   sessionStorage (sobrevive à navegação pra obrigado.html/catalogo).
+   100% aditivo: não altera nada do fluxo de captura existente.
+   ═══════════════════════════════════════════════════════════ */
+const SAW_ATTR_KEY = 'saw_attr_v1';
+
+function _capturaAtribuicao() {
+  try {
+    // Mantém a PRIMEIRA origem da sessão (first-touch)
+    const existente = sessionStorage.getItem(SAW_ATTR_KEY);
+    if (existente) return JSON.parse(existente);
+
+    const qs = new URLSearchParams(location.search);
+    const get = (k) => (qs.get(k) || '').slice(0, 255) || null;
+
+    const utm_source = get('utm_source');
+    const gclid = get('gclid') || get('wbraid') || get('gbraid');
+    const fbclid = get('fbclid');
+
+    let origem_derivada = utm_source;
+    if (!origem_derivada) {
+      if (gclid) origem_derivada = 'google_ads';
+      else if (fbclid) origem_derivada = 'meta_ads';
+      else if (document.referrer) {
+        try {
+          const refHost = new URL(document.referrer).hostname;
+          origem_derivada = refHost.includes('sawmoveis') ? 'direto' : refHost;
+        } catch { origem_derivada = 'direto'; }
+      } else {
+        origem_derivada = 'direto';
+      }
+    }
+
+    const attr = {
+      lead_id: (self.crypto?.randomUUID?.() || ('lid_' + Date.now() + '_' + Math.random().toString(36).slice(2))),
+      utm_source,
+      utm_medium: get('utm_medium'),
+      utm_campaign: get('utm_campaign'),
+      utm_term: get('utm_term'),
+      utm_content: get('utm_content'),
+      gclid,
+      fbclid,
+      referrer: (document.referrer || '').slice(0, 500) || null,
+      landing_page: (location.pathname + location.search).slice(0, 500),
+      origem_derivada,
+      captado_em: new Date().toISOString()
+    };
+    sessionStorage.setItem(SAW_ATTR_KEY, JSON.stringify(attr));
+    return attr;
+  } catch (e) {
+    return {};
+  }
+}
+
+// Captura imediatamente no carregamento de qualquer página da LP
+const _SAW_ATTR = _capturaAtribuicao();
+
+/* ── Helper: captura de lead com logging visível em caso de erro ──
+   Injeta a atribuição de forma ADITIVA: campos novos top-level + cópia
+   dentro de metadata (failsafe — se a coluna ainda não existir no
+   Supabase, o dado fica preservado no metadata jsonb que já existe). */
 function _capturarLead(payload) {
+  const attr = _SAW_ATTR || {};
+  const enriquecido = Object.assign({}, payload, {
+    lead_id: attr.lead_id || payload.lead_id || null,
+    utm_source: attr.utm_source || null,
+    utm_medium: attr.utm_medium || null,
+    utm_campaign: attr.utm_campaign || null,
+    utm_term: attr.utm_term || null,
+    utm_content: attr.utm_content || null,
+    gclid: attr.gclid || null,
+    referrer: attr.referrer || null,
+    metadata: Object.assign({}, payload.metadata || {}, { atribuicao: attr })
+  });
+  return _enviarLead(enriquecido);
+}
+
+function _enviarLead(payload) {
   return fetch(CAMPANHAS_API_URL + '/leads', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -456,6 +534,24 @@ if (projetoForm) {
       lbImg.alt = img.alt || '';
       lightbox.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+
+      // Meta Pixel ViewContent — retargeting com contexto do card
+      const cardTitle = item.querySelector('.gal-item__label')?.textContent?.trim() || img.alt || 'Portfolio';
+      const cardCategoria = item.dataset.categoria || 'portfolio';
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'ViewContent', {
+          content_name: cardTitle,
+          content_category: cardCategoria,
+          content_type: 'portfolio_item'
+        });
+      }
+      // GA4 — também loga pra funil de análise
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'portfolio_view', {
+          content_name: cardTitle,
+          content_category: cardCategoria
+        });
+      }
     }
   });
 
