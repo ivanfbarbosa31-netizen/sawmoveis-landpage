@@ -35,6 +35,9 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: "1ebc4f25ae272b526973d1b76734c826"
           command: pages deploy . --project-name=sawmoveis-site --branch=main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: "1ebc4f25ae272b526973d1b76734c826"
 
       - name: Notificar sucesso
         if: success()
