@@ -800,7 +800,12 @@ body {
 
 /* ═══════════════════════════════════════
    PRÉ-BRIEFING FLUTUANTE (mobile only)
+   v2 — "Projeto 3D Grátis" · badge · pulse
 ═══════════════════════════════════════ */
+@keyframes prebriefing-pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.04); }
+}
 .pre-briefing-float {
   position: fixed;
   bottom: 28px;
@@ -808,33 +813,48 @@ body {
   z-index: 9999;
   background: #E85C1A;
   color: #fff;
-  padding: 14px 18px;
+  padding: 15px 22px;
   border-radius: 50px;
   font-family: Inter, sans-serif;
   font-weight: 700;
   font-size: .88rem;
-  box-shadow: 0 4px 20px rgba(232,92,26,.45), 0 2px 8px rgba(0,0,0,.3);
+  box-shadow: 0 6px 20px rgba(232,92,26,.5), 0 2px 8px rgba(0,0,0,.3);
   display: none;
   align-items: center;
   gap: 8px;
   text-decoration: none;
   transition: transform .2s ease, box-shadow .2s ease;
-  animation: pb-glow 3s ease-in-out infinite;
+  animation: prebriefing-pulse 4s ease-in-out infinite;
+}
+/* badge GRÁTIS */
+.pre-briefing-float::before {
+  content: 'GRÁTIS';
+  position: absolute;
+  top: -9px;
+  right: -4px;
+  background: #FFD700;
+  color: #1a1a1a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  padding: 3px 8px;
+  border-radius: 100px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.3);
 }
 .pre-briefing-float:hover {
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 8px 36px rgba(232,92,26,.6);
+  animation: none;
+  transform: scale(1.08);
+  box-shadow: 0 8px 36px rgba(232,92,26,.65);
   color: #fff;
-}
-@keyframes pb-glow {
-  0%,100% { box-shadow: 0 4px 20px rgba(232,92,26,.45), 0 2px 8px rgba(0,0,0,.3); }
-  50%      { box-shadow: 0 4px 36px rgba(232,92,26,.7),  0 2px 8px rgba(0,0,0,.3); }
 }
 @media (max-width: 768px) {
   .pre-briefing-float { display: inline-flex; }
 }
 @media (max-width: 640px) {
-  .pre-briefing-float { bottom: 16px; left: 16px; padding: 12px; border-radius: 50%; }
+  .pre-briefing-float { bottom: 16px; left: 16px; padding: 14px 18px; border-radius: 50px; }
+}
+@media (max-width: 420px) {
+  .pre-briefing-float { padding: 14px; border-radius: 50%; }
   .pre-briefing-float span { display: none; }
 }
 
@@ -845,10 +865,10 @@ body {
   gap: 6px;
   background: #E85C1A;
   color: #fff;
-  padding: 8px 14px;
+  padding: 9px 15px;
   border-radius: 50px;
   font-weight: 700;
-  font-size: .78rem;
+  font-size: .82rem;
   text-decoration: none;
   white-space: nowrap;
   transition: opacity .2s;
