@@ -731,3 +731,37 @@ document.querySelectorAll('.ad-slider').forEach(slider => {
     });
   }
 })();
+
+/* ═══════════════════════════════════════════════════════════
+   HIDE PRE-BRIEFING CTAs WHEN WIZARD IS VISIBLE
+   Esconde os botões de CTA "Pré-Briefing" enquanto o usuário
+   já está dentro do wizard (#diagnostico) — evita redundância visual.
+   Usa IntersectionObserver (performático, sem scroll listener).
+   ═══════════════════════════════════════════════════════════ */
+(function () {
+  if (!('IntersectionObserver' in window)) return; // browsers antigos: ignora gracefully
+
+  const wizardSection = document.getElementById('diagnostico');
+  if (!wizardSection) return;
+
+  /* Seleciona todos os CTAs de "ir pro Pré-Briefing" que devem sumir */
+  const prebriefingCtas = document.querySelectorAll(
+    '.pre-briefing-float, .nav__prebriefing-mobile, #heroPreBriefingBtn'
+  );
+  if (!prebriefingCtas.length) return;
+
+  /* Aplica transição suave em cada elemento */
+  prebriefingCtas.forEach(function (btn) {
+    btn.style.transition = 'opacity 200ms ease';
+  });
+
+  const wizardObserver = new IntersectionObserver(function (entries) {
+    const insideWizard = entries[0].isIntersecting;
+    prebriefingCtas.forEach(function (btn) {
+      btn.style.opacity        = insideWizard ? '0' : '';
+      btn.style.pointerEvents  = insideWizard ? 'none' : '';
+    });
+  }, { threshold: 0.3 });
+
+  wizardObserver.observe(wizardSection);
+})();
