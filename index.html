@@ -2952,189 +2952,369 @@
       });
     }
 
-    // Gera PDF profissional do Pré-Briefing (visual SAW + branding)
+    // Gera PDF premium do Pré-Briefing SAW — v2 (Bárbara + Marina, 2026-06-05)
+    // Capa: foto _SAG6701 + overlay betume 50% + logo SAW + Playfair
+    // Página 2: header/footer betume, 7 blocos copy Marina, paleta brand kit
     async function gerarPDF(s, min, max) {
       const ambientes = Array.isArray(s.ambiente)
         ? s.ambiente.join(', ')
         : (s.ambiente || '—');
-      const tamanhos = {'ate-8': 'até 8 m²', '8-15': '8 a 15 m²', '15-25': '15 a 25 m²', '25-plus': '25 m² ou +'};
-      const tamanhoLabel = tamanhos[s.tamanho] || s.tamanho || '—';
+      const tamanhoMap = {'ate-8': 'até 8 m²', '8-15': '8 a 15 m²', '15-25': '15 a 25 m²', '25-plus': '25 m² ou +'};
       const estiloLabel = (s.estilo === 'moderno') ? 'Moderno' : (s.estilo === 'classico' ? 'Clássico / Sofisticado' : s.estilo || '—');
+      const ambienteLabel = ambientes.charAt(0).toUpperCase() + ambientes.slice(1);
       const dataAtual = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+      // Assets base64 — carregados via fetch (mesma origem, sem CORS)
+      async function loadAssetB64(url) {
+        try {
+          const r = await fetch(url);
+          const buf = await r.arrayBuffer();
+          const bytes = new Uint8Array(buf);
+          let bin = '';
+          bytes.forEach(b => bin += String.fromCharCode(b));
+          return btoa(bin);
+        } catch(e) {
+          console.warn('[gerarPDF] asset não carregado:', url, e.message);
+          return null;
+        }
+      }
 
       try {
         const { jsPDF } = await carregarJsPDF();
         const doc = new jsPDF({ unit: 'pt', format: 'a4' });
         const W = doc.internal.pageSize.getWidth();
         const H = doc.internal.pageSize.getHeight();
+        const MARGIN = 40;
+        const CW = W - MARGIN * 2;
 
-        // Paleta SAW
-        const orange = [232, 92, 26];
-        const orangeLight = [255, 123, 59];
-        const dark = [17, 17, 19];
-        const text = [50, 50, 55];
-        const muted = [120, 120, 125];
+        // ── Paleta SAW Brand Kit (Bárbara) ──────────────────────────────────
+        const C = {
+          betume:    [26, 25, 24],
+          offwhite:  [248, 245, 240],
+          orange:    [232, 92, 26],
+          bege:      [244, 237, 227],
+          bodyText:  [61, 58, 55],
+          separator: [154, 149, 144],
+        };
 
-        // ═══ FUNDO ESCURO TOPO ═══
-        doc.setFillColor(...dark);
-        doc.rect(0, 0, W, 130, 'F');
-        // Faixa laranja
-        doc.setFillColor(...orange);
-        doc.rect(0, 125, W, 6, 'F');
+        // ── Fontes brand ─────────────────────────────────────────────────────
+        // Fontes carregadas via fetch (relativo ao index.html)
+        const fontPaths = [
+          { url: '_samples/fonts/Inter-Regular.ttf',  name: 'Inter-Regular.ttf',  family: 'Inter', style: 'normal' },
+          { url: '_samples/fonts/Inter-Bold.ttf',     name: 'Inter-Bold.ttf',     family: 'Inter', style: 'bold'   },
+          { url: '_samples/fonts/Inter-Italic.ttf',   name: 'Inter-Italic.ttf',   family: 'Inter', style: 'italic' },
+          { url: '_samples/fonts/PlayfairDisplay-Variable.ttf', name: 'Playfair.ttf', family: 'PlayfairDisplay', style: 'normal' },
+          { url: '_samples/fonts/PlayfairDisplay-Variable.ttf', name: 'Playfair-Bold.ttf', family: 'PlayfairDisplay', style: 'bold' },
+        ];
+        let fontsOk = false;
+        try {
+          for (const f of fontPaths) {
+            const b64 = await loadAssetB64(f.url);
+            if (b64) {
+              doc.addFileToVFS(f.name, b64);
+              doc.addFont(f.name, f.family, f.style);
+            }
+          }
+          fontsOk = true;
+        } catch(fe) {
+          console.warn('[gerarPDF] fontes brand não carregadas, usando helvetica:', fe.message);
+        }
 
-        // Logo SAW (texto)
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(255, 255, 255);
+        const setInter = (style) => doc.setFont(fontsOk ? 'Inter' : 'helvetica', style);
+        const setPlayfair = (style) => doc.setFont(fontsOk ? 'PlayfairDisplay' : 'helvetica', style);
+
+        // ── Logo SAW ─────────────────────────────────────────────────────────
+        const logoB64 = await loadAssetB64('_samples/logo-saw-base64.txt')
+          .then(async () => {
+            // logo-saw-base64.txt já é texto base64, não binário — carrega direto
+            const r = await fetch('_samples/logo-saw-base64.txt');
+            return r.ok ? (await r.text()).trim() : null;
+          }).catch(() => null);
+
+        // ── Foto capa ─────────────────────────────────────────────────────────
+        const capaB64 = await loadAssetB64('_samples/capa-SAG6701-base64.txt')
+          .then(async () => {
+            const r = await fetch('_samples/capa-SAG6701-base64.txt');
+            return r.ok ? (await r.text()).trim() : null;
+          }).catch(() => null);
+
+        // ════════════════════════════════════════════════════════
+        //  PÁGINA 1 — CAPA PREMIUM
+        // ════════════════════════════════════════════════════════
+        if (capaB64) {
+          doc.addImage(capaB64, 'JPEG', 0, 0, W, H);
+        } else {
+          // fallback: fundo betume sólido se foto não carregar
+          doc.setFillColor(...C.betume);
+          doc.rect(0, 0, W, H, 'F');
+        }
+
+        // Overlay betume 50%
+        doc.setGState(doc.GState({ opacity: 0.50 }));
+        doc.setFillColor(...C.betume);
+        doc.rect(0, 0, W, H, 'F');
+        doc.setGState(doc.GState({ opacity: 1.0 }));
+
+        // Logo topo esquerdo
+        if (logoB64) {
+          doc.addImage(logoB64, 'PNG', MARGIN, 40, 100, 28);
+        } else {
+          setPlayfair('bold');
+          doc.setFontSize(20);
+          doc.setTextColor(...C.offwhite);
+          doc.text('SAW MÓVEIS', MARGIN, 60);
+        }
+
+        // Bloco central capa
+        const centerY = H * 0.44;
+
+        setPlayfair('normal');
+        doc.setFontSize(11);
+        doc.setTextColor(...C.separator);
+        doc.text('Preparado exclusivamente para', W / 2, centerY - 60, { align: 'center' });
+
+        setPlayfair('bold');
         doc.setFontSize(28);
-        doc.text('SAW', 40, 60);
-        doc.setTextColor(...orange);
-        doc.text('MÓVEIS', 100, 60);
+        doc.setTextColor(...C.offwhite);
+        doc.text('Pré-Briefing', W / 2, centerY - 26, { align: 'center' });
 
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(200, 200, 200);
-        doc.setFontSize(9);
-        doc.text('Móveis Planejados sob Medida · 11 anos · +350 obras entregues', 40, 80);
+        setPlayfair('normal');
+        doc.setFontSize(18);
+        doc.setTextColor(...C.offwhite);
+        doc.text('personalizado', W / 2, centerY + 4, { align: 'center' });
 
-        doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        doc.text(`Documento gerado em ${dataAtual}`, W - 40, 80, { align: 'right' });
-
-        // ═══ TÍTULO ═══
-        doc.setTextColor(...dark);
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(22);
-        doc.text('Pré-Briefing Personalizado', 40, 175);
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(11);
-        doc.setTextColor(...muted);
-        doc.text(`Preparado para ${s.nome || 'você'}`, 40, 195);
-
-        // ═══ DADOS DO CLIENTE ═══
-        let y = 230;
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...orange);
-        doc.text('CLIENTE', 40, y);
-        doc.setDrawColor(...orange);
+        // Linha laranja
+        doc.setDrawColor(...C.orange);
         doc.setLineWidth(1);
-        doc.line(40, y + 4, 110, y + 4);
-        y += 22;
+        doc.line(W / 2 - 20, centerY + 20, W / 2 + 20, centerY + 20);
 
-        doc.setFont('helvetica', 'normal');
+        // Nome cliente
+        setInter('bold');
+        doc.setFontSize(16);
+        doc.setTextColor(...C.offwhite);
+        doc.text(s.nome || 'Cliente', W / 2, centerY + 46, { align: 'center' });
+
+        // Data
+        setInter('normal');
         doc.setFontSize(11);
-        doc.setTextColor(...text);
-        doc.text(`Nome:  ${s.nome || '—'}`, 40, y); y += 18;
-        doc.text(`WhatsApp:  ${s.tel || '—'}`, 40, y); y += 18;
-        if (s.email) { doc.text(`E-mail:  ${s.email}`, 40, y); y += 18; }
-        y += 10;
+        doc.setTextColor(...C.separator);
+        doc.text(dataAtual, W / 2, centerY + 64, { align: 'center' });
 
-        // ═══ PROJETO ═══
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(10);
-        doc.setTextColor(...orange);
-        doc.text('SEU PROJETO', 40, y);
-        doc.line(40, y + 4, 150, y + 4);
-        y += 22;
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(11);
-        doc.setTextColor(...text);
-        doc.text(`Ambiente:  ${ambientes.charAt(0).toUpperCase() + ambientes.slice(1)}`, 40, y); y += 18;
-        doc.text(`Tamanho:  ${tamanhoLabel}`, 40, y); y += 18;
-        doc.text(`Estilo:  ${estiloLabel}`, 40, y); y += 28;
-
-        // ═══ INVESTIMENTO (destaque) ═══
-        doc.setFillColor(252, 245, 240);
-        doc.roundedRect(40, y, W - 80, 80, 6, 6, 'F');
-        doc.setDrawColor(...orange);
-        doc.setLineWidth(0.5);
-        doc.roundedRect(40, y, W - 80, 80, 6, 6, 'S');
-
-        doc.setFont('helvetica', 'bold');
+        // Rodapé capa
+        setInter('normal');
         doc.setFontSize(9);
-        doc.setTextColor(...orange);
-        doc.text('REFERÊNCIA DE INVESTIMENTO', 56, y + 22);
+        doc.setTextColor(...C.offwhite);
+        doc.text('Marcenaria SAW Móveis · Itapecerica da Serra', W / 2, H - 36, { align: 'center' });
 
-        doc.setFont('helvetica', 'bold');
+        // ════════════════════════════════════════════════════════
+        //  PÁGINA 2 — CONTEÚDO
+        // ════════════════════════════════════════════════════════
+        doc.addPage();
+
+        // ── Header fixo pg2 ──────────────────────────────────────────────────
+        doc.setFillColor(...C.betume);
+        doc.rect(0, 0, W, 56, 'F');
+        if (logoB64) {
+          doc.addImage(logoB64, 'PNG', MARGIN, 14, 72, 20);
+        }
+        setInter('normal');
+        doc.setFontSize(9);
+        doc.setTextColor(...C.separator);
+        doc.text(`Pré-Briefing · ${s.nome || 'Cliente'}`, W - MARGIN, 32, { align: 'right' });
+
+        let y = 74;
+
+        // ── Helper section label ──────────────────────────────────────────────
+        function secLabel(lbl) {
+          setInter('normal');
+          doc.setFontSize(9);
+          doc.setTextColor(...C.separator);
+          doc.text(lbl.toUpperCase(), MARGIN, y);
+          doc.setDrawColor(...C.separator);
+          doc.setLineWidth(0.5);
+          doc.line(MARGIN, y + 4, W - MARGIN, y + 4);
+          y += 20;
+        }
+
+        // ── APRESENTAÇÃO ─────────────────────────────────────────────────────
+        secLabel('Apresentação');
+        setInter('normal');
+        doc.setFontSize(11);
+        doc.setTextColor(...C.bodyText);
+        const introParas = [
+          'Recebemos as informações do seu projeto.',
+          'Este documento reúne uma referência de investimento baseada no ambiente, dimensão e estilo que você escolheu — projetada a partir de obras similares já entregues pela SAW.',
+          'Nossa equipe entra em contato em até 2 horas úteis pelo WhatsApp informado para alinhar agenda e responder qualquer dúvida.',
+        ];
+        introParas.forEach(p => {
+          const linhas = doc.splitTextToSize(p, CW);
+          doc.text(linhas, MARGIN, y);
+          y += linhas.length * 15 + 5;
+        });
+        y += 8;
+
+        // ── CLIENTE + SEU PROJETO (2 colunas) ────────────────────────────────
+        const colW = (CW - 20) / 2;
+        const colL = MARGIN;
+        const colR = MARGIN + colW + 20;
+        let yL = y;
+        let yR = y;
+
+        // Coluna esquerda — CLIENTE
+        setInter('bold');
+        doc.setFontSize(9);
+        doc.setTextColor(...C.orange);
+        doc.text('CLIENTE', colL, yL);
+        doc.setDrawColor(...C.orange);
+        doc.setLineWidth(0.7);
+        doc.line(colL, yL + 3, colL + 48, yL + 3);
+        yL += 18;
+
+        [['Nome', s.nome || '—'], ['WhatsApp', s.tel || '—'], ['E-mail', s.email || '—']].forEach(([lbl, val]) => {
+          setInter('bold');
+          doc.setFontSize(9);
+          doc.setTextColor(...C.bodyText);
+          doc.text(lbl + ':', colL, yL);
+          setInter('normal');
+          doc.setFontSize(11);
+          const ls = doc.splitTextToSize(val, colW - 8);
+          doc.text(ls, colL, yL + 13);
+          yL += ls.length * 14 + 10;
+        });
+
+        // Coluna direita — SEU PROJETO
+        setInter('bold');
+        doc.setFontSize(9);
+        doc.setTextColor(...C.orange);
+        doc.text('SEU PROJETO', colR, yR);
+        doc.setDrawColor(...C.orange);
+        doc.setLineWidth(0.7);
+        doc.line(colR, yR + 3, colR + 70, yR + 3);
+        yR += 18;
+
+        [
+          ['Ambiente', ambienteLabel],
+          ['Dimensão aprox.', `${s.tamanho === 'ate-8' ? 'até 8' : s.tamanho === '25-plus' ? '25 m² ou +' : s.tamanho.replace('-', ' a ')} m²`],
+          ['Estilo', estiloLabel],
+        ].forEach(([lbl, val]) => {
+          setInter('bold');
+          doc.setFontSize(9);
+          doc.setTextColor(...C.bodyText);
+          doc.text(lbl + ':', colR, yR);
+          setInter('normal');
+          doc.setFontSize(11);
+          const ls = doc.splitTextToSize(val, colW - 8);
+          doc.text(ls, colR, yR + 13);
+          yR += ls.length * 14 + 10;
+        });
+
+        y = Math.max(yL, yR) + 12;
+
+        // ── REFERÊNCIA DE INVESTIMENTO ────────────────────────────────────────
+        const boxH = 86;
+        doc.setFillColor(...C.bege);
+        doc.roundedRect(MARGIN, y, CW, boxH, 5, 5, 'F');
+        doc.setFillColor(...C.orange);
+        doc.rect(MARGIN, y, 3, boxH, 'F');
+
+        setInter('bold');
+        doc.setFontSize(9);
+        doc.setTextColor(...C.orange);
+        doc.text('REFERÊNCIA DE INVESTIMENTO', MARGIN + 14, y + 20);
+
+        setPlayfair('bold');
         doc.setFontSize(22);
-        doc.setTextColor(...dark);
-        doc.text(`R$ ${min} mil  –  R$ ${max} mil`, 56, y + 50);
+        doc.setTextColor(...C.betume);
+        doc.text(`R$ ${min} mil  –  R$ ${max} mil`, MARGIN + 14, y + 48);
 
-        doc.setFont('helvetica', 'italic');
+        setInter('italic');
         doc.setFontSize(9);
-        doc.setTextColor(...muted);
-        doc.text('Baseado em projetos similares já entregues pela SAW. Orçamento exato após visita técnica.', 56, y + 70);
-        y += 105;
+        doc.setTextColor(...C.bodyText);
+        doc.text(
+          'Baseado em projetos similares já entregues pela SAW.\nO valor exato é definido após visita técnica e detalhamento de materiais.',
+          MARGIN + 14, y + 65, { maxWidth: CW - 20 }
+        );
+        y += boxH + 18;
 
-        // ═══ CHECKLIST ═══
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(10);
-        doc.setTextColor(...orange);
-        doc.text('CHECKLIST PARA SUA VISITA TÉCNICA', 40, y);
-        doc.line(40, y + 4, 230, y + 4);
-        y += 22;
-
-        const items = [
+        // ── CHECKLIST ─────────────────────────────────────────────────────────
+        secLabel('Checklist para sua visita técnica');
+        const checkItems = [
           'Medidas aproximadas do ambiente (largura × profundidade × pé direito)',
           'Fotos do espaço atual em diferentes ângulos',
           'Localização de tomadas, janelas, portas e pontos de iluminação',
-          'Lista de funcionalidades essenciais (ex: 4 panelas + air fryer)',
-          'Faixa de investimento aprovada — otimiza materiais sem retrabalho'
+          'Lista de funcionalidades essenciais (ex: 4 panelas, air fryer, lava-louças)',
+          'Referências visuais que você gosta — foto de revista, Pinterest, obra vista',
+          'Faixa de investimento confirmada com quem decide — agiliza o processo',
         ];
-        doc.setFont('helvetica', 'normal');
+        setInter('normal');
         doc.setFontSize(10);
-        doc.setTextColor(...text);
-        items.forEach(item => {
-          doc.setTextColor(...orange);
-          doc.text('☐', 42, y);
-          doc.setTextColor(...text);
-          const linhas = doc.splitTextToSize(item, W - 90);
-          doc.text(linhas, 58, y);
-          y += linhas.length * 14 + 4;
+        doc.setTextColor(...C.bodyText);
+        checkItems.forEach(item => {
+          doc.setDrawColor(...C.separator);
+          doc.setLineWidth(0.5);
+          doc.rect(MARGIN, y - 9, 10, 10);
+          const ls = doc.splitTextToSize(item, CW - 18);
+          doc.text(ls, MARGIN + 14, y);
+          y += ls.length * 14 + 4;
         });
         y += 10;
 
-        // ═══ FOOTER (rodapé escuro) ═══
-        const footerY = H - 90;
-        doc.setFillColor(...dark);
-        doc.rect(0, footerY, W, 90, 'F');
-        doc.setFillColor(...orange);
-        doc.rect(0, footerY, W, 4, 'F');
+        // ── O QUE ACONTECE AGORA ─────────────────────────────────────────────
+        secLabel('O que acontece agora');
+        const steps = [
+          'Em até 2 horas úteis, nossa equipe entra em contato pelo WhatsApp informado para confirmar interesse e alinhar agenda.',
+          'Agendamos visita técnica gratuita — vemos o ambiente, tiramos as medidas e entendemos o que você precisa que o projeto resolva.',
+          'Em até 5 dias úteis após a visita, você recebe orçamento detalhado com projeto 3D técnico. Incluso, sem custo adicional.',
+          'Projeto aprovado: fabricamos em 45 dias na nossa fábrica própria em Itapecerica da Serra. Garantia de 3 anos em estrutura, ferragens e acabamento — escrita em contrato.',
+        ];
+        steps.forEach((step, i) => {
+          setInter('bold');
+          doc.setFontSize(11);
+          doc.setTextColor(...C.orange);
+          doc.text(`${i + 1}.`, MARGIN, y);
+          setInter('normal');
+          doc.setFontSize(10);
+          doc.setTextColor(...C.bodyText);
+          const ls = doc.splitTextToSize(step, CW - 18);
+          doc.text(ls, MARGIN + 14, y);
+          y += ls.length * 14 + 7;
+        });
 
-        doc.setTextColor(255, 255, 255);
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(12);
-        doc.text('Quando estiver pronto:', 40, footerY + 28);
+        // ── FOOTER pg2 ────────────────────────────────────────────────────────
+        const fY = H - 80;
+        doc.setFillColor(...C.betume);
+        doc.rect(0, fY, W, 80, 'F');
+        doc.setFillColor(...C.orange);
+        doc.rect(0, fY, W, 2, 'F');
 
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(11);
-        doc.setTextColor(...orangeLight);
-        doc.text('WhatsApp:', 40, footerY + 48);
-        doc.setTextColor(255, 255, 255);
-        doc.text(' (11) 3495-9479', 100, footerY + 48);
-
-        doc.setTextColor(...orangeLight);
-        doc.text('Endereço:', 40, footerY + 64);
-        doc.setTextColor(255, 255, 255);
-        doc.text(' Rua Taquaral, Sala 10 — Itapecerica da Serra/SP', 100, footerY + 64);
-
+        setInter('normal');
         doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        doc.text('11 anos · +350 obras · 45 dias entrega · 3 anos garantia', W / 2, footerY + 82, { align: 'center' });
+        doc.setTextColor(...C.offwhite);
+        doc.text('Marcenaria SAW Móveis Ltda  ·  CNPJ 42.345.456/0001-33  ·  Rua Teixeira, 99  ·  Itapecerica da Serra/SP  ·  CEP 06853-460', W / 2, fY + 14, { align: 'center' });
+        doc.text('WhatsApp (11) 3495-9479  ·  sawmoveis.com.br', W / 2, fY + 26, { align: 'center' });
+        doc.text('11 anos no mercado  ·  +350 obras entregues  ·  45 dias de fabricação  ·  Ferragens FGV (Itália) e Häfele (Alemanha)  ·  MDF Eucatex', W / 2, fY + 38, { align: 'center' });
+        doc.text('3 anos de garantia em estrutura, ferragens e acabamento', W / 2, fY + 50, { align: 'center' });
+
+        // LGPD
+        doc.setFontSize(7);
+        doc.setTextColor(...C.separator);
+        doc.text(
+          'Seus dados são usados exclusivamente para elaboração do orçamento e contato sobre seu projeto. Não compartilhamos com terceiros.  Política de Privacidade: sawmoveis.com.br/politica-de-privacidade',
+          W / 2, fY + 64, { align: 'center', maxWidth: CW }
+        );
 
         // Salvar
         const filename = `pre-briefing-saw-${(s.nome || 'cliente').split(' ')[0].toLowerCase()}.pdf`;
         doc.save(filename);
 
-        if (typeof gtag !== 'undefined') gtag('event', 'pre_briefing_pdf_downloaded', { format: 'pdf' });
+        if (typeof gtag !== 'undefined') gtag('event', 'pre_briefing_pdf_downloaded', { format: 'pdf', version: 'v2_premium' });
         return;
       } catch (err) {
         console.error('[gerarPDF] falhou jsPDF, fallback pra TXT:', err);
       }
 
-      // Fallback TXT (se jsPDF falhar — sem internet, etc)
-      const conteudo = `SAW MÓVEIS — Pré-Briefing\n\nCliente: ${s.nome}\nWhatsApp: ${s.tel}\nAmbiente: ${ambientes}\nTamanho: ${tamanhoLabel}\nEstilo: ${estiloLabel}\n\nReferência: R$ ${min} mil – R$ ${max} mil\n\nContato: (11) 3495-9479`;
+      // Fallback TXT (se jsPDF falhar)
+      const conteudo = `SAW MÓVEIS — Pré-Briefing\n\nCliente: ${s.nome}\nWhatsApp: ${s.tel}\nAmbiente: ${ambientes}\nEstilo: ${estiloLabel}\n\nReferência: R$ ${min} mil – R$ ${max} mil\n\nContato: (11) 3495-9479\nsawmoveis.com.br`;
       const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
