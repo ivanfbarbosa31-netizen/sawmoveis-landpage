@@ -1666,3 +1666,22 @@ body {
 /* Hamburger nav — touch target >= 44px (era 28px) */
 .nav__burger { padding: 12px; }
 
+/* ===== FIX MOBILE — botão "Gerar meu Pré-Briefing" Etapa 4 wizard (2026-06-05) ===== */
+/* Fonte menor e padding reduzido para evitar texto vazando em telas <768px (~390px iPhone) */
+@media (max-width: 768px) {
+  .diag__nav .btn--lg {
+    font-size: clamp(0.82rem, 3.5vw, 1rem);
+    padding: 14px 16px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 420px) {
+  .diag__nav .btn--lg {
+    padding: 14px 12px;
+    font-size: 0.82rem;
+  }
+}
+
