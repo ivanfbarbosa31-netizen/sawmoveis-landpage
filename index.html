@@ -1571,6 +1571,10 @@
     /* Progresso bar original — oculto (substituído pelos dots) */
     .diag__progress { display: none; }
 
+    /* ════ CONTROLE DE ETAPAS — obrigatório pra navegação funcionar ════ */
+    .diag__step { display: none; }
+    .diag__step.active { display: block; }
+
     #diag-wizard { scroll-margin-top: 80px; }
     @keyframes diagFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     /* Headline Playfair gigante — Conceito A */
