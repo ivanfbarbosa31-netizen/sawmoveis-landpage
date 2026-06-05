@@ -211,6 +211,16 @@
         </a>
         <a href="#diag-wizard" class="btn btn--primary">Fazer meu Pré-Briefing →</a>
       </div>
+      <!-- botão compacto visível só em mobile (<900px), ao lado do burger -->
+      <a href="#diag-wizard" class="nav__prebriefing-mobile" aria-label="Pré-Briefing">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        Pre-Briefing →
+      </a>
       <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -2608,6 +2618,16 @@
       </p>
     </div>
   </footer>
+
+  <!-- ===== PRÉ-BRIEFING FLUTUANTE (mobile only — esquerda) ===== -->
+  <a href="#diag-wizard" class="pre-briefing-float" aria-label="Fazer meu Pré-Briefing">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="17"/>
+    </svg>
+    <span>Pré-Briefing</span>
+  </a>
 
   <!-- ===== WHATSAPP FLUTUANTE ===== -->
   <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW%20e%20gostaria%20de%20saber%20mais%20sobre%20m%C3%B3veis%20planejados." target="_blank" rel="noopener" class="whatsapp-float" aria-label="Falar no WhatsApp">
