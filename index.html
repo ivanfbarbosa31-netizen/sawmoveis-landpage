@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- build:2026-06-17-v2 -->
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -9,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2026-06-17-v2" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://connect.facebook.net" />
@@ -154,16 +155,52 @@
   </script>
 
   <!-- CLIQUE WHATSAPP → CONVERSÃO Google Ads -->
+  <!-- FIX 2026-06-07 Rafael: Tag 1 deduplicated — max 1 conversion per page session
+       Prevents users clicking 2+ of the 6 WhatsApp buttons from counting as
+       2+ conversions. whatsapp_click still fires on every click (engagement metric). -->
   <script>
+    // Passo 0 Plannus (2026-06-15 Rafael): links wa.me substituídos por /to-whatsapp?origem=
+    // O tracking detecta ambos os padrões para manter retrocompatibilidade
+    // getSawParam: lê UTM/gclid do sessionStorage (mesmo padrão do script.js)
+    function getSawParam(k) {
+      try { return sessionStorage.getItem('saw_' + k) || ''; } catch(e) { return ''; }
+    }
+    // buildWaTrackerHref: injeta UTMs do sessionStorage na URL /to-whatsapp
+    // Chamado no momento do clique para pegar os valores mais recentes
+    function buildWaTrackerHref(link) {
+      var href = link.getAttribute('href');
+      // Só manipula links /to-whatsapp (links wa.me diretos passam inalterados)
+      if (!href || href.indexOf('/to-whatsapp') === -1) return href;
+      var u = new URL(href, location.origin);
+      var keys = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid'];
+      keys.forEach(function(k) {
+        var v = getSawParam(k);
+        if (v && !u.searchParams.get(k)) u.searchParams.set(k, v);
+      });
+      // Passa o referrer atual (path apenas, sem dados externos)
+      if (!u.searchParams.get('referrer')) u.searchParams.set('referrer', location.pathname);
+      return u.toString();
+    }
+
+    var _waCvFired = false;
     document.addEventListener('click', function (e) {
-      var link = e.target.closest('a[href*="wa.me"]');
+      // Detecta clique em botão WhatsApp — tanto /to-whatsapp quanto wa.me (fallback)
+      var link = e.target.closest('a[href*="/to-whatsapp"], a[href*="wa.me"]');
       if (!link) return;
+      // Injeta UTMs na href /to-whatsapp antes de navegar
+      var newHref = buildWaTrackerHref(link);
+      if (newHref && newHref !== link.href) {
+        link.href = newHref;
+      }
       if (typeof gtag === 'function') {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-18138350559/tYVQCMOXgK8cEN-HhclD',
-          'value': 70.0,
-          'currency': 'BRL'
-        });
+        if (!_waCvFired) {
+          _waCvFired = true;
+          gtag('event', 'conversion', {
+            'send_to': 'AW-18138350559/tYVQCMOXgK8cEN-HhclD',
+            'value': 70.0,
+            'currency': 'BRL'
+          });
+        }
         gtag('event', 'whatsapp_click', {
           'link_url': link.href,
           'link_text': (link.innerText || '').trim().slice(0, 80)
@@ -205,22 +242,8 @@
         <a href="tel:1134959479">(11) 3495-9479</a>
       </div>
       <div class="nav__actions">
-        <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW%20e%20gostaria%20de%20saber%20mais%20sobre%20m%C3%B3veis%20planejados." target="_blank" rel="noopener" class="btn btn--whatsapp">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          WhatsApp
-        </a>
-        <a href="#diag-wizard" class="btn btn--primary">Projeto 3D Grátis →</a>
+        <a href="#form-principal" class="btn btn--primary">Solicitar avaliação inicial</a>
       </div>
-      <!-- botão compacto visível só em mobile (<900px), ao lado do burger -->
-      <a href="#diag-wizard" class="nav__prebriefing-mobile" aria-label="Projeto 3D Grátis">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="1"/>
-          <line x1="3" y1="12" x2="12" y2="12"/>
-          <line x1="12" y1="3" x2="12" y2="21"/>
-          <line x1="12" y1="17" x2="21" y2="17"/>
-        </svg>
-        Projeto 3D Grátis →
-      </a>
       <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -229,12 +252,11 @@
       <a href="#galeria">Ver Projetos</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#faq">Dúvidas Frequentes</a>
-      <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW%20e%20gostaria%20de%20saber%20mais%20sobre%20m%C3%B3veis%20planejados." target="_blank" rel="noopener" class="btn btn--whatsapp">WhatsApp</a>
-      <a href="#diag-wizard" class="btn btn--primary">Projeto 3D Grátis →</a>
+      <a href="#form-principal" class="btn btn--primary">Solicitar avaliação inicial</a>
     </div>
   </header>
 
-  <!-- ===== HERO ===== -->
+  <!-- ===== HERO — original (revertido 17/06/2026) ===== -->
   <section class="hero">
     <div class="hero__img"></div>
     <div class="container hero__inner">
@@ -252,23 +274,18 @@
           <strong>+350 projetos entregues para arquitetos e construtoras em São Paulo.</strong> Projeto 3D técnico, precisão CNC, prazo de 45 dias respeitado.
         </p>
 
-        <!-- CTA primário único pro Diagnóstico (substitui mini-form) -->
         <div class="hero__form reveal hero__form--cta-only">
-          <span class="hero__form-label">✨ Comece agora · Em 90 segundos você tem seu briefing personalizado</span>
+          <span class="hero__form-label">Fale com a nossa equipe — resposta no mesmo dia</span>
           <div class="hero__cta-stack">
-            <a href="#diag-wizard" id="heroPreBriefingBtn" class="btn btn--primary btn--lg btn--full">
-              Fazer meu Pré-Briefing
+            <a href="#form-principal" class="btn btn--primary btn--lg btn--full" id="heroCTABtn">
+              Falar com a SAW
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW%20e%20j%C3%A1%20sei%20o%20que%20quero.%20Pode%20me%20chamar%3F" target="_blank" rel="noopener" id="heroWhatsBtn" class="hero__link-secondary">
-              Já sei o que quero · Falar no WhatsApp
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
             </a>
           </div>
           <div class="hero__form-note">
-            <span>⏱ 90 segundos</span>
-            <span>📋 PDF gratuito</span>
-            <span>💬 Sem spam. Seus dados são usados apenas para atendimento do projeto.</span>
+            <span>&#10003; 3 anos de garantia</span>
+            <span>&#10003; Projeto 3D incluso</span>
+            <span>&#10003; Atendimento técnico</span>
           </div>
         </div>
       </div>
@@ -356,6 +373,287 @@
 
     </div>
   </section>
+
+  <!-- ===== FORMULÁRIO PRINCIPAL — 2 campos: Nome + WhatsApp ===== -->
+  <section class="form-principal-section section" id="form-principal">
+    <div class="container">
+
+      <div class="fpa__wrap reveal">
+
+        <div class="fpa__header reveal">
+          <span class="section-tag">Comece pelo espaço</span>
+          <h2>Comece pelo espaço. A SAW cuida do resto.</h2>
+          <p>Render 3D incluso. Fábrica própria em Itapecerica da Serra. Resposta no mesmo dia.</p>
+        </div>
+
+        <div class="fpa__body reveal">
+          <form class="fpa__form" id="formPrincipal" novalidate>
+
+            <div class="fpa__field">
+              <label for="fpa-nome">Nome</label>
+              <input type="text" id="fpa-nome" name="nome" placeholder="Como prefere ser chamado?" autocomplete="name" required />
+            </div>
+
+            <div class="fpa__field">
+              <label for="fpa-tel">WhatsApp</label>
+              <input type="tel" id="fpa-tel" name="telefone" placeholder="(11) 99999-9999" autocomplete="tel" inputmode="numeric" required />
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full btn--lg fpa__btn" id="fpaSubmitBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Falar no WhatsApp
+            </button>
+
+            <p class="fpa__lgpd">
+              Seus dados ficam só com a SAW. Nenhum spam.
+              Ao enviar, você concorda com nossa <a href="/politica-de-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.
+            </p>
+
+          </form>
+
+          <!-- Estado de sucesso (oculto até submit OK) -->
+          <div class="fpa__success" id="fpaSuccess" aria-live="polite" style="display:none;">
+            <div class="fpa__success-icon">&#10003;</div>
+            <h3>Recebido!</h3>
+            <p>Abrindo o WhatsApp agora...</p>
+          </div>
+
+          <div class="fpa__microcopy">
+            <span>&#10003; Seus dados ficam só com a SAW. Nenhum spam.</span>
+          </div>
+        </div>
+
+        <div class="fpa__aside reveal">
+          <div class="fpa__aside-rating">&#9733;&#9733;&#9733;&#9733;&#9733; <strong>5.0</strong> <span>Google</span></div>
+          <blockquote class="fpa__aside-quote">
+            "Entregaram dentro do prazo e com acabamento impecável. Fechamos o segundo contrato."
+          </blockquote>
+          <div class="fpa__aside-author">
+            <div class="avatar-circle">CY</div>
+            <div>
+              <strong>CYMS &middot; Projetos Hospitalares</strong>
+              <span>Parceiro B2B verificado</span>
+            </div>
+          </div>
+          <div class="fpa__aside-stats">
+            <div><strong>350+</strong><span>obras</span></div>
+            <div><strong>11 anos</strong><span>mercado</span></div>
+            <div><strong>3 anos</strong><span>garantia</span></div>
+          </div>
+        </div>
+
+      </div><!-- /.fpa__wrap -->
+    </div>
+  </section>
+
+  <!-- cta-float removido 17/06/2026 — substituído pelo whatsapp-float verde -->
+
+  <!-- ===== ESTILOS — FORM PRINCIPAL + WHATSAPP FLUTUANTE (ajuste 17/06/2026) ===== -->
+  <style>
+
+    /* ════ BOTÃO WHATSAPP FLUTUANTE VERDE ════ */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #25D366;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.45), 0 2px 8px rgba(0,0,0,.30);
+      transition: transform .2s ease, box-shadow .2s ease;
+      text-decoration: none;
+    }
+    .whatsapp-fab:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(37,211,102,.60);
+    }
+    .whatsapp-fab:active { transform: translateY(-1px); }
+    @media (max-width: 480px) {
+      .whatsapp-fab { bottom: 16px; right: 16px; width: 52px; height: 52px; }
+    }
+
+    /* ════ SEÇÃO FORM PRINCIPAL ════ */
+    /* scroll-margin-top: garante que o header fixo (88px) não cubra o form ao usar âncora */
+    #form-principal {
+      scroll-margin-top: 96px;
+    }
+    .form-principal-section {
+      background: var(--bg-2, #191919);
+      border-top: 1px solid var(--border, rgba(255,255,255,0.07));
+      border-bottom: 1px solid var(--border, rgba(255,255,255,0.07));
+    }
+    .fpa__wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      gap: 0 56px;
+      align-items: start;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .fpa__header {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .fpa__body {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .fpa__aside {
+      padding: 32px 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+      border: 1px solid var(--border, rgba(255,255,255,0.07));
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    @media (max-width: 768px) {
+      .fpa__wrap { grid-template-columns: 1fr; gap: 32px 0; }
+      .fpa__aside { order: -1; }
+    }
+
+    /* ════ FORM ════ */
+    .fpa__form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .fpa__field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .fpa__field label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-2, #AAA);
+      letter-spacing: 0.02em;
+    }
+    .fpa__field input,
+    .fpa__field select {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--text, #F4F4F4);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .fpa__field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-color: rgba(255,255,255,0.04);
+      padding-right: 40px;
+      cursor: pointer;
+    }
+    .fpa__field input:focus,
+    .fpa__field select:focus {
+      outline: none;
+      border-color: #E85C1A;
+      box-shadow: 0 0 0 3px rgba(232,92,26,0.12);
+    }
+    .fpa__field input::placeholder { color: rgba(255,255,255,0.3); }
+    .fpa__field select option { background: #1a1a1a; color: #F4F4F4; }
+    .fpa__field.is-error input,
+    .fpa__field.is-error select { border-color: #ef4444; }
+
+    /* ════ CTA ════ */
+    .fpa__btn {
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .fpa__btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* ════ LGPD ════ */
+    .fpa__lgpd {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.5;
+      text-align: center;
+      margin-top: 4px;
+    }
+    .fpa__lgpd a { color: #E85C1A; text-decoration: underline; }
+
+    /* ════ MICROCOPY ════ */
+    .fpa__microcopy {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      margin-top: 14px;
+      justify-content: center;
+    }
+    .fpa__microcopy span { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+
+    /* ════ SUCCESS STATE ════ */
+    .fpa__success {
+      text-align: center;
+      padding: 32px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .fpa__success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.35);
+      color: #22c55e;
+      font-size: 1.6rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .fpa__success h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text, #F4F4F4); margin: 0; }
+    .fpa__success p { color: var(--text-2, #AAA); font-size: 0.95rem; margin: 0; }
+
+    /* ════ ASIDE ════ */
+    .fpa__aside-rating { font-size: 0.95rem; color: var(--text-2, #888); }
+    .fpa__aside-rating strong { color: var(--text, #F4F4F4); font-size: 1.1rem; }
+    .fpa__aside-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--text, #F4F4F4);
+      font-style: italic;
+      line-height: 1.6;
+      border-left: 3px solid #E85C1A;
+      padding-left: 14px;
+      margin: 0;
+    }
+    .fpa__aside-author { display: flex; align-items: center; gap: 12px; }
+    .fpa__aside-author strong { display: block; font-size: 0.9rem; color: var(--text, #F4F4F4); }
+    .fpa__aside-author span { font-size: 0.78rem; color: var(--text-2, #888); }
+    .fpa__aside-stats {
+      display: flex;
+      gap: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .fpa__aside-stats div { display: flex; flex-direction: column; gap: 2px; }
+    .fpa__aside-stats strong { color: #E85C1A; font-size: 1.1rem; font-family: 'Playfair Display', serif; }
+    .fpa__aside-stats span { font-size: 0.75rem; color: var(--text-2, #888); }
+  </style>
 
   <!-- ===== NÚMEROS ===== -->
   <section class="numeros" id="numeros">
@@ -585,13 +883,10 @@
         <p>Nenhum projeto desta categoria nesta seleção.<br />Veja todos os <strong>+350 projetos</strong> direto pelo WhatsApp 👇</p>
       </div>
 
-      <!-- CTA dupla -->
+      <!-- CTA -->
       <div class="galeria__cta reveal">
-        <a href="#diag-wizard" class="btn btn--primary btn--lg">
-          Fazer meu Pré-Briefing →
-        </a>
-        <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Quero%20ver%20mais%20projetos%20da%20SAW%20M%C3%B3veis." target="_blank" rel="noopener" class="btn btn--outline btn--lg">
-          Ver mais projetos no WhatsApp →
+        <a href="#form-principal" class="btn btn--primary btn--lg">
+          Fazer meu Pré-Orçamento →
         </a>
       </div>
     </div>
@@ -665,7 +960,7 @@
       </div>
 
       <div class="antes-depois__cta reveal">
-        <a href="#diag-wizard" class="btn btn--primary btn--lg">Fazer meu Pré-Briefing →</a>
+        <a href="#form-principal" class="btn btn--primary btn--lg">Fazer meu Pré-Orçamento →</a>
       </div>
     </div>
   </section>
@@ -810,7 +1105,7 @@
           <h3>Residencial</h3>
           <p>Cozinhas, dormitórios, closets, home offices, áreas gourmet e projetos completos.</p>
           <div class="seg-card__case">+350 famílias atendidas</div>
-          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20residencial%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
+          <a href="#form-principal" class="seg-card__cta">Solicitar avaliação inicial →</a>
         </div>
 
         <div class="seg-card reveal">
@@ -823,7 +1118,7 @@
           <h3>Corporativo</h3>
           <p>Escritórios, salas de reunião, recepções e estações de trabalho.</p>
           <div class="seg-card__case">Case: Cordicell</div>
-          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20corporativo%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
+          <a href="#form-principal" class="seg-card__cta">Solicitar avaliação inicial →</a>
         </div>
 
         <div class="seg-card reveal">
@@ -836,7 +1131,7 @@
           <h3>Hospitais e Clínicas</h3>
           <p>Balcões, consultórios, áreas de espera e mobiliário hospitalar especializado.</p>
           <div class="seg-card__case">Case: CYMS Hospital Alemão</div>
-          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20hospitalar%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
+          <a href="#form-principal" class="seg-card__cta">Solicitar avaliação inicial →</a>
         </div>
 
         <div class="seg-card reveal">
@@ -849,7 +1144,7 @@
           <h3>Apartamentos Decorados</h3>
           <p>Ambientes integrados de alto padrão para construtoras e lançamentos.</p>
           <div class="seg-card__case">Cases: MEGA · CP · Interlagos · Panamby</div>
-          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20de%20apartamento%20decorado%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
+          <a href="#form-principal" class="seg-card__cta">Solicitar avaliação inicial →</a>
         </div>
 
         <div class="seg-card reveal">
@@ -862,7 +1157,7 @@
           <h3>Laboratórios</h3>
           <p>Bancadas técnicas, armários especializados e mobiliário para equipamentos.</p>
           <div class="seg-card__case">Case: G.R.F. Laboratórios LTDA</div>
-          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20de%20laborat%C3%B3rio%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
+          <a href="#form-principal" class="seg-card__cta">Solicitar avaliação inicial →</a>
         </div>
 
         <div class="seg-card reveal">
@@ -875,7 +1170,7 @@
           <h3>Áreas Comuns</h3>
           <p>Salões de festas, áreas gourmet, espaços de convivência em condomínios.</p>
           <div class="seg-card__case">Grandes condomínios em SP</div>
-          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20de%20%C3%A1rea%20comum%20de%20condom%C3%ADnio%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
+          <a href="#form-principal" class="seg-card__cta">Solicitar avaliação inicial →</a>
         </div>
 
         <div class="seg-card reveal">
@@ -888,7 +1183,7 @@
           <h3>Stands de Vendas</h3>
           <p>Estandes impactantes para lançamentos imobiliários com design atrativo.</p>
           <div class="seg-card__case">Lançamentos em São Paulo</div>
-          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20de%20stand%20de%20vendas%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
+          <a href="#form-principal" class="seg-card__cta">Solicitar avaliação inicial →</a>
         </div>
 
         <div class="seg-card seg-card--highlight reveal">
@@ -898,7 +1193,7 @@
           <h3>Projetos Especiais</h3>
           <p>Soluções customizadas sob demanda: gôndolas, móveis exclusivos e projetos arquitetônicos únicos.</p>
           <div class="seg-card__case">Consulte para projetos únicos</div>
-          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW.%20Tenho%20um%20projeto%20especial%20e%20quero%20conversar." target="_blank" rel="noopener" class="seg-card__cta">Falar com especialista →</a>
+          <a href="#form-principal" class="seg-card__cta">Solicitar avaliação inicial →</a>
         </div>
 
       </div>
@@ -1099,1121 +1394,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ===== DIAGNÓSTICO DE PROJETO — visual Conceito A fullscreen ===== -->
-  <section class="diagnostico diagnostico--imersiva" id="diagnostico">
-    <!-- âncora de scroll: id="diag-wizard" está direto no .diag, etapa 1 ativa -->
-    <div class="diag-imersiva__bg" id="diagBg" aria-hidden="true"></div>
-    <div class="container diag-imersiva__container">
-
-      <div class="diag" id="diagWizard">
-
-        <!-- Progress dots minimalistas — Conceito A -->
-        <div class="diag__progress-dots" id="diagDots">
-          <div class="diag__dot active" data-step="1"></div>
-          <div class="diag__dot" data-step="2"></div>
-          <div class="diag__dot" data-step="3"></div>
-          <div class="diag__dot" data-step="4"></div>
-        </div>
-
-        <!-- Progress bar legacy (oculto via CSS) -->
-        <div class="diag__progress">
-          <div class="diag__progress-bar" id="diagBar" style="width:25%"></div>
-          <div class="diag__progress-steps">
-            <span class="active" data-step="1">1</span>
-            <span data-step="2">2</span>
-            <span data-step="3">3</span>
-            <span data-step="4">4</span>
-          </div>
-        </div>
-
-        <!-- ETAPA 1 — Ambiente -->
-        <div class="diag__step active" data-step="1" id="diag-wizard">
-          <h3>Pra qual ambiente é o projeto?</h3>
-          <p class="diag__sub">Escolha uma opção. Pra mais de um ambiente, marque <strong>Projeto Completo</strong>.</p>
-          <div class="diag__cards diag__cards--3col diag__cards--minimal" data-field="ambiente">
-            <button type="button" class="diag-card diag-card--minimal diag-card--featured" data-value="completo">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- planta baixa: quatro cômodos vista superior -->
-                  <rect x="10" y="10" width="44" height="44" rx="1.5"/>
-                  <line x1="10" y1="32" x2="54" y2="32"/>
-                  <line x1="32" y1="10" x2="32" y2="54"/>
-                  <!-- porta cômodo inferior esq -->
-                  <path d="M18 54 v-6 a6 6 0 0 1 6 0"/>
-                  <!-- janela cômodo superior dir -->
-                  <line x1="38" y1="10" x2="48" y2="10"/>
-                  <!-- bancada cômodo inferior dir -->
-                  <rect x="36" y="40" width="12" height="5" rx="0.5"/>
-                </svg>
-              </span>
-              <span class="diag-card__label">Projeto Completo</span>
-              <span class="diag-card__hint">recomendado</span>
-            </button>
-            <button type="button" class="diag-card diag-card--minimal" data-value="cozinha">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- bancada: tampo longo -->
-                  <rect x="8" y="36" width="48" height="10" rx="1.5"/>
-                  <!-- cuba embutida -->
-                  <rect x="14" y="38" width="12" height="6" rx="1"/>
-                  <!-- cooktop: 2 queimadores + grill -->
-                  <circle cx="38" cy="41" r="4"/>
-                  <circle cx="38" cy="41" r="2"/>
-                  <circle cx="50" cy="41" r="2.5"/>
-                  <!-- capote: perfil acima da bancada -->
-                  <rect x="12" y="18" width="40" height="6" rx="1.5"/>
-                  <!-- suporte capote esq/dir -->
-                  <line x1="16" y1="24" x2="16" y2="36"/>
-                  <line x1="48" y1="24" x2="48" y2="36"/>
-                  <!-- armários superiores -->
-                  <rect x="8" y="10" width="48" height="7" rx="1"/>
-                </svg>
-              </span>
-              <span class="diag-card__label">Cozinha</span>
-            </button>
-            <button type="button" class="diag-card diag-card--minimal" data-value="dormitorio">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- cabeceira -->
-                  <rect x="8" y="12" width="48" height="12" rx="2"/>
-                  <!-- colchão / plataforma cama -->
-                  <rect x="8" y="24" width="48" height="24" rx="1"/>
-                  <!-- divisória travesseiros -->
-                  <line x1="32" y1="24" x2="32" y2="34"/>
-                  <!-- criado-mudo esquerdo -->
-                  <rect x="8" y="50" width="10" height="8" rx="1"/>
-                  <!-- criado-mudo direito -->
-                  <rect x="46" y="50" width="10" height="8" rx="1"/>
-                  <!-- pé da cama -->
-                  <line x1="8" y1="48" x2="56" y2="48"/>
-                </svg>
-              </span>
-              <span class="diag-card__label">Dormitório</span>
-            </button>
-            <button type="button" class="diag-card diag-card--minimal" data-value="closet">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- trilho cabide: haste horizontal -->
-                  <line x1="16" y1="18" x2="48" y2="18"/>
-                  <!-- 3 cabides pendurados -->
-                  <path d="M24 18 v4 m0 0 c0 0 -6 5 -6 8 h12 c0-3-6-8-6-8"/>
-                  <path d="M32 18 v4 m0 0 c0 0 -6 5 -6 8 h12 c0-3-6-8-6-8"/>
-                  <path d="M40 18 v4 m0 0 c0 0 -6 5 -6 8 h12 c0-3-6-8-6-8"/>
-                  <!-- gaveta abaixo: bloco com puxador -->
-                  <rect x="12" y="42" width="40" height="14" rx="1.5"/>
-                  <line x1="22" y1="42" x2="22" y2="56"/>
-                  <line x1="42" y1="42" x2="42" y2="56"/>
-                  <!-- puxador central gaveta -->
-                  <line x1="28" y1="49" x2="36" y2="49"/>
-                </svg>
-              </span>
-              <span class="diag-card__label">Closet</span>
-            </button>
-            <button type="button" class="diag-card diag-card--minimal" data-value="sala-tv">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- TV: moldura fina -->
-                  <rect x="8" y="12" width="48" height="28" rx="2"/>
-                  <!-- tela interna (bisel) -->
-                  <rect x="12" y="16" width="40" height="20" rx="0.5"/>
-                  <!-- pescoço + base -->
-                  <line x1="32" y1="40" x2="32" y2="46"/>
-                  <!-- rack baixo: tampo -->
-                  <rect x="10" y="46" width="44" height="8" rx="1.5"/>
-                  <!-- 2 patas rack -->
-                  <line x1="18" y1="54" x2="18" y2="58"/>
-                  <line x1="46" y1="54" x2="46" y2="58"/>
-                  <!-- detalhe led rack -->
-                  <line x1="20" y1="50" x2="44" y2="50"/>
-                </svg>
-              </span>
-              <span class="diag-card__label">Sala TV</span>
-            </button>
-            <button type="button" class="diag-card diag-card--minimal" data-value="sala-jantar">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- mesa retangular vista superior -->
-                  <rect x="14" y="22" width="36" height="20" rx="1.5"/>
-                  <!-- 4 cadeiras: 2 em cima, 2 embaixo -->
-                  <!-- cadeira topo esq -->
-                  <rect x="17" y="14" width="10" height="7" rx="1"/>
-                  <!-- cadeira topo dir -->
-                  <rect x="37" y="14" width="10" height="7" rx="1"/>
-                  <!-- cadeira base esq -->
-                  <rect x="17" y="43" width="10" height="7" rx="1"/>
-                  <!-- cadeira base dir -->
-                  <rect x="37" y="43" width="10" height="7" rx="1"/>
-                  <!-- encosto das cadeiras de baixo -->
-                  <line x1="18" y1="50" x2="26" y2="50"/>
-                  <line x1="38" y1="50" x2="46" y2="50"/>
-                </svg>
-              </span>
-              <span class="diag-card__label">Sala Jantar</span>
-            </button>
-            <button type="button" class="diag-card diag-card--minimal" data-value="home-office">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- monitor: moldura -->
-                  <rect x="16" y="10" width="32" height="22" rx="1.5"/>
-                  <!-- tela interna -->
-                  <rect x="20" y="13" width="24" height="15" rx="0.5"/>
-                  <!-- pescoço monitor -->
-                  <line x1="32" y1="32" x2="32" y2="37"/>
-                  <!-- mesa: tampo longo e fino -->
-                  <rect x="6" y="37" width="52" height="5" rx="1"/>
-                  <!-- pernas mesa -->
-                  <line x1="14" y1="42" x2="14" y2="54"/>
-                  <line x1="50" y1="42" x2="50" y2="54"/>
-                  <!-- travessa inferior mesa -->
-                  <line x1="14" y1="54" x2="50" y2="54"/>
-                  <!-- cadeira: encosto atrás da mesa -->
-                  <path d="M24 37 v-6 a8 8 0 0 1 16 0 v6"/>
-                </svg>
-              </span>
-              <span class="diag-card__label">Home Office</span>
-            </button>
-            <button type="button" class="diag-card diag-card--minimal" data-value="banheiro">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- espelho retangular -->
-                  <rect x="16" y="8" width="32" height="20" rx="1.5"/>
-                  <!-- suporte espelho -->
-                  <line x1="24" y1="28" x2="24" y2="32"/>
-                  <line x1="40" y1="28" x2="40" y2="32"/>
-                  <!-- bancada -->
-                  <rect x="8" y="32" width="48" height="8" rx="1.5"/>
-                  <!-- cuba embutida no tampo -->
-                  <rect x="20" y="34" width="16" height="4" rx="1"/>
-                  <!-- misturador (torneira) -->
-                  <line x1="28" y1="34" x2="28" y2="30"/>
-                  <line x1="25" y1="30" x2="31" y2="30"/>
-                  <!-- armário abaixo da bancada -->
-                  <rect x="8" y="40" width="48" height="16" rx="1"/>
-                  <line x1="32" y1="40" x2="32" y2="56"/>
-                  <!-- puxadores -->
-                  <line x1="17" y1="48" x2="23" y2="48"/>
-                  <line x1="41" y1="48" x2="47" y2="48"/>
-                </svg>
-              </span>
-              <span class="diag-card__label">Banheiro</span>
-            </button>
-            <button type="button" class="diag-card diag-card--minimal" data-value="lavanderia">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-card__svg" aria-hidden="true">
-                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <!-- máquina de lavar: caixa -->
-                  <rect x="8" y="10" width="26" height="46" rx="2"/>
-                  <!-- painel superior máquina -->
-                  <line x1="8" y1="22" x2="34" y2="22"/>
-                  <!-- visor circular -->
-                  <circle cx="21" cy="37" r="8"/>
-                  <circle cx="21" cy="37" r="4.5"/>
-                  <!-- botão painel esq -->
-                  <circle cx="13" cy="16" r="1.5"/>
-                  <circle cx="18" cy="16" r="1.5"/>
-                  <!-- tanque ao lado: caixa -->
-                  <rect x="38" y="18" width="18" height="38" rx="2"/>
-                  <!-- borda superior tanque -->
-                  <line x1="38" y1="26" x2="56" y2="26"/>
-                  <!-- torneira tanque -->
-                  <line x1="47" y1="18" x2="47" y2="12"/>
-                  <line x1="44" y1="12" x2="50" y2="12"/>
-                  <!-- ralo tanque -->
-                  <circle cx="47" cy="36" r="3"/>
-                </svg>
-              </span>
-              <span class="diag-card__label">Lavanderia</span>
-            </button>
-          </div>
-          <div class="diag__nav">
-            <button type="button" class="btn btn--primary btn--lg" data-action="next" disabled>Próximo →</button>
-          </div>
-        </div>
-
-        <!-- ETAPA 2 — Tamanho -->
-        <div class="diag__step" data-step="2">
-          <h3>Tamanho aproximado do espaço?</h3>
-          <p class="diag__sub">Pra entender o porte do projeto. Você pode ajustar depois com a equipe.</p>
-          <div class="diag__cards diag__cards--2col" data-field="tamanho">
-            <button type="button" class="diag-card diag-card--lg" data-value="ate-8">
-              <span class="diag-card__title">Até 8 m²</span>
-              <span class="diag-card__sub">Compacto · cozinha pequena ou closet pequeno</span>
-            </button>
-            <button type="button" class="diag-card diag-card--lg" data-value="8-15">
-              <span class="diag-card__title">8 a 15 m²</span>
-              <span class="diag-card__sub">Médio · cozinha padrão / dormitório casal</span>
-            </button>
-            <button type="button" class="diag-card diag-card--lg" data-value="15-25">
-              <span class="diag-card__title">15 a 25 m²</span>
-              <span class="diag-card__sub">Amplo · sala completa / suíte com closet</span>
-            </button>
-            <button type="button" class="diag-card diag-card--lg" data-value="25-plus">
-              <span class="diag-card__title">25 m² ou +</span>
-              <span class="diag-card__sub">Grande · ambiente integrado / casa toda</span>
-            </button>
-          </div>
-          <div class="diag__nav">
-            <button type="button" class="btn btn--ghost" data-action="back">← Voltar</button>
-            <button type="button" class="btn btn--primary btn--lg" data-action="next" disabled>Próximo →</button>
-          </div>
-        </div>
-
-        <!-- ETAPA 3 — Estilo -->
-        <div class="diag__step" data-step="3">
-          <!-- Chamada magnética antes dos cards -->
-          <div class="diag-style__intro">
-            <span class="diag-style__pretitle">⌜ Pergunta 03 / 04 ⌝</span>
-            <h3 class="diag-style__title">Cada <em>estilo</em> tem sua assinatura</h3>
-            <p class="diag-style__sub">A SAW se especializou em <strong>dois caminhos</strong> que dominamos a fundo. Escolha o que te atrai — você pode refinar depois.</p>
-            <div class="diag-style__divider" aria-hidden="true"></div>
-          </div>
-
-          <div class="diag__cards diag__cards--2col diag__cards--editorial" data-field="estilo">
-            <button type="button" class="diag-card diag-card--editorial" data-value="moderno">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-editorial__letter" aria-hidden="true">M</span>
-              <span class="diag-editorial__pattern" aria-hidden="true">
-                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1" preserveAspectRatio="xMidYMid slice">
-                  <rect x="20" y="20" width="80" height="80"/>
-                  <rect x="35" y="35" width="50" height="50"/>
-                  <rect x="50" y="50" width="20" height="20"/>
-                </svg>
-              </span>
-              <div class="diag-editorial__body">
-                <span class="diag-editorial__kicker">— Estilo 01</span>
-                <h4 class="diag-editorial__title">Moderno</h4>
-                <span class="diag-editorial__accent-line" aria-hidden="true"></span>
-                <p class="diag-editorial__desc">Linhas retas, laca fosca, eletros embutidos. Vibe contemporânea com pouco ornamento.</p>
-                <span class="diag-editorial__tags">
-                  <span>Lacca</span>
-                  <span class="diag-editorial__sep">·</span>
-                  <span>MDF clean</span>
-                  <span class="diag-editorial__sep">·</span>
-                  <span>LED integrado</span>
-                </span>
-              </div>
-            </button>
-            <button type="button" class="diag-card diag-card--editorial" data-value="classico">
-              <span class="diag-card__check-mark" aria-hidden="true">✓</span>
-              <span class="diag-editorial__letter" aria-hidden="true">C</span>
-              <span class="diag-editorial__pattern" aria-hidden="true">
-                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1" preserveAspectRatio="xMidYMid slice">
-                  <circle cx="60" cy="60" r="40"/>
-                  <circle cx="60" cy="60" r="28"/>
-                  <circle cx="60" cy="60" r="16"/>
-                  <path d="M60 20v80M20 60h80M32 32l56 56M88 32l-56 56"/>
-                </svg>
-              </span>
-              <div class="diag-editorial__body">
-                <span class="diag-editorial__kicker">— Estilo 02</span>
-                <h4 class="diag-editorial__title">Clássico<br/><em>Sofisticado</em></h4>
-                <span class="diag-editorial__accent-line" aria-hidden="true"></span>
-                <p class="diag-editorial__desc">Madeira nobre, detalhes torneados, mármores. Atemporal com sofisticação discreta.</p>
-                <span class="diag-editorial__tags">
-                  <span>Madeira nobre</span>
-                  <span class="diag-editorial__sep">·</span>
-                  <span>Mármore</span>
-                  <span class="diag-editorial__sep">·</span>
-                  <span>Ferragens artesanais</span>
-                </span>
-              </div>
-            </button>
-          </div>
-          <div class="diag__nav">
-            <button type="button" class="btn btn--ghost" data-action="back">← Voltar</button>
-            <button type="button" class="btn btn--primary btn--lg" data-action="next" disabled>Próximo →</button>
-          </div>
-        </div>
-
-        <!-- ETAPA 4 — Contato -->
-        <div class="diag__step" data-step="4">
-          <h3>Pra entregarmos seu Pré-Briefing</h3>
-          <p class="diag__sub">Você recebe agora no WhatsApp + email. <strong>Sem ligações de venda</strong>, prometido.</p>
-          <div class="diag__form">
-            <input type="text" id="diag-nome" placeholder="Seu nome" required />
-            <input type="tel" id="diag-tel" placeholder="WhatsApp com DDD" required />
-            <input type="email" id="diag-email" placeholder="Seu melhor email" />
-            <label class="diag__check">
-              <input type="checkbox" id="diag-consent" checked /> Aceito receber contato via WhatsApp/email sobre meu projeto
-            </label>
-            <p style="font-size:.78rem; color:#888; margin-top:-4px; line-height:1.5;">
-              Ao continuar, você concorda com nossa <a href="/politica-de-privacidade.html" target="_blank" rel="noopener" style="color:#E85C1A; text-decoration:underline;">Política de Privacidade</a>. Seus dados são tratados conforme a LGPD e não são compartilhados com terceiros para fins comerciais.
-            </p>
-          </div>
-          <div class="diag__nav">
-            <button type="button" class="btn btn--ghost" data-action="back">← Voltar</button>
-            <button type="button" class="btn btn--primary btn--lg" data-action="finish">Gerar meu Pré-Briefing →</button>
-          </div>
-        </div>
-
-        <!-- ETAPA FINAL — Resultado -->
-        <div class="diag__step diag__final" data-step="5">
-          <div class="diag__final-badge">✓ Pré-Briefing pronto</div>
-          <h3>Seu Pré-Briefing personalizado <span id="diagNomeFinal">está pronto</span></h3>
-          <p class="diag__sub">Recebemos seu projeto — nossa equipe entra em contato pelo WhatsApp em até 2h úteis</p>
-
-          <div class="diag__result">
-            <div class="diag__result-block">
-              <h4>Inspirações que combinam com você</h4>
-              <div class="diag__inspirations" id="diagInsp"></div>
-            </div>
-            <div class="diag__result-block">
-              <h4>Checklist pra preparar antes da visita técnica</h4>
-              <ul class="diag__checklist">
-                <li>📐 Medidas aproximadas do ambiente (largura × profundidade × pé direito)</li>
-                <li>📸 Fotos do espaço atual em diferentes ângulos</li>
-                <li>💡 Localização das tomadas, janelas, portas e pontos de iluminação</li>
-                <li>📋 Lista de funcionalidades essenciais (ex: 4 panelas + air fryer + microondas embutido)</li>
-                <li>💰 Faixa de investimento aprovada — pra otimizar materiais sem retrabalho</li>
-              </ul>
-            </div>
-            <div class="diag__result-block diag__budget" id="diagBudget">
-              <h4>Referência de investimento</h4>
-              <p class="diag__budget-range" id="diagBudgetRange">—</p>
-              <small>Faixa baseada em projetos similares entregues pela SAW. Orçamento exato após visita técnica gratuita.</small>
-            </div>
-          </div>
-
-          <div class="diag__final-cta">
-            <button type="button" id="diagPdfBtn" class="btn btn--primary btn--lg">📄 Baixar PDF do meu Pré-Briefing</button>
-          </div>
-          <p class="diag__final-sla">Nossa equipe já recebeu seus dados e vai chamar você no WhatsApp em até 2h úteis.</p>
-          <p class="diag__final-foot">💡 Você também pode revisar suas escolhas e refazer: <a href="#" id="diagRestart">recomeçar diagnóstico</a></p>
-        </div>
-
-      </div>
-
-      <div class="diag-imersiva__trust">
-        <span>✓ +350 projetos de referência</span>
-        <span>✓ Resposta no WhatsApp em até 2h úteis</span>
-        <span>✓ Sem spam. Seus dados são usados apenas para atendimento do projeto.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Estilos do Diagnóstico — visual Conceito A fullscreen imersivo -->
-  <style>
-    /* ════ SEÇÃO FULLSCREEN IMERSIVA ════ */
-    .diagnostico--imersiva {
-      position: relative;
-      min-height: 100vh;
-      padding: 0;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-    }
-    .diag-imersiva__bg {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transition: background-image 0.6s ease, opacity 0.4s ease;
-      z-index: 0;
-    }
-    .diag-imersiva__bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(rgba(10,10,10,0.72), rgba(10,10,10,0.72));
-    }
-    .diag-imersiva__container {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding-top: 80px;
-      padding-bottom: 60px;
-    }
-
-    /* ════ DOTS DE PROGRESSO MINIMALISTAS ════ */
-    .diag__progress-dots {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 40px;
-    }
-    .diag__dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-      border: 1px solid rgba(255,255,255,0.35);
-      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
-      cursor: default;
-    }
-    .diag__dot.active {
-      background: #E85C1A;
-      border-color: #E85C1A;
-      box-shadow: 0 0 10px rgba(232,92,26,0.6);
-      transform: scale(1.25);
-    }
-    .diag__dot.done {
-      background: rgba(232,92,26,0.45);
-      border-color: rgba(232,92,26,0.5);
-    }
-
-    /* ════ CARD WIZARD TRANSPARENTE NO FULLSCREEN ════ */
-    .diag { max-width: 900px; margin: 0 auto; background: rgba(10,10,10,0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 40px 36px; box-shadow: 0 32px 80px rgba(0,0,0,0.6); }
-    @media (max-width:680px){ .diag{ padding: 28px 18px; border-radius: 18px; } }
-
-    /* Progresso bar original — oculto (substituído pelos dots) */
-    .diag__progress { display: none; }
-
-    /* ════ CONTROLE DE ETAPAS — obrigatório pra navegação funcionar ════ */
-    .diag__step { display: none; }
-    .diag__step.active { display: block; }
-
-    #diag-wizard { scroll-margin-top: 80px; }
-    @keyframes diagFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    /* Headline Playfair gigante — Conceito A */
-    .diag__step h3 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.6rem); color: #fff; margin-bottom: 10px; text-align: center; line-height: 1.1; letter-spacing: -0.02em; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
-    .diag__sub { color: rgba(255,255,255,0.75); margin-bottom: 28px; font-size: 1rem; text-align: center; }
-    .diag__cards { display: grid; gap: 12px; margin-bottom: 28px; }
-    .diag__cards--3col { grid-template-columns: repeat(3, 1fr); }
-    .diag__cards--2col { grid-template-columns: repeat(2, 1fr); }
-    @media (max-width:680px){ .diag__cards--3col, .diag__cards--2col { grid-template-columns: repeat(2,1fr); } }
-    .diag-card { padding: 16px 12px; background: rgba(255,255,255,0.02); border: 1.5px solid rgba(255,255,255,0.08); border-radius: 14px; color: #F4F4F4; font-family: inherit; font-size: 0.92rem; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
-    .diag-card:hover { border-color: rgba(232,92,26,0.5); background: rgba(232,92,26,0.05); transform: translateY(-2px); }
-    .diag-card.selected { border-color: #E85C1A; background: rgba(232,92,26,0.12); box-shadow: 0 4px 16px rgba(232,92,26,0.2); }
-    .diag-card__emoji { font-size: 1.6rem; }
-
-    /* ════════ Cards MINIMAL (boutique premium · SVG line-art) ════════
-       Refinamentos sutis (sites premium usam, ninguém percebe que percebeu):
-       - corner-pip no canto superior esquerdo (indica "clicável")
-       - sweep gradient ao selecionar (animação radial laranja)
-       - SVG stroke-dasharray "desenho" no hover
-       - aspect 4:3 mais compacto, padding ajustado
-    ════════════════════════════════════════════════════════════════════ */
-    .diag__cards--minimal { gap: 12px; }
-    .diag-card--minimal {
-      padding: 18px 14px 16px;
-      aspect-ratio: 4/3;
-      position: relative;
-      background:
-        radial-gradient(ellipse 70% 80% at 50% 100%, rgba(232,92,26,0.03) 0%, transparent 75%),
-        linear-gradient(180deg, rgba(255,255,255,0.022), rgba(255,255,255,0.008));
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 14px;
-      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      overflow: hidden;
-    }
-    /* SURPRESA 1 — corner-pip discreto no canto (indica "isso é clicável") */
-    .diag-card--minimal::before {
-      content: '';
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      width: 6px;
-      height: 6px;
-      border-top: 1px solid rgba(255,255,255,0.15);
-      border-left: 1px solid rgba(255,255,255,0.15);
-      transition: all 0.3s;
-      pointer-events: none;
-    }
-    /* SURPRESA 2 — sweep gradient ao selecionar (faz "luz passar" pelo card) */
-    .diag-card--minimal::after {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      background: conic-gradient(from 0deg at 50% 50%,
-        transparent 0deg,
-        rgba(232,92,26,0.25) 60deg,
-        transparent 120deg,
-        transparent 360deg);
-      opacity: 0;
-      animation: none;
-      pointer-events: none;
-      border-radius: inherit;
-      z-index: 0;
-    }
-    .diag-card--minimal:hover {
-      border-color: rgba(232,92,26,0.35);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    }
-    .diag-card--minimal:hover::before {
-      border-color: rgba(232,92,26,0.6);
-      transform: scale(1.2);
-    }
-    .diag-card--minimal .diag-card__svg {
-      width: 38px;
-      height: 38px;
-      color: #C8C8C8;
-      transition: color 0.3s, transform 0.35s cubic-bezier(0.4,0,0.2,1);
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
-    }
-    /* SURPRESA 3 — stroke "desenha" no hover (efeito assinatura premium) */
-    .diag-card--minimal .diag-card__svg svg * {
-      stroke-dasharray: 500;
-      stroke-dashoffset: 0;
-      transition: stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1);
-    }
-    .diag-card--minimal:hover .diag-card__svg svg * {
-      animation: drawStroke 1.2s cubic-bezier(0.4,0,0.2,1);
-    }
-    @keyframes drawStroke {
-      0%   { stroke-dashoffset: 500; }
-      100% { stroke-dashoffset: 0; }
-    }
-    .diag-card--minimal:hover .diag-card__svg {
-      color: #E85C1A;
-      transform: scale(1.05) translateY(-1px);
-    }
-    .diag-card--minimal .diag-card__label {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #F4F4F4;
-      letter-spacing: -0.01em;
-      text-align: center;
-      line-height: 1.15;
-      position: relative;
-      z-index: 1;
-    }
-    .diag-card--minimal .diag-card__hint {
-      font-size: 0.62rem;
-      color: #E85C1A;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      font-weight: 600;
-      margin-top: -2px;
-      position: relative;
-      z-index: 1;
-    }
-    .diag-card--minimal.selected {
-      border-color: #E85C1A;
-      background:
-        radial-gradient(ellipse 80% 100% at 50% 100%, rgba(232,92,26,0.15) 0%, transparent 75%),
-        linear-gradient(180deg, rgba(232,92,26,0.06), rgba(232,92,26,0.02));
-      box-shadow:
-        0 0 0 2px rgba(232,92,26,0.18),
-        0 8px 24px rgba(232,92,26,0.18);
-      transform: translateY(-2px);
-    }
-    .diag-card--minimal.selected::after {
-      opacity: 1;
-      animation: sweepGlow 0.7s cubic-bezier(0.4,0,0.2,1);
-    }
-    @keyframes sweepGlow {
-      0%   { opacity: 0; transform: rotate(0deg); }
-      50%  { opacity: 1; }
-      100% { opacity: 0; transform: rotate(180deg); }
-    }
-    .diag-card--minimal.selected::before {
-      border-color: #E85C1A;
-      transform: scale(1.4);
-    }
-    .diag-card--minimal.selected .diag-card__svg {
-      color: #E85C1A;
-    }
-    .diag-card--minimal.selected .diag-card__label {
-      color: #fff;
-    }
-    .diag-card--minimal .diag-card__check-mark {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 22px;
-      height: 22px;
-      background: #E85C1A;
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.72rem;
-      font-weight: 800;
-      opacity: 0;
-      transform: scale(0.4) rotate(-90deg);
-      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 3px 10px rgba(232,92,26,0.5);
-      z-index: 3;
-    }
-    .diag-card--minimal.selected .diag-card__check-mark {
-      opacity: 1;
-      transform: scale(1) rotate(0);
-    }
-    /* Featured card (Projeto Completo) — recomendado */
-    .diag-card--featured {
-      background:
-        radial-gradient(ellipse 80% 100% at 50% 100%, rgba(232,92,26,0.08) 0%, transparent 75%),
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(232,92,26,0.02));
-      border-color: rgba(232,92,26,0.22);
-    }
-    .diag-card--featured .diag-card__svg { color: #E85C1A; }
-    .diag-card--featured::before { border-color: rgba(232,92,26,0.4); }
-    @media (max-width: 680px) {
-      .diag-card--minimal { padding: 14px 10px 12px; aspect-ratio: 4/3; }
-      .diag-card--minimal .diag-card__svg { width: 32px; height: 32px; }
-      .diag-card--minimal .diag-card__label { font-size: 0.85rem; }
-      .diag-card--minimal .diag-card__hint { font-size: 0.58rem; }
-    }
-
-    /* ════════ Cards com FOTO real do portfólio SAW ════════ */
-    .diag__cards--photo { gap: 14px; }
-    .diag-card--photo {
-      padding: 0;
-      overflow: hidden;
-      aspect-ratio: 4/3;
-      position: relative;
-      border-radius: 16px;
-      border-width: 2px;
-      align-items: stretch;
-      transform-origin: center;
-    }
-    .diag-card--photo img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), filter 0.3s;
-      filter: brightness(0.85) saturate(1.05);
-    }
-    .diag-card--photo::after {
-      /* Gradient escuro pra texto legível */
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.85) 100%);
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-    .diag-card--photo:hover img {
-      transform: scale(1.08);
-      filter: brightness(0.95) saturate(1.15);
-    }
-    .diag-card--photo .diag-card__label {
-      position: absolute;
-      bottom: 12px;
-      left: 14px;
-      right: 14px;
-      color: #fff;
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-      letter-spacing: -0.01em;
-      z-index: 2;
-      text-align: left;
-    }
-    .diag-card__check-mark {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 28px;
-      height: 28px;
-      background: #E85C1A;
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.95rem;
-      font-weight: 800;
-      opacity: 0;
-      transform: scale(0.5);
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 4px 12px rgba(232,92,26,0.4);
-      z-index: 2;
-    }
-    .diag-card--photo.selected {
-      border-color: #E85C1A;
-      box-shadow: 0 0 0 4px rgba(232,92,26,0.25), 0 8px 24px rgba(232,92,26,0.4);
-      transform: translateY(-4px);
-    }
-    .diag-card--photo.selected img {
-      filter: brightness(1.05) saturate(1.2);
-      transform: scale(1.05);
-    }
-    .diag-card--photo.selected::after {
-      background: linear-gradient(180deg, rgba(232,92,26,0.1) 0%, rgba(0,0,0,0.85) 100%);
-    }
-    .diag-card--photo.selected .diag-card__check-mark {
-      opacity: 1;
-      transform: scale(1);
-    }
-    /* Icon variant (banheiro, lavanderia — sem foto) */
-    .diag-card--icon {
-      background: linear-gradient(135deg, #1A1A1C 0%, #232325 100%);
-    }
-    .diag-card--icon img { display: none; }
-    .diag-card--icon::after {
-      background: linear-gradient(180deg, rgba(232,92,26,0.06) 0%, rgba(0,0,0,0.4) 100%);
-    }
-    .diag-card__svg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -75%);
-      width: 56px;
-      height: 56px;
-      color: #E85C1A;
-      transition: all 0.3s;
-      z-index: 1;
-    }
-    .diag-card__svg svg { width: 100%; height: 100%; }
-    .diag-card--icon:hover .diag-card__svg {
-      color: #FF7B3B;
-      transform: translate(-50%, -78%) scale(1.1);
-    }
-    .diag-card--icon.selected .diag-card__svg {
-      color: #fff;
-      transform: translate(-50%, -78%);
-    }
-    /* Special: Projeto Completo (mais destacado) */
-    .diag-card--special {
-      grid-column: span 1;
-    }
-    .diag-card--special .diag-card__label--special {
-      background: linear-gradient(135deg, rgba(232,92,26,0.95), rgba(200,74,14,0.95));
-      padding: 6px 14px;
-      border-radius: 999px;
-      display: inline-block;
-      font-size: 0.95rem;
-      bottom: 14px;
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
-      text-align: center;
-      white-space: nowrap;
-    }
-    @media (max-width: 680px) {
-      .diag-card--photo .diag-card__label { font-size: 1rem; bottom: 10px; left: 10px; right: 10px; }
-      .diag-card__svg { width: 44px; height: 44px; }
-    }
-
-    .diag-card--lg { padding: 22px 18px; align-items: flex-start; text-align: left; }
-    .diag-card--lg .diag-card__title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: #F4F4F4; }
-    .diag-card--lg .diag-card__sub { color: #888; font-size: 0.85rem; }
-    .diag-card--style { padding: 0; overflow: hidden; align-items: stretch; }
-    .diag-card--style img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
-    .diag-card--style > div { padding: 14px 16px; text-align: left; }
-    .diag-card--style .diag-card__title { display: block; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #F4F4F4; margin-bottom: 4px; }
-    .diag-card--style .diag-card__sub { display: block; color: #888; font-size: 0.82rem; line-height: 1.4; }
-
-    /* ════════ Chamada magnética antes dos cards de estilo ════════ */
-    .diag-style__intro {
-      text-align: center;
-      margin: 0 auto 32px;
-      max-width: 560px;
-      position: relative;
-    }
-    .diag-style__pretitle {
-      display: inline-block;
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      color: #E85C1A;
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-      font-family: 'Inter', sans-serif;
-    }
-    .diag-style__title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.7rem, 3.5vw, 2.3rem);
-      font-weight: 800;
-      line-height: 1.1;
-      color: #F4F4F4;
-      letter-spacing: -0.02em;
-      margin: 0 0 14px;
-    }
-    .diag-style__title em {
-      font-style: italic;
-      color: #E85C1A;
-      background: linear-gradient(135deg, #E85C1A, #FF7B3B);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .diag-style__sub {
-      color: #C8C8C8;
-      font-size: 0.98rem;
-      line-height: 1.6;
-      margin: 0 0 22px;
-    }
-    .diag-style__sub strong {
-      color: #F4F4F4;
-      border-bottom: 2px solid rgba(232,92,26,0.4);
-      padding-bottom: 1px;
-    }
-    .diag-style__divider {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #E85C1A, transparent);
-      margin: 0 auto;
-    }
-
-    /* ════════ Cards EDITORIAL (estilo "menu premium" tipográfico) ════════
-       Inspiração: cardápios de restaurantes alta gastronomia + revistas Wallpaper/Vogue
-       Sem foto, foco em tipografia + letra inicial gigante + pattern geométrico sutil
-    ════════════════════════════════════════════════════════════════════════ */
-    .diag__cards--editorial { gap: 16px; }
-    .diag-card--editorial {
-      padding: 0;
-      aspect-ratio: 3/4;
-      position: relative;
-      overflow: hidden;
-      align-items: stretch;
-      background: linear-gradient(160deg, #14141a 0%, #1c1c22 40%, #14141a 100%);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-      isolation: isolate;
-    }
-    @media (max-width: 680px) { .diag-card--editorial { aspect-ratio: 4/5; } }
-    .diag-card--editorial:hover {
-      border-color: rgba(232,92,26,0.5);
-      transform: translateY(-4px);
-      box-shadow: 0 24px 48px rgba(0,0,0,0.4), 0 0 32px rgba(232,92,26,0.08);
-    }
-    /* Letra inicial gigante decorativa */
-    .diag-editorial__letter {
-      position: absolute;
-      top: -24px;
-      right: -16px;
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(180px, 24vw, 280px);
-      font-weight: 800;
-      line-height: 1;
-      color: rgba(232,92,26,0.08);
-      letter-spacing: -0.04em;
-      pointer-events: none;
-      z-index: 0;
-      transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-      font-style: italic;
-    }
-    .diag-card--editorial:hover .diag-editorial__letter {
-      color: rgba(232,92,26,0.15);
-      transform: scale(1.05) rotate(-2deg);
-    }
-    /* Pattern geométrico de fundo */
-    .diag-editorial__pattern {
-      position: absolute;
-      inset: 0;
-      opacity: 0.12;
-      color: #E85C1A;
-      z-index: 0;
-      pointer-events: none;
-      transition: opacity 0.4s;
-    }
-    .diag-editorial__pattern svg {
-      width: 100%; height: 100%;
-      stroke-dasharray: 400;
-      stroke-dashoffset: 0;
-      transition: stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1);
-    }
-    .diag-card--editorial:hover .diag-editorial__pattern svg {
-      animation: editorialDraw 2s cubic-bezier(0.4,0,0.2,1);
-    }
-    @keyframes editorialDraw {
-      0%   { stroke-dashoffset: 400; opacity: 0.18; }
-      100% { stroke-dashoffset: 0; opacity: 0.12; }
-    }
-    /* Corpo do card — nova ordem: kicker → título → linha laranja → descrição → tags */
-    .diag-editorial__body {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;  /* mudou: agora flui de cima pra baixo */
-      align-items: flex-start;
-      width: 100%;
-      height: 100%;
-      padding: 24px 22px 22px;
-      text-align: left;
-      gap: 10px;
-    }
-    .diag-editorial__kicker {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #E85C1A;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin: 0;
-    }
-    .diag-editorial__title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.7rem, 3.2vw, 2.3rem);
-      font-weight: 800;
-      color: #F4F4F4;
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      margin: 0;
-    }
-    .diag-editorial__title em {
-      font-style: italic;
-      font-weight: 400;
-      background: linear-gradient(135deg, #E85C1A, #FF7B3B);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    /* Linha laranja decorativa entre título e descrição */
-    .diag-editorial__accent-line {
-      display: block;
-      width: 40px;
-      height: 3px;
-      background: linear-gradient(90deg, #E85C1A, transparent);
-      border-radius: 2px;
-      margin: 6px 0 4px;
-      transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
-    }
-    .diag-card--editorial:hover .diag-editorial__accent-line {
-      width: 80px;
-      background: linear-gradient(90deg, #FF7B3B, #E85C1A 50%, transparent);
-    }
-    .diag-card--editorial.selected .diag-editorial__accent-line {
-      width: 100px;
-      background: linear-gradient(90deg, #FF7B3B, #E85C1A 60%, transparent);
-      height: 4px;
-    }
-    .diag-editorial__desc {
-      font-size: 0.92rem;
-      color: #D0D0D0;
-      line-height: 1.5;
-      margin: 0;
-      max-width: 100%;
-    }
-    .diag-editorial__tags {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.7rem;
-      color: #888;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-top: auto;
-      padding-top: 12px;
-      border-top: 1px solid rgba(232,92,26,0.18);
-      width: 100%;
-    }
-    .diag-editorial__tags > span:not(.diag-editorial__sep) {
-      color: #C8C8C8;
-    }
-    .diag-editorial__sep {
-      color: #E85C1A;
-      font-weight: 800;
-    }
-    /* Selected state */
-    .diag-card--editorial.selected {
-      border-color: #E85C1A;
-      box-shadow: 0 0 0 2px rgba(232,92,26,0.25), 0 20px 48px rgba(232,92,26,0.25);
-      transform: translateY(-4px);
-      background: linear-gradient(160deg, #1f1610 0%, #251a13 40%, #1c1410 100%);
-    }
-    .diag-card--editorial.selected .diag-editorial__letter {
-      color: rgba(232,92,26,0.25);
-    }
-    .diag-card--editorial.selected .diag-editorial__pattern {
-      opacity: 0.22;
-    }
-    .diag-card--editorial.selected .diag-editorial__title {
-      color: #fff;
-    }
-    .diag-card--editorial .diag-card__check-mark {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 28px;
-      height: 28px;
-      background: #E85C1A;
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      font-weight: 800;
-      opacity: 0;
-      transform: scale(0.4) rotate(-90deg);
-      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 4px 12px rgba(232,92,26,0.5);
-      z-index: 3;
-    }
-    .diag-card--editorial.selected .diag-card__check-mark {
-      opacity: 1;
-      transform: scale(1) rotate(0);
-    }
-    @media (max-width: 680px) {
-      .diag-editorial__body { padding: 22px 18px; }
-      .diag-editorial__letter { font-size: 180px; top: -20px; right: -10px; }
-    }
-    .diag__form { display: flex; flex-direction: column; gap: 12px; max-width: 480px; margin: 0 auto 28px; }
-    .diag__form input { width: 100%; padding: 14px 16px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; color: #F4F4F4; font-family: inherit; font-size: 1rem; transition: border 0.2s; }
-    .diag__form input:focus { outline: none; border-color: #E85C1A; }
-    .diag__check { display: flex; align-items: center; gap: 8px; color: #888; font-size: 0.85rem; line-height: 1.4; }
-    .diag__nav { display: flex; gap: 12px; justify-content: space-between; align-items: center; }
-    .diag__nav .btn { min-width: 130px; }
-    .diag__nav .btn--ghost { background: transparent; color: #888; border: none; padding: 12px 16px; cursor: pointer; font-family: inherit; }
-    .diag__nav .btn--ghost:hover { color: #F4F4F4; }
-    .diag__nav .btn[disabled] { opacity: 0.4; cursor: not-allowed; }
-    .diag__final { text-align: center; }
-    .diag__final-badge { display: inline-block; padding: 6px 14px; background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); border-radius: 999px; font-size: 0.85rem; font-weight: 600; margin-bottom: 16px; }
-    .diag__result { text-align: left; margin: 32px 0; display: flex; flex-direction: column; gap: 24px; }
-    .diag__result-block { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 20px 22px; }
-    .diag__result-block h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #F4F4F4; margin-bottom: 14px; }
-    .diag__inspirations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    @media (max-width:680px){ .diag__inspirations { grid-template-columns: 1fr; } }
-    .diag__inspirations img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 10px; }
-    .diag__checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; color: #C8C8C8; font-size: 0.92rem; line-height: 1.5; }
-    .diag__budget-range { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #E85C1A; font-weight: 800; margin-bottom: 6px; }
-    .diag__budget small { color: #888; font-size: 0.82rem; line-height: 1.5; }
-    .diag__final-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-    .diag__final-foot { font-size: 0.85rem; color: #888; }
-    .diag__final-foot a { color: #E85C1A; text-decoration: none; }
-    .diag__final-sla { font-size: 0.92rem; color: #C8C8C8; margin-top: 16px; line-height: 1.5; }
-
-    /* ════ TRUST BAR IMERSIVA ════ */
-    .diag-imersiva__trust {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px 32px;
-      margin-top: 32px;
-      color: rgba(255,255,255,0.55);
-      font-size: 0.85rem;
-      letter-spacing: 0.02em;
-    }
-    .diag-imersiva__trust span::before { content: '✓ '; color: #E85C1A; }
-
-    /* ════ CARD HOVER LARANJA SAW — reforço Conceito A ════ */
-    .diag-card:hover {
-      border-color: #E85C1A !important;
-      background: rgba(232,92,26,0.1) !important;
-      transform: translateY(-2px);
-    }
-    .diag-card.selected {
-      border-color: #E85C1A !important;
-      background: rgba(232,92,26,0.14) !important;
-      box-shadow: 0 0 0 2px rgba(232,92,26,0.25), 0 8px 24px rgba(232,92,26,0.2);
-    }
-
-    /* ════ NAV ════ */
-    .diag__nav { display: flex; gap: 12px; justify-content: space-between; align-items: center; margin-top: 8px; }
-    .diag__nav .btn--ghost { background: transparent; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.12); padding: 12px 16px; cursor: pointer; font-family: inherit; border-radius: 10px; transition: all 0.2s; }
-    .diag__nav .btn--ghost:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
-    .diag__nav .btn[disabled] { opacity: 0.35; cursor: not-allowed; }
-  </style>
 
   <!-- ===== FAQ ===== -->
   <section class="faq section" id="faq">
@@ -2427,97 +1607,9 @@
 
       <div class="reveal" style="text-align:center; margin-top: 8px;">
         <p style="font-size:.92rem; color:var(--text-2); margin-bottom:20px;">Tem uma dúvida que não está aqui? Fala direto com nossa equipe técnica.</p>
-        <a href="https://wa.me/5511947345529?text=Ol%C3%A1%2C+sou+arquiteto%2Fa+e+tenho+d%C3%BAvidas+sobre+parceria+com+a+SAW." class="btn btn--primary" target="_blank" rel="noopener">Falar com a equipe SAW</a>
+        <a href="#form-principal" class="btn btn--primary">Solicitar avaliação inicial</a>
       </div>
 
-    </div>
-  </section>
-
-  <!-- ===== FORMULÁRIO DE PROJETO ===== -->
-  <section class="formulario section" id="formulario">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">Caminho alternativo</span>
-        <h2>Prefere preencher um<br />formulário rápido?</h2>
-        <p>Se já sabe o que quer e não precisa do <a href="#diagnostico" style="color:#E85C1A;text-decoration:underline;">Pré-Briefing</a>, preencha aqui. Nossa equipe responde em até 2h com proposta personalizada.</p>
-      </div>
-
-      <div class="formulario__simples reveal">
-        <form class="form-simples" id="projetoForm" novalidate>
-
-          <div class="form-simples__fields">
-            <div class="form-group">
-              <label for="f-nome">Seu nome *</label>
-              <input type="text" id="f-nome" name="nome" placeholder="Como podemos te chamar?" required />
-            </div>
-            <div class="form-group">
-              <label for="f-tel">WhatsApp *</label>
-              <input type="tel" id="f-tel" name="telefone" placeholder="(11) 9 0000-0000" required />
-            </div>
-            <div class="form-group">
-              <label for="f-amb">Qual ambiente? *</label>
-              <select id="f-amb" name="ambiente" required>
-                <option value="">Selecione o ambiente</option>
-                <option>Cozinha</option>
-                <option>Dormitório / Closet</option>
-                <option>Sala de TV / Estar</option>
-                <option>Sala de Jantar</option>
-                <option>Home Office</option>
-                <option>Área Gourmet / Lazer</option>
-                <option>Projeto Completo</option>
-                <option>Corporativo / Escritório</option>
-                <option>Outro</option>
-              </select>
-            </div>
-            <div class="form-group form-group--full">
-              <label for="f-desc">Mensagem (opcional)</label>
-              <textarea id="f-desc" name="descricao" placeholder="Conta um pouco sobre o projeto — tamanho do espaço, estilo, prazo..."></textarea>
-            </div>
-          </div>
-
-          <button type="submit" class="btn btn--primary btn--full btn--lg form-simples__btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Falar com a SAW
-          </button>
-
-          <div class="form-simples__trust">
-            <span>🔒 Sem spam</span>
-            <span>✓ Resposta em até 2h</span>
-            <span>✓ Visita gratuita</span>
-            <span>✓ Atendimento técnico</span>
-          </div>
-
-        </form>
-
-        <div class="form-simples__aside">
-          <div class="aside-trust">
-            <div class="aside-stars">★★★★★ <strong>5.0</strong> <span>no Google</span></div>
-            <blockquote>"A SAW Móveis entregou tudo o que prometeu. Colaboradores zelosos e atenciosos do início ao fim."</blockquote>
-            <div class="aside-author">
-              <div class="avatar-circle">EM</div>
-              <div><strong>Eliade Matos</strong><span>Cliente verificado</span></div>
-            </div>
-          </div>
-          <div class="aside-stats">
-            <div class="aside-stat">
-              <strong>350+</strong><span>obras entregues</span>
-            </div>
-            <div class="aside-stat">
-              <strong>11 anos</strong><span>de experiência</span>
-            </div>
-            <div class="aside-stat">
-              <strong>3 anos</strong><span>de garantia</span>
-            </div>
-            <div class="aside-stat">
-              <strong>45 dias</strong><span>prazo médio</span>
-            </div>
-          </div>
-          <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vi%20os%20projetos%20no%20site%20e%20quero%20conversar%20sobre%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="aside-whatsapp">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Prefere chamar direto no WhatsApp?
-          </a>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -2532,9 +1624,8 @@
           <h2>Transforme seu projeto<br />em realidade agora</h2>
           <p>Entre em contato e receba atendimento personalizado. Da medição ao projeto 3D — render incluso no orçamento.</p>
           <div class="orcamento__actions">
-            <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vi%20os%20projetos%20no%20site%20e%20quero%20conversar%20sobre%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="btn btn--whatsapp btn--lg">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              Falar no WhatsApp
+            <a href="#form-principal" class="btn btn--primary btn--lg">
+              Solicitar avaliação inicial
             </a>
             <a href="tel:1134959479" class="btn btn--ghost btn--lg">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
@@ -2599,7 +1690,7 @@
         </div>
         <div class="footer__col">
           <strong>Contato</strong>
-          <a href="https://wa.me/551134959479" target="_blank" rel="noopener">(11) 3495-9479</a>
+          <a href="tel:1134959479">(11) 3495-9479</a>
           <a href="mailto:vendas02@sawmoveis.com.br">vendas02@sawmoveis.com.br</a>
           <a href="https://www.sawmoveis.com.br" target="_blank" rel="noopener">www.sawmoveis.com.br</a>
           <a href="https://www.instagram.com/marcenariasawmoveis/" target="_blank" rel="noopener">@marcenariasawmoveis</a>
@@ -2621,31 +1712,15 @@
     </div>
   </footer>
 
-  <!-- ===== PRÉ-BRIEFING FLUTUANTE (mobile only — esquerda) ===== -->
-  <a href="#diag-wizard" class="pre-briefing-float" aria-label="Projeto 3D Grátis">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="1"/>
-      <line x1="3" y1="12" x2="12" y2="12"/>
-      <line x1="12" y1="3" x2="12" y2="21"/>
-      <line x1="12" y1="17" x2="21" y2="17"/>
-    </svg>
-    <span>Projeto 3D Grátis</span>
+  <!-- Float pré-orçamento REMOVIDO 2026-06-14: wizard zerado em conversões -->
+
+  <!-- ===== BOTÃO WHATSAPP VERDE FLUTUANTE (17/06/2026) ===== -->
+  <!-- Atualizado 2026-06-26 Rafael: clique vai direto ao WhatsApp (sem intermediário) -->
+  <!-- Usa rota /to-whatsapp do Worker: rastreia origem + UTMs + redireciona para wa.me -->
+  <a href="/to-whatsapp?origem=float-wa" class="whatsapp-fab" id="whatsappFab" aria-label="Falar no WhatsApp" target="_blank" rel="noopener noreferrer">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 
-  <!-- ===== WHATSAPP FLUTUANTE ===== -->
-  <a href="https://wa.me/551134959479?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SAW%20e%20gostaria%20de%20saber%20mais%20sobre%20m%C3%B3veis%20planejados." target="_blank" rel="noopener" class="whatsapp-float" aria-label="Falar no WhatsApp">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    <span>Falar no WhatsApp</span>
-  </a>
-
-  <!-- ===== BOTÃO FLUTUANTE — CATÁLOGO PDF ===== -->
-  <button type="button" class="catalogo-float" id="openCatalogo" aria-label="Baixar catálogo grátis">
-    <span class="catalogo-float__icon">📘</span>
-    <span class="catalogo-float__text">
-      <strong>Baixar Catálogo</strong>
-      <small>30 projetos · grátis</small>
-    </span>
-  </button>
 
   <!-- ===== MODAL — CAPTURA EMAIL PARA CATÁLOGO ===== -->
   <div class="catalogo-modal" id="catalogoModal" aria-hidden="true">
@@ -2691,677 +1766,210 @@
     </div>
   </div>
 
-  <script src="script.js?v=2026-05-13-2"></script>
+  <script src="script.js?v=2026-06-17-v2"></script>
 
-  <!-- ════════ DIAGNÓSTICO DE PROJETO — Lógica do wizard ════════ -->
+  <!-- ════════ CAPTURA DE ATRIBUIÇÃO (GCLID + UTMs) ════════ -->
+  <!-- Rafael/Atlas — P0 fix 09/06/2026: captura gclid + UTMs da URL e persiste
+       no localStorage (lookback 90 dias). Garante que leads vindos de Google Ads
+       chegam ao Worker com gclid preenchido → upload offline conversion funciona. -->
   <script>
   (function() {
-    const wizard = document.getElementById('diagWizard');
-    if (!wizard) return;
-
-    // Inicializa background da seção imersiva na etapa 1
-    (function() {
-      const bg = document.getElementById('diagBg');
-      if (bg) bg.style.backgroundImage = "url('fotos/gal-cozinha-v2.webp')";
-    })();
-
-    const state = {
-      step: 1,
-      ambiente: null,
-      tamanho: null,
-      estilo: null,
-      nome: '',
-      tel: '',
-      email: '',
-      consent: true,
-    };
-
-    // Mapeamento de inspirações por estilo (3 fotos do catálogo SAW)
-    const INSP = {
-      moderno: ['fotos/gal-cozinha-v2.webp', 'fotos/sala-estar.webp', 'fotos/gal-dormitorio1.webp'],
-      classico: ['fotos/gal-cozinha2.webp', 'fotos/sala-ok-v2.webp', 'fotos/gal-dormitorio.webp'],
-    };
-
-    // Faixas de valor por tamanho × estilo (referência 2026, Grande SP)
-    const BUDGET = {
-      'ate-8':     { moderno: [6,12],   classico: [8,15]   },
-      '8-15':      { moderno: [12,22],  classico: [15,28]  },
-      '15-25':     { moderno: [22,38],  classico: [28,48]  },
-      '25-plus':   { moderno: [38,80],  classico: [48,120] },
-    };
-
-    // Mapa de nome de etapa pro GA4/Meta
-    const STEP_NAMES = { 1: 'ambiente', 2: 'tamanho', 3: 'estilo', 4: 'contato' };
-
-    // Mapa de background por etapa — Conceito A
-    const STEP_BG = {
-      1: 'fotos/gal-cozinha-v2.webp',
-      2: 'fotos/gal-dormitorio-v2.webp',
-      3: 'fotos/sala-ok-v2.webp',
-      4: 'fotos/gal-sala.webp',
-      5: 'fotos/gal-cozinha2.webp'
-    };
-    const diagBgEl = document.getElementById('diagBg');
-
-    function updateDiagBg(n) {
-      if (!diagBgEl) return;
-      const img = STEP_BG[n] || STEP_BG[1];
-      diagBgEl.style.backgroundImage = `url('${img}')`;
-    }
-
-    function updateDots(n) {
-      document.querySelectorAll('#diagDots .diag__dot').forEach(dot => {
-        const s = parseInt(dot.dataset.step, 10);
-        dot.classList.remove('active', 'done');
-        if (s < n) dot.classList.add('done');
-        else if (s === n) dot.classList.add('active');
-      });
-    }
-
-    function showStep(n) {
-      wizard.querySelectorAll('.diag__step').forEach(s => s.classList.remove('active'));
-      wizard.querySelector(`.diag__step[data-step="${n}"]`)?.classList.add('active');
-      // progress bar legacy
-      const totalSteps = 4;
-      const pct = Math.min(100, (Math.min(n, totalSteps) / totalSteps) * 100);
-      document.getElementById('diagBar').style.width = pct + '%';
-      // step indicators legacy
-      wizard.querySelectorAll('.diag__progress-steps span').forEach(el => {
-        const step = parseInt(el.dataset.step, 10);
-        el.classList.remove('active', 'done');
-        if (step < n) el.classList.add('done');
-        else if (step === n) el.classList.add('active');
-      });
-      // NOVO — dots + bg por etapa (Conceito A)
-      updateDots(n);
-      updateDiagBg(n);
-      state.step = n;
-      // Scroll suave pro topo da seção fullscreen
-      const diagSec = document.getElementById('diagnostico');
-      if (diagSec) diagSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // Tracking de etapa (GA4 + Meta) — só etapas 1-4
-      if (n >= 1 && n <= 4) {
-        const stepName = STEP_NAMES[n] || String(n);
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'diagnostic_step', { step: n, step_name: stepName, event_category: 'wizard' });
-        }
-        if (typeof fbq !== 'undefined') {
-          fbq('trackCustom', 'DiagnosticStep', { step: n, step_name: stepName });
-        }
-      }
-    }
-
-    function updateNext() {
-      const stepEl = wizard.querySelector(`.diag__step[data-step="${state.step}"]`);
-      if (!stepEl) return;
-      const nextBtn = stepEl.querySelector('[data-action="next"], [data-action="finish"]');
-      if (!nextBtn) return;
-      let ok = false;
-      if (state.step === 1) ok = !!state.ambiente;
-      else if (state.step === 2) ok = !!state.tamanho;
-      else if (state.step === 3) ok = !!state.estilo;
-      else if (state.step === 4) ok = state.nome.length > 2 && state.tel.length >= 10;
-      nextBtn.disabled = !ok;
-    }
-
-    // Cards (ambiente, tamanho, estilo)
-    wizard.querySelectorAll('.diag__cards').forEach(group => {
-      const field = group.dataset.field;
-      const multi = group.dataset.multi === 'true';
-      group.querySelectorAll('.diag-card').forEach(card => {
-        card.addEventListener('click', () => {
-          const val = card.dataset.value;
-          if (multi) {
-            // Toggle
-            const idx = state[field].indexOf(val);
-            if (idx >= 0) state[field].splice(idx, 1);
-            else state[field].push(val);
-            card.classList.toggle('selected');
-            updateNext();
-          } else {
-            // Single-select: marca + AUTO-AVANÇA depois de 500ms
-            // (delay pra usuário ver o feedback visual da seleção: glow, check, sweep)
-            group.querySelectorAll('.diag-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            state[field] = val;
-            updateNext();
-            // Auto-avança se não for a última etapa
-            if (state.step < 4) {
-              setTimeout(() => {
-                if (state.step < 4) showStep(state.step + 1);
-                updateNext();
-              }, 500);
-            }
-          }
-        });
-      });
-    });
-
-    // Inputs da etapa 4
-    document.getElementById('diag-nome')?.addEventListener('input', e => { state.nome = e.target.value.trim(); updateNext(); });
-    document.getElementById('diag-tel')?.addEventListener('input', e => { state.tel = e.target.value.trim(); updateNext(); });
-    document.getElementById('diag-email')?.addEventListener('input', e => { state.email = e.target.value.trim(); });
-    document.getElementById('diag-consent')?.addEventListener('change', e => { state.consent = e.target.checked; });
-
-    // Navegação
-    wizard.addEventListener('click', e => {
-      const t = e.target.closest('[data-action]');
-      if (!t) return;
-      const action = t.dataset.action;
-      if (action === 'back') {
-        if (state.step > 1) showStep(state.step - 1);
-      } else if (action === 'next') {
-        if (state.step < 4) {
-          showStep(state.step + 1);
-          updateNext();
-        }
-      } else if (action === 'finish') {
-        finishDiagnostico();
+    var params = new URLSearchParams(window.location.search);
+    var SAW_FIELDS = ['gclid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+    SAW_FIELDS.forEach(function(k) {
+      var v = params.get(k);
+      if (v) {
+        localStorage.setItem('saw_' + k, v);
+        localStorage.setItem('saw_' + k + '_ts', String(Date.now()));
       }
     });
+  })();
 
-    // Restart
-    document.getElementById('diagRestart')?.addEventListener('click', e => {
+  function getSawParam(k) {
+    var v = localStorage.getItem('saw_' + k);
+    var ts = parseInt(localStorage.getItem('saw_' + k + '_ts') || '0', 10);
+    var ageDays = (Date.now() - ts) / (1000 * 60 * 60 * 24);
+    return (v && ageDays < 90) ? v : null;
+  }
+  </script>
+
+  <!-- ════════ FORM PRINCIPAL A — submit + tracking migrado do wizard ════════ -->
+  <!-- Rafael 2026-06-14: wizard 4-etapas removido (zero conversões).
+       Form A: 3 campos → POST /leads + generate_lead GA4 + Google Ads ytv- + fbq Lead.
+       Guarda anti-inflate: sessionStorage saw_gl_fired (herdado do wizard).
+       Origem do lead: 'form_principal'. -->
+  <script>
+  (function() {
+    var form      = document.getElementById('formPrincipal');
+    var submitBtn = document.getElementById('fpaSubmitBtn');
+    var successEl = document.getElementById('fpaSuccess');
+    if (!form) return;
+
+    // Detecta ambiente API
+    // Em produção (sawmoveis.com.br / *.pages.dev) usa /api/leads same-origin
+    // → Pages Function proxy server-to-server → Worker (sem CORS, sem bloqueio iOS)
+    // Em localhost usa o Worker direto (Pages Functions não rodam local sem wrangler pages dev)
+    var CAMPANHAS_API = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+      ? 'http://localhost:3000'
+      : '/api';
+
+    // Lê gclid/UTMs do localStorage (gravados pelo bloco de atribuição)
+    function getSawParam(k) {
+      var v  = localStorage.getItem('saw_' + k);
+      var ts = parseInt(localStorage.getItem('saw_' + k + '_ts') || '0', 10);
+      var ageDays = (Date.now() - ts) / (1000 * 60 * 60 * 24);
+      return (v && ageDays < 90) ? v : null;
+    }
+
+    // Validação inline
+    function validateField(fieldEl, inputEl) {
+      var ok = inputEl.checkValidity() && inputEl.value.trim().length > 0;
+      fieldEl.classList.toggle('is-error', !ok);
+      return ok;
+    }
+
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
-      // Reset state
-      state.ambiente = null; state.tamanho = null; state.estilo = null;
-      state.nome = ''; state.tel = ''; state.email = '';
-      wizard.querySelectorAll('.diag-card.selected').forEach(c => c.classList.remove('selected'));
-      ['diag-nome','diag-tel','diag-email'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-      showStep(1);
-      updateNext();
-    });
 
-    // Finaliza diagnóstico
-    function finishDiagnostico() {
-      // Preencher tela final
-      document.getElementById('diagNomeFinal').textContent = state.nome ? state.nome.split(' ')[0] + ', está pronto!' : 'está pronto!';
+      var nomeInput = document.getElementById('fpa-nome');
+      var telInput  = document.getElementById('fpa-tel');
+      // Campo ambiente removido — Opção A (17/06/2026): apenas Nome + WhatsApp
 
-      // Inspirações
-      const insp = INSP[state.estilo] || INSP['moderno'];
-      document.getElementById('diagInsp').innerHTML = insp.map(src =>
-        `<img src="${src}" alt="Inspiração ${state.estilo}" loading="lazy"/>`
-      ).join('');
+      var nomeField = nomeInput.closest('.fpa__field');
+      var telField  = telInput.closest('.fpa__field');
 
-      // Budget
-      const range = (BUDGET[state.tamanho] && BUDGET[state.tamanho][state.estilo]) || [10, 30];
-      const min = range[0].toLocaleString('pt-BR');
-      const max = range[1].toLocaleString('pt-BR');
-      document.getElementById('diagBudgetRange').textContent = `R$ ${min} mil – R$ ${max} mil`;
+      var nomeOk = validateField(nomeField, nomeInput);
+      var telOk  = validateField(telField, telInput);
 
-      // PDF download
-      document.getElementById('diagPdfBtn')?.addEventListener('click', () => gerarPDF(state, min, max));
+      if (!nomeOk || !telOk) {
+        (nomeOk ? telInput : nomeInput).focus();
+        return;
+      }
 
-      // Captura no Worker (mesma URL do form principal — auto-detect localhost)
-      const CAMPANHAS_API = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
-        ? 'http://localhost:3000'
-        : 'https://saw-leads.ivan-fbarbosa31.workers.dev';
+      var nome     = nomeInput.value.trim();
+      var telefone = telInput.value.trim();
+
+      // Feedback visual
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      var ctrl      = new AbortController();
+      var timeoutId = setTimeout(function() { ctrl.abort(); }, 8000);
+
+      // Mensagem pré-preenchida WhatsApp
+      var waMsgFpa = 'Olá! Vim pelo site da SAW Móveis e quero saber mais sobre móveis planejados.\n\n*Nome:* ' + nome + '\n*WhatsApp:* ' + telefone + '\n\nPode me chamar?';
+      var waUrlFpa = 'https://wa.me/551134959479?text=' + encodeURIComponent(waMsgFpa);
 
       fetch(CAMPANHAS_API + '/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: state.nome,
-          telefone: state.tel,
-          interesse: ambientes,
-          origem: 'pre_briefing_imersivo',
-          tags: ['pre-briefing', 'cliente-final', 'morno'],
+        signal: ctrl.signal,
+        body: JSON.stringify(Object.assign({
+          nome:      nome,
+          telefone:  telefone,
+          interesse: null,
+          origem:    'form_principal',
+          tags:      ['site', 'form-a', 'cliente-final', 'whatsapp-direto'],
           metadata: {
-            email: state.email,
-            ambiente: state.ambiente,
-            tamanho: state.tamanho,
-            estilo: state.estilo,
-            faixa_min: range[0],
-            faixa_max: range[1],
-            score: 70,
-            consent: state.consent
+            form_version: 'opcao_a_2campos'
           }
-        })
+        }, {
+          gclid:        getSawParam('gclid'),
+          utm_source:   getSawParam('utm_source'),
+          utm_medium:   getSawParam('utm_medium'),
+          utm_campaign: getSawParam('utm_campaign'),
+          utm_term:     getSawParam('utm_term'),
+          utm_content:  getSawParam('utm_content')
+        }))
       })
-      .then(r => r.json())
-      .then(d => {
-        console.log('[pre-briefing] OK lead:', d?.lead?.id || 'sem-id');
-        // Redireciona pra obrigado com nome
-        const primeiroNome = encodeURIComponent((state.nome || '').split(' ')[0]);
-        window.location.href = 'obrigado.html?nome=' + primeiroNome;
-      })
-      .catch(err => {
-        console.error('[pre-briefing] FALHOU:', err.message);
-        // Mesmo com erro de rede: redireciona (lead pode não ter gravado, mas UX não quebra)
-        const primeiroNome = encodeURIComponent((state.nome || '').split(' ')[0]);
-        window.location.href = 'obrigado.html?nome=' + primeiroNome;
-      });
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        var leadId = (d && d.lead && d.lead.id) ? d.lead.id : null;
+        console.log('[form-principal] OK lead:', leadId || 'sem-id');
 
-      // Tracking
-      if (typeof gtag !== 'undefined') gtag('event', 'diagnostic_completed', { event_category: 'lead_qualification', value: 70 });
-      if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_category: 'diagnostico', value: 70, currency: 'BRL' });
+        // ── generate_lead + Google Ads ytv- + Meta fbq Lead ──────────────────
+        // Anti-inflate: 1 disparo por sessão, só após lead gravado com sucesso
+        if (leadId && !sessionStorage.getItem('saw_gl_fired')) {
+          try {
+            sessionStorage.setItem('saw_gl_fired', '1');
 
-      // Vai pra tela final
-      showStep(5);
-    }
-
-    // Carrega jsPDF dinâmicamente (CDN) só quando necessário
-    function carregarJsPDF() {
-      return new Promise((resolve, reject) => {
-        if (window.jspdf) return resolve(window.jspdf);
-        const s = document.createElement('script');
-        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-        s.onload = () => resolve(window.jspdf);
-        s.onerror = () => reject(new Error('Falha ao carregar jsPDF'));
-        document.head.appendChild(s);
-      });
-    }
-
-    // Gera PDF premium do Pré-Briefing SAW — v2 (Bárbara + Marina, 2026-06-05)
-    // Capa: foto _SAG6701 + overlay betume 50% + logo SAW + Playfair
-    // Página 2: header/footer betume, 7 blocos copy Marina, paleta brand kit
-    async function gerarPDF(s, min, max) {
-      const ambientes = Array.isArray(s.ambiente)
-        ? s.ambiente.join(', ')
-        : (s.ambiente || '—');
-      const tamanhoMap = {'ate-8': 'até 8 m²', '8-15': '8 a 15 m²', '15-25': '15 a 25 m²', '25-plus': '25 m² ou +'};
-      const estiloLabel = (s.estilo === 'moderno') ? 'Moderno' : (s.estilo === 'classico' ? 'Clássico / Sofisticado' : s.estilo || '—');
-      const ambienteLabel = ambientes.charAt(0).toUpperCase() + ambientes.slice(1);
-      const dataAtual = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-
-      // Assets base64 — carregados via fetch (mesma origem, sem CORS)
-      async function loadAssetB64(url) {
-        try {
-          const r = await fetch(url);
-          const buf = await r.arrayBuffer();
-          const bytes = new Uint8Array(buf);
-          let bin = '';
-          bytes.forEach(b => bin += String.fromCharCode(b));
-          return btoa(bin);
-        } catch(e) {
-          console.warn('[gerarPDF] asset não carregado:', url, e.message);
-          return null;
-        }
-      }
-
-      try {
-        const { jsPDF } = await carregarJsPDF();
-        const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-        const W = doc.internal.pageSize.getWidth();
-        const H = doc.internal.pageSize.getHeight();
-        const MARGIN = 40;
-        const CW = W - MARGIN * 2;
-
-        // ── Paleta SAW Brand Kit (Bárbara) ──────────────────────────────────
-        const C = {
-          betume:    [26, 25, 24],
-          offwhite:  [248, 245, 240],
-          orange:    [232, 92, 26],
-          bege:      [244, 237, 227],
-          bodyText:  [61, 58, 55],
-          separator: [154, 149, 144],
-        };
-
-        // ── Fontes brand ─────────────────────────────────────────────────────
-        // Fontes carregadas via fetch (relativo ao index.html)
-        const fontPaths = [
-          { url: '_samples/fonts/Inter-Regular.ttf',  name: 'Inter-Regular.ttf',  family: 'Inter', style: 'normal' },
-          { url: '_samples/fonts/Inter-Bold.ttf',     name: 'Inter-Bold.ttf',     family: 'Inter', style: 'bold'   },
-          { url: '_samples/fonts/Inter-Italic.ttf',   name: 'Inter-Italic.ttf',   family: 'Inter', style: 'italic' },
-          { url: '_samples/fonts/PlayfairDisplay-Variable.ttf', name: 'Playfair.ttf', family: 'PlayfairDisplay', style: 'normal' },
-          { url: '_samples/fonts/PlayfairDisplay-Variable.ttf', name: 'Playfair-Bold.ttf', family: 'PlayfairDisplay', style: 'bold' },
-        ];
-        let fontsOk = false;
-        try {
-          for (const f of fontPaths) {
-            const b64 = await loadAssetB64(f.url);
-            if (b64) {
-              doc.addFileToVFS(f.name, b64);
-              doc.addFont(f.name, f.family, f.style);
+            if (typeof gtag !== 'undefined') {
+              // GA4 generate_lead
+              gtag('event', 'generate_lead', {
+                currency:       'BRL',
+                value:          1500,
+                lead_source:    'form_principal',
+                transaction_id: leadId
+              });
+              // Google Ads — conversion action ytv- (SUBMIT_LEAD_FORM primária)
+              gtag('event', 'conversion', {
+                'send_to':       'AW-18138350559/ytv-CMGmgaccEN-HhclD',
+                'value':         1500,
+                'currency':      'BRL',
+                'transaction_id': leadId
+              });
             }
+
+            // Meta Pixel Lead com eventID para deduplicação CAPI
+            if (typeof fbq !== 'undefined') {
+              fbq('track', 'Lead',
+                { value: 1500, currency: 'BRL', content_category: 'form_principal' },
+                { eventID: 'gl_' + leadId }
+              );
+            }
+          } catch (te) {
+            console.warn('[form-principal] tracking erro:', te);
           }
-          fontsOk = true;
-        } catch(fe) {
-          console.warn('[gerarPDF] fontes brand não carregadas, usando helvetica:', fe.message);
         }
 
-        const setInter = (style) => doc.setFont(fontsOk ? 'Inter' : 'helvetica', style);
-        const setPlayfair = (style) => doc.setFont(fontsOk ? 'PlayfairDisplay' : 'helvetica', style);
-
-        // ── Logo SAW ─────────────────────────────────────────────────────────
-        const logoB64 = await loadAssetB64('_samples/logo-saw-base64.txt')
-          .then(async () => {
-            // logo-saw-base64.txt já é texto base64, não binário — carrega direto
-            const r = await fetch('_samples/logo-saw-base64.txt');
-            return r.ok ? (await r.text()).trim() : null;
-          }).catch(() => null);
-
-        // ── Foto capa ─────────────────────────────────────────────────────────
-        const capaB64 = await loadAssetB64('_samples/capa-SAG6701-base64.txt')
-          .then(async () => {
-            const r = await fetch('_samples/capa-SAG6701-base64.txt');
-            return r.ok ? (await r.text()).trim() : null;
-          }).catch(() => null);
-
-        // ════════════════════════════════════════════════════════
-        //  PÁGINA 1 — CAPA PREMIUM
-        // ════════════════════════════════════════════════════════
-        if (capaB64) {
-          doc.addImage(capaB64, 'JPEG', 0, 0, W, H);
-        } else {
-          // fallback: fundo betume sólido se foto não carregar
-          doc.setFillColor(...C.betume);
-          doc.rect(0, 0, W, H, 'F');
+        // Sucesso UI + abre WhatsApp
+        form.style.display = 'none';
+        if (successEl) successEl.style.display = 'flex';
+        window.open(waUrlFpa, '_blank', 'noopener,noreferrer');
+      })
+      .catch(function(err) {
+        console.error('[form-principal] FALHOU:', err.message);
+        // Mesmo em erro de gravação: mostra sucesso e abre WhatsApp — lead não trava
+        form.style.display = 'none';
+        if (successEl) successEl.style.display = 'flex';
+        window.open(waUrlFpa, '_blank', 'noopener,noreferrer');
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'lead_capture_failed', { event_category: 'erro', event_label: err.message });
         }
-
-        // Overlay betume 50%
-        doc.setGState(doc.GState({ opacity: 0.50 }));
-        doc.setFillColor(...C.betume);
-        doc.rect(0, 0, W, H, 'F');
-        doc.setGState(doc.GState({ opacity: 1.0 }));
-
-        // Logo topo esquerdo
-        if (logoB64) {
-          doc.addImage(logoB64, 'PNG', MARGIN, 40, 100, 28);
-        } else {
-          setPlayfair('bold');
-          doc.setFontSize(20);
-          doc.setTextColor(...C.offwhite);
-          doc.text('SAW MÓVEIS', MARGIN, 60);
-        }
-
-        // Bloco central capa
-        const centerY = H * 0.44;
-
-        setPlayfair('normal');
-        doc.setFontSize(11);
-        doc.setTextColor(...C.separator);
-        doc.text('Preparado exclusivamente para', W / 2, centerY - 60, { align: 'center' });
-
-        setPlayfair('bold');
-        doc.setFontSize(28);
-        doc.setTextColor(...C.offwhite);
-        doc.text('Pré-Briefing', W / 2, centerY - 26, { align: 'center' });
-
-        setPlayfair('normal');
-        doc.setFontSize(18);
-        doc.setTextColor(...C.offwhite);
-        doc.text('personalizado', W / 2, centerY + 4, { align: 'center' });
-
-        // Linha laranja
-        doc.setDrawColor(...C.orange);
-        doc.setLineWidth(1);
-        doc.line(W / 2 - 20, centerY + 20, W / 2 + 20, centerY + 20);
-
-        // Nome cliente
-        setInter('bold');
-        doc.setFontSize(16);
-        doc.setTextColor(...C.offwhite);
-        doc.text(s.nome || 'Cliente', W / 2, centerY + 46, { align: 'center' });
-
-        // Data
-        setInter('normal');
-        doc.setFontSize(11);
-        doc.setTextColor(...C.separator);
-        doc.text(dataAtual, W / 2, centerY + 64, { align: 'center' });
-
-        // Rodapé capa
-        setInter('normal');
-        doc.setFontSize(9);
-        doc.setTextColor(...C.offwhite);
-        doc.text('Marcenaria SAW Móveis · Itapecerica da Serra', W / 2, H - 36, { align: 'center' });
-
-        // ════════════════════════════════════════════════════════
-        //  PÁGINA 2 — CONTEÚDO
-        // ════════════════════════════════════════════════════════
-        doc.addPage();
-
-        // ── Header fixo pg2 ──────────────────────────────────────────────────
-        doc.setFillColor(...C.betume);
-        doc.rect(0, 0, W, 56, 'F');
-        if (logoB64) {
-          doc.addImage(logoB64, 'PNG', MARGIN, 14, 72, 20);
-        }
-        setInter('normal');
-        doc.setFontSize(9);
-        doc.setTextColor(...C.separator);
-        doc.text(`Pré-Briefing · ${s.nome || 'Cliente'}`, W - MARGIN, 32, { align: 'right' });
-
-        let y = 74;
-
-        // ── Helper section label ──────────────────────────────────────────────
-        function secLabel(lbl) {
-          setInter('normal');
-          doc.setFontSize(9);
-          doc.setTextColor(...C.separator);
-          doc.text(lbl.toUpperCase(), MARGIN, y);
-          doc.setDrawColor(...C.separator);
-          doc.setLineWidth(0.5);
-          doc.line(MARGIN, y + 4, W - MARGIN, y + 4);
-          y += 20;
-        }
-
-        // ── APRESENTAÇÃO ─────────────────────────────────────────────────────
-        secLabel('Apresentação');
-        setInter('normal');
-        doc.setFontSize(11);
-        doc.setTextColor(...C.bodyText);
-        const introParas = [
-          'Recebemos as informações do seu projeto.',
-          'Este documento reúne uma referência de investimento baseada no ambiente, dimensão e estilo que você escolheu — projetada a partir de obras similares já entregues pela SAW.',
-          'Nossa equipe entra em contato em até 2 horas úteis pelo WhatsApp informado para alinhar agenda e responder qualquer dúvida.',
-        ];
-        introParas.forEach(p => {
-          const linhas = doc.splitTextToSize(p, CW);
-          doc.text(linhas, MARGIN, y);
-          y += linhas.length * 15 + 5;
-        });
-        y += 8;
-
-        // ── CLIENTE + SEU PROJETO (2 colunas) ────────────────────────────────
-        const colW = (CW - 20) / 2;
-        const colL = MARGIN;
-        const colR = MARGIN + colW + 20;
-        let yL = y;
-        let yR = y;
-
-        // Coluna esquerda — CLIENTE
-        setInter('bold');
-        doc.setFontSize(9);
-        doc.setTextColor(...C.orange);
-        doc.text('CLIENTE', colL, yL);
-        doc.setDrawColor(...C.orange);
-        doc.setLineWidth(0.7);
-        doc.line(colL, yL + 3, colL + 48, yL + 3);
-        yL += 18;
-
-        [['Nome', s.nome || '—'], ['WhatsApp', s.tel || '—'], ['E-mail', s.email || '—']].forEach(([lbl, val]) => {
-          setInter('bold');
-          doc.setFontSize(9);
-          doc.setTextColor(...C.bodyText);
-          doc.text(lbl + ':', colL, yL);
-          setInter('normal');
-          doc.setFontSize(11);
-          const ls = doc.splitTextToSize(val, colW - 8);
-          doc.text(ls, colL, yL + 13);
-          yL += ls.length * 14 + 10;
-        });
-
-        // Coluna direita — SEU PROJETO
-        setInter('bold');
-        doc.setFontSize(9);
-        doc.setTextColor(...C.orange);
-        doc.text('SEU PROJETO', colR, yR);
-        doc.setDrawColor(...C.orange);
-        doc.setLineWidth(0.7);
-        doc.line(colR, yR + 3, colR + 70, yR + 3);
-        yR += 18;
-
-        [
-          ['Ambiente', ambienteLabel],
-          ['Dimensão aprox.', `${s.tamanho === 'ate-8' ? 'até 8' : s.tamanho === '25-plus' ? '25 m² ou +' : s.tamanho.replace('-', ' a ')} m²`],
-          ['Estilo', estiloLabel],
-        ].forEach(([lbl, val]) => {
-          setInter('bold');
-          doc.setFontSize(9);
-          doc.setTextColor(...C.bodyText);
-          doc.text(lbl + ':', colR, yR);
-          setInter('normal');
-          doc.setFontSize(11);
-          const ls = doc.splitTextToSize(val, colW - 8);
-          doc.text(ls, colR, yR + 13);
-          yR += ls.length * 14 + 10;
-        });
-
-        y = Math.max(yL, yR) + 12;
-
-        // ── REFERÊNCIA DE INVESTIMENTO ────────────────────────────────────────
-        const boxH = 86;
-        doc.setFillColor(...C.bege);
-        doc.roundedRect(MARGIN, y, CW, boxH, 5, 5, 'F');
-        doc.setFillColor(...C.orange);
-        doc.rect(MARGIN, y, 3, boxH, 'F');
-
-        setInter('bold');
-        doc.setFontSize(9);
-        doc.setTextColor(...C.orange);
-        doc.text('REFERÊNCIA DE INVESTIMENTO', MARGIN + 14, y + 20);
-
-        setPlayfair('bold');
-        doc.setFontSize(22);
-        doc.setTextColor(...C.betume);
-        doc.text(`R$ ${min} mil  –  R$ ${max} mil`, MARGIN + 14, y + 48);
-
-        setInter('italic');
-        doc.setFontSize(9);
-        doc.setTextColor(...C.bodyText);
-        doc.text(
-          'Baseado em projetos similares já entregues pela SAW.\nO valor exato é definido após visita técnica e detalhamento de materiais.',
-          MARGIN + 14, y + 65, { maxWidth: CW - 20 }
-        );
-        y += boxH + 18;
-
-        // ── CHECKLIST ─────────────────────────────────────────────────────────
-        secLabel('Checklist para sua visita técnica');
-        const checkItems = [
-          'Medidas aproximadas do ambiente (largura × profundidade × pé direito)',
-          'Fotos do espaço atual em diferentes ângulos',
-          'Localização de tomadas, janelas, portas e pontos de iluminação',
-          'Lista de funcionalidades essenciais (ex: 4 panelas, air fryer, lava-louças)',
-          'Referências visuais que você gosta — foto de revista, Pinterest, obra vista',
-          'Faixa de investimento confirmada com quem decide — agiliza o processo',
-        ];
-        setInter('normal');
-        doc.setFontSize(10);
-        doc.setTextColor(...C.bodyText);
-        checkItems.forEach(item => {
-          doc.setDrawColor(...C.separator);
-          doc.setLineWidth(0.5);
-          doc.rect(MARGIN, y - 9, 10, 10);
-          const ls = doc.splitTextToSize(item, CW - 18);
-          doc.text(ls, MARGIN + 14, y);
-          y += ls.length * 14 + 4;
-        });
-        y += 10;
-
-        // ── O QUE ACONTECE AGORA ─────────────────────────────────────────────
-        secLabel('O que acontece agora');
-        const steps = [
-          'Em até 2 horas úteis, nossa equipe entra em contato pelo WhatsApp informado para confirmar interesse e alinhar agenda.',
-          'Agendamos visita técnica gratuita — vemos o ambiente, tiramos as medidas e entendemos o que você precisa que o projeto resolva.',
-          'Em até 5 dias úteis após a visita, você recebe orçamento detalhado com projeto 3D técnico. Incluso, sem custo adicional.',
-          'Projeto aprovado: fabricamos em 45 dias na nossa fábrica própria em Itapecerica da Serra. Garantia de 3 anos em estrutura, ferragens e acabamento — escrita em contrato.',
-        ];
-        steps.forEach((step, i) => {
-          setInter('bold');
-          doc.setFontSize(11);
-          doc.setTextColor(...C.orange);
-          doc.text(`${i + 1}.`, MARGIN, y);
-          setInter('normal');
-          doc.setFontSize(10);
-          doc.setTextColor(...C.bodyText);
-          const ls = doc.splitTextToSize(step, CW - 18);
-          doc.text(ls, MARGIN + 14, y);
-          y += ls.length * 14 + 7;
-        });
-
-        // ── FOOTER pg2 ────────────────────────────────────────────────────────
-        const fY = H - 80;
-        doc.setFillColor(...C.betume);
-        doc.rect(0, fY, W, 80, 'F');
-        doc.setFillColor(...C.orange);
-        doc.rect(0, fY, W, 2, 'F');
-
-        setInter('normal');
-        doc.setFontSize(8);
-        doc.setTextColor(...C.offwhite);
-        doc.text('Marcenaria SAW Móveis Ltda  ·  CNPJ 42.345.456/0001-33  ·  Rua Teixeira, 99  ·  Itapecerica da Serra/SP  ·  CEP 06853-460', W / 2, fY + 14, { align: 'center' });
-        doc.text('WhatsApp (11) 3495-9479  ·  sawmoveis.com.br', W / 2, fY + 26, { align: 'center' });
-        doc.text('11 anos no mercado  ·  +350 obras entregues  ·  45 dias de fabricação  ·  Ferragens FGV (Itália) e Häfele (Alemanha)  ·  MDF Eucatex', W / 2, fY + 38, { align: 'center' });
-        doc.text('3 anos de garantia em estrutura, ferragens e acabamento', W / 2, fY + 50, { align: 'center' });
-
-        // LGPD
-        doc.setFontSize(7);
-        doc.setTextColor(...C.separator);
-        doc.text(
-          'Seus dados são usados exclusivamente para elaboração do orçamento e contato sobre seu projeto. Não compartilhamos com terceiros.  Política de Privacidade: sawmoveis.com.br/politica-de-privacidade',
-          W / 2, fY + 64, { align: 'center', maxWidth: CW }
-        );
-
-        // Salvar
-        const filename = `pre-briefing-saw-${(s.nome || 'cliente').split(' ')[0].toLowerCase()}.pdf`;
-        doc.save(filename);
-
-        if (typeof gtag !== 'undefined') gtag('event', 'pre_briefing_pdf_downloaded', { format: 'pdf', version: 'v2_premium' });
-        return;
-      } catch (err) {
-        console.error('[gerarPDF] falhou jsPDF, fallback pra TXT:', err);
-      }
-
-      // Fallback TXT (se jsPDF falhar)
-      const conteudo = `SAW MÓVEIS — Pré-Briefing\n\nCliente: ${s.nome}\nWhatsApp: ${s.tel}\nAmbiente: ${ambientes}\nEstilo: ${estiloLabel}\n\nReferência: R$ ${min} mil – R$ ${max} mil\n\nContato: (11) 3495-9479\nsawmoveis.com.br`;
-      const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `pre-briefing-saw-${(s.nome || 'cliente').split(' ')[0].toLowerCase()}.txt`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(() => URL.revokeObjectURL(url), 100);
-
-      if (typeof gtag !== 'undefined') gtag('event', 'diagnostic_pdf_download', {});
-    }
-
-    // Inicializa
-    updateNext();
-  })();
-  </script>
-
-  <!-- ════════ Tracking pre_briefing_start (consolidação CTAs) ════════ -->
-  <script>
-  (function() {
-    // Botão primário do Hero
-    const heroBtn = document.getElementById('heroPreBriefingBtn');
-    if (heroBtn) {
-      heroBtn.addEventListener('click', function() {
-        if (typeof gtag !== 'undefined') gtag('event', 'pre_briefing_start', { location: 'hero', cta: 'primary' });
-        if (typeof fbq !== 'undefined') fbq('trackCustom', 'PreBriefingStart', { location: 'hero' });
-      });
-    }
-    // Link secundário WhatsApp do Hero
-    const heroWhats = document.getElementById('heroWhatsBtn');
-    if (heroWhats) {
-      heroWhats.addEventListener('click', function() {
-        if (typeof gtag !== 'undefined') gtag('event', 'whatsapp_click', { location: 'hero_secondary' });
-        if (typeof fbq !== 'undefined') fbq('trackCustom', 'WhatsAppClick', { location: 'hero_secondary' });
-      });
-    }
-    // Outros CTAs primários que vão pro Diagnóstico
-    document.querySelectorAll('a[href="#diag-wizard"].btn--primary').forEach(function(a) {
-      if (a.id === 'heroPreBriefingBtn') return; // já tem tracking
-      a.addEventListener('click', function() {
-        if (typeof gtag !== 'undefined') gtag('event', 'pre_briefing_start', { location: 'inline', cta: 'primary' });
-        if (typeof fbq !== 'undefined') fbq('trackCustom', 'PreBriefingStart', { location: 'inline' });
+      })
+      .finally(function() {
+        clearTimeout(timeoutId);
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Falar no WhatsApp';
       });
     });
+
+    // ── Scroll centralizado para o formulário ──────────────────────────────
+    // Centraliza o form na viewport (block:'center') em vez de apenas rolar pro topo.
+    // Evita que o header fixo cubra o form. Aplica a TODOS os CTAs externos (âncoras).
+    // O submit do form (type=submit) NÃO é afetado — ele só envia o form.
+    function scrollToForm(trackLocation) {
+      var form = document.getElementById('form-principal');
+      if (!form) return;
+      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (typeof gtag !== 'undefined') gtag('event', 'form_principal_click', { location: trackLocation || 'unknown' });
+    }
+
+    document.querySelectorAll('a[href="#form-principal"]').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToForm(a.id || 'cta-link');
+      });
+    });
+
+    // ── Botão WhatsApp verde flutuante ──────────────────────────────────────
+    // 2026-06-26 Rafael: listener removido — botão agora é <a href="/to-whatsapp?origem=float-wa">
+    // O clique vai direto ao WhatsApp via Worker (rastreia origem + UTMs + redireciona wa.me).
+    // O tracking gtag('whatsapp_click') continua capturado pelo listener global
+    // que detecta a[href*="/to-whatsapp"] (linha ~188 deste script).
+
     // Catálogo no rodapé
-    const footerCat = document.getElementById('footerCatalogoLink');
+    var footerCat = document.getElementById('footerCatalogoLink');
     if (footerCat) {
       footerCat.addEventListener('click', function() {
         if (typeof gtag !== 'undefined') gtag('event', 'catalog_pdf_downloaded', { location: 'footer' });
@@ -3370,5 +1978,7 @@
     }
   })();
   </script>
+
+  <!-- heroSplitForm removido 17/06/2026 — Opção A descartada -->
 </body>
 </html>
