@@ -20,3 +20,7 @@ package-lock.json
 # Secrets (nunca commitar)
 .env
 .env.local
+
+# Config local do Claude Code (contem tokens de API — nunca commitar)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
